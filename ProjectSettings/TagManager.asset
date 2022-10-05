@@ -9,14 +9,15 @@ TagManager:
   - eventManager
   - activeDecoy
   - recentlyDisabledDecoy
+  - postProcessingController
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Game
   - Water
   - UI
-  - 
+  - PostProcessing
   - 
   - 
   - 

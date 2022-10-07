@@ -26,6 +26,7 @@ public class playerController : MonoBehaviour
     private float _projectileChargeDuration = 0f;
     private float _projectileChargeStartTime;
     private bool _isAlive = true;
+    private bool _isCharging;
     private bool _isReadyToFire = true;
     private GameObject _spawnedObject;
     private projectileScript _spawnedObjectScript;
@@ -62,17 +63,23 @@ public class playerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && _isReadyToFire) // detect mouse 1 down
+        if (Input.GetMouseButtonDown(0) && _isReadyToFire && !_isCharging) // detect mouse 1 down
         {
             _projectileChargeStartTime = Time.time; // stores value of the time when mouse 1 was down
+            _isCharging = true;
+            // calculates charge duration and clamps within set value of parameters
         }
         else if (Input.GetMouseButtonUp(0) && _isReadyToFire)
         {
-            _projectileChargeDuration = Mathf.Clamp((_projectileChargeDuration = Time.time - _projectileChargeStartTime), projectileBaseDamage, playerMaxProjectileCharge); // calculates charge duration and clamps within set value of parameters
+        
             _projectileCalculatedDamage = projectileBaseDamage * _projectileChargeDuration; // calculates damage
             Shoot(_projectileCalculatedDamage); // shoots bullet
-            _projectileChargeDuration = 0f; // resets charge 
-            StartCoroutine(ShootingCooldown()); // start cooldown
+            StartCoroutine(ShootingCooldown());// start cooldown
+            _isCharging = false;  
+        }
+        else if (_projectileChargeStartTime >= 0 && _isCharging)
+        {
+            _projectileChargeDuration = Time.time - _projectileChargeStartTime;
         }
     }
 
@@ -81,14 +88,18 @@ public class playerController : MonoBehaviour
         _isReadyToFire = false; // player temporarily unable to fire
         yield return new WaitForSeconds(shootingRate); // cooldown 
         _isReadyToFire = true; // player can now fire
+        _projectileChargeStartTime = 0f;
+        _projectileChargeDuration = 0f;
+
     }
     
     void Shoot(float projectileDamage)
     { // spawn object and assign it to a gameobject as reference
+        _projectileCharge = Mathf.Clamp(_projectileChargeDuration + projectileBaseDamage, projectileBaseDamage, playerMaxProjectileCharge) / 10;
         _spawnedObject = Instantiate(playerProjectile, transform.position, transform.rotation);
         _spawnedObjectScript = _spawnedObject.GetComponent<projectileScript>(); // get projectile script of spawned object
-        _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate); // pass through variables
-        Debug.Log("Spawned Bullet with a damage value of <b>" + projectileDamage + "<\b>");
+        _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate, _projectileCharge); // pass through variables
+        Debug.Log("Spawned Bullet with a damage value of " + projectileDamage);
         Damage(projectileHealthConsumption); // damage player
     }
 

@@ -1387,9 +1387,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30adb16718ee2934c8bb80b6e30de13b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  burningRate: 3
+  burningRate: 0
   maxPlayerHealth: 100
-  playerMaxProjectileCharge: 3
+  playerMaxProjectileCharge: 20
   playerProjectileChargeRate: 1.5
   projectileHealthConsumption: 5
   projectileDespawnRate: 5
@@ -1601,7 +1601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5495732648329243967, guid: 782d2a0813b914c4e988a36673a0e6a0, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

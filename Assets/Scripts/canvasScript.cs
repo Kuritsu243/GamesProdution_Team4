@@ -16,8 +16,6 @@ public class canvasScript : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
         _playerController = _player.GetComponent<playerController>();
     }
-
-    // Update is called once per frame
     void Update()
     { 
         healthBar.fillAmount = _playerController.PlayerHealth / _playerController.MaxPlayerHealth;

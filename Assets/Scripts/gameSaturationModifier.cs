@@ -11,6 +11,13 @@ public class gameSaturationModifier : MonoBehaviour
     private GameObject _postProcessController;
     private PostProcessVolume _postProcessVolume;
     private ColorGrading _colorGrading;
+    private int _levelProgression;
+
+    public int LevelProgression
+    {
+        get => _levelProgression;
+        set => _levelProgression = value;
+    }
     [Range(-100, 100f)]
     [SerializeField] private int saturation;
     // Start is called before the first frame update

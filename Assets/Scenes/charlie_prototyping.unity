@@ -1389,6 +1389,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burningRate: 3
   maxPlayerHealth: 100
+  playerMaxProjectileCharge: 3
+  playerProjectileChargeRate: 1.5
+  projectileHealthConsumption: 5
+  projectileDespawnRate: 5
+  projectileSpeed: 5
+  projectileBaseDamage: 5
+  shootingRate: 1
+  playerProjectile: {fileID: 5315226020846044873, guid: 52bea41a062f39d419a16c0703fd9622, type: 3}
 --- !u!1 &2131356906
 GameObject:
   m_ObjectHideFlags: 0

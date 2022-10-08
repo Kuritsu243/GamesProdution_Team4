@@ -8,31 +8,33 @@ using UnityEngine.UI;
 
 public class gameSaturationModifier : MonoBehaviour
 {
-    private float _enemiesInSceneCount;
+    private ColorGrading _colorGrading;
     private float _enemiesCurrentlyInScene;
+
+    // private variables
+    private float _enemiesInSceneCount;
     private GameObject _postProcessController;
     private PostProcessVolume _postProcessVolume;
-    private ColorGrading _colorGrading;
+    private float _saturation;
 
+    // encapsulated fields
     public float EnemiesCurrentlyInScene
     {
         get => _enemiesCurrentlyInScene;
         set => _enemiesCurrentlyInScene = value;
     }
-    private float _saturation;
-    // Start is called before the first frame update
-    
-    
+
     void Start()
     {
 
-        _postProcessController = GameObject.FindGameObjectWithTag("postProcessingController");
-        _postProcessVolume = _postProcessController.GetComponent<PostProcessVolume>();
-        _postProcessVolume.profile.TryGetSettings(out _colorGrading);
-        GetAllEnemiesInScene();
-        SetSaturationLevel();
+        _postProcessController = GameObject.FindGameObjectWithTag("postProcessingController"); // get post processing controller
+        _postProcessVolume = _postProcessController.GetComponent<PostProcessVolume>(); // get post process volume component
+        _postProcessVolume.profile.TryGetSettings(out _colorGrading); // apply colour grading settings
+        GetAllEnemiesInScene(); // gets count of enemies
+        SetSaturationLevel(); // set saturation level
 
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -48,23 +50,21 @@ public class gameSaturationModifier : MonoBehaviour
         Debug.Log(_saturation);
     }
 
-    void GetAllEnemiesInScene()
+    void GetAllEnemiesInScene() // get count of enemies
     {
-        _enemiesInSceneCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        _enemiesCurrentlyInScene = _enemiesInSceneCount;
+        _enemiesInSceneCount = GameObject.FindGameObjectsWithTag("Enemy").Length; // creates array of all enemies and counts how many exist
+        _enemiesCurrentlyInScene = _enemiesInSceneCount; // sets currently in scene to size of array above
     }
 
-    public void CalculateSaturationLevel()
+    public void CalculateSaturationLevel() // calculates saturation level
     {
-        _saturation = (_enemiesCurrentlyInScene / _enemiesInSceneCount) * -100;
+        _saturation = (_enemiesCurrentlyInScene / _enemiesInSceneCount) * -100; // calculate percentage to set after seeing how many enemies are left
         SetSaturationLevel();
     }
 
-    void SetSaturationLevel()
+    void SetSaturationLevel() // set saturation level
     {
-        _colorGrading.saturation.value = (int)(_saturation);
-        _postProcessVolume.profile.TryGetSettings(out _colorGrading);
+        _colorGrading.saturation.value = (int)(_saturation); // set value to saturation variable after being converted to int from float
+        _postProcessVolume.profile.TryGetSettings(out _colorGrading); // apply saturation value
     }
-
-
 }

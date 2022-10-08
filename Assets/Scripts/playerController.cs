@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class Helper
 {
-    public static GameObject FindGameObjectInChildWithTag(this GameObject gameObject, string tag)
+    public static GameObject FindGameObjectInChildWithTag(this GameObject gameObject, string tag) // creates function to allow to search for a gameobject with a tag
     {
         Transform t = gameObject.transform;
         foreach (Transform transform in t)
@@ -26,10 +26,12 @@ public class playerController : MonoBehaviour
 {
     [Header("Health Settings")] // Health Settings
     [SerializeField] private float burningRate;
+
     [SerializeField] private float maxPlayerHealth = 100;
-    
+
     [Header("Projectile Settings")] // Projectile Settings
     [SerializeField] private float playerMaxProjectileCharge;
+
     [SerializeField] private float playerProjectileChargeRate;
     [SerializeField] private float projectileHealthConsumption;
     [SerializeField] private float projectileDespawnRate;
@@ -37,49 +39,38 @@ public class playerController : MonoBehaviour
     [SerializeField] private float projectileBaseDamage;
     [SerializeField] private int shootingRate;
     [SerializeField] private GameObject playerProjectile;
-    
-    //Private variables
-    private float _playerHealth;
-    private float _projectileCharge;
-    private float _projectileCalculatedDamage;
-    private float _projectileChargeDuration = 0f;
-    private float _projectileChargeStartTime;
     private bool _isAlive = true;
     private bool _isCharging;
     private bool _isReadyToFire = true;
+
+    //Private variables
+    private float _playerHealth;
+    private float _projectileCalculatedDamage;
+    private float _projectileCharge;
+    private float _projectileChargeDuration = 0f;
+    private float _projectileChargeStartTime;
+    private GameObject _projectileSpawnPoint;
     private GameObject _spawnedObject;
     private projectileScript _spawnedObjectScript;
-    private GameObject _projectileSpawnPoint;
-    
+
     // Encapsulated Fields
     public float PlayerHealth
     {
         get => _playerHealth;
         private set => _playerHealth = value;
     }
+
     public float MaxPlayerHealth
     {
         get => maxPlayerHealth;
         set => maxPlayerHealth = value;
     }
 
-    
+
     void Start()
     {
         PlayerHealth = MaxPlayerHealth; // set player health to max health
-        _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint");
-    }
-    private void FixedUpdate()
-    {
-        if (_isAlive)
-        {  // Decay health 
-            _playerHealth = Mathf.Clamp(_playerHealth - (Time.deltaTime * burningRate), 0f, MaxPlayerHealth); 
-        }
-        if (_playerHealth  <= 0)
-        { // Player death
-            _isAlive = false;
-            this.Die();
-        }
+        _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint"); // find spawn point by tag in child
     }
 
     private void Update()
@@ -104,6 +95,19 @@ public class playerController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (_isAlive)
+        {  // Decay health 
+            _playerHealth = Mathf.Clamp(_playerHealth - (Time.deltaTime * burningRate), 0f, MaxPlayerHealth); 
+        }
+        if (_playerHealth  <= 0)
+        { // Player death
+            _isAlive = false;
+            this.Die();
+        }
+    }
+
     IEnumerator ShootingCooldown()
     {
         _isReadyToFire = false; // player temporarily unable to fire
@@ -113,10 +117,10 @@ public class playerController : MonoBehaviour
         _projectileChargeDuration = 0f;
 
     }
-    
+
     void Shoot(float projectileDamage)
     { // spawn object and assign it to a gameobject as reference
-        _projectileCharge = Mathf.Clamp(_projectileChargeDuration + projectileBaseDamage, projectileBaseDamage, playerMaxProjectileCharge);
+        _projectileCharge = Mathf.Clamp(_projectileChargeDuration + projectileBaseDamage, projectileBaseDamage, playerMaxProjectileCharge); // min value is base damage, max value is max charge value
         _spawnedObject = Instantiate(playerProjectile, _projectileSpawnPoint.transform.position, transform.rotation);
         _spawnedObjectScript = _spawnedObject.GetComponent<projectileScript>(); // get projectile script of spawned object
         _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate, _projectileCharge); // pass through variables
@@ -128,7 +132,7 @@ public class playerController : MonoBehaviour
     {
         _playerHealth -= damageAmount; // reduces health by damage value passed through 
     }
-    
+
     void Die()
     { // destroys player gameobject
         Destroy(this.gameObject);

@@ -4,42 +4,38 @@ using UnityEngine;
 
 public class lightDecoyPawn : MonoBehaviour
 {
-
-    private bool _isLit = false;
-    private Renderer _lightDecoyRenderer;
+    // Serialized variables
     [SerializeField] private Material inactiveDecoyMaterial;
     [SerializeField] private Material activeDecoyMaterial;
-    // Start is called before the first frame update
+
+    // private variables
+    private bool _isLit = false;
+    private Renderer _lightDecoyRenderer;
+
     void Start()
     {
-        _lightDecoyRenderer = GetComponent<Renderer>();
+        _lightDecoyRenderer = GetComponent<Renderer>(); // get light renderer
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     public void DisableDecoy()
     {
-        _lightDecoyRenderer.material = inactiveDecoyMaterial;
-        _isLit = false;
-        gameObject.tag = "recentlyDisabledDecoy";
+        _lightDecoyRenderer.material = inactiveDecoyMaterial; // set decoy material to inactive material
+        _isLit = false; // is lit is false
+        gameObject.tag = "recentlyDisabledDecoy"; // set tag to recently disabled decoy
     }
 
-    public void ActivateDecoy(float duration)
+    public void ActivateDecoy(float duration) // activate decoy
     {
-        _lightDecoyRenderer.material = activeDecoyMaterial;
-        StartCoroutine(DecoyActive(duration));
-        _isLit = true;
-        gameObject.tag = "activeDecoy";
+        _lightDecoyRenderer.material = activeDecoyMaterial; // set material to lit material
+        StartCoroutine(DecoyActive(duration)); // start countdown for duration it's enabled
+        _isLit = true; // is lit is true
+        gameObject.tag = "activeDecoy"; // change tag to indicate it is active
     }
 
-    private IEnumerator DecoyActive(float decoyLitDuration)
+    private IEnumerator DecoyActive(float decoyLitDuration) // decoy countdown
     {
-        yield return new WaitForSeconds(decoyLitDuration);
-        DisableDecoy();
+        yield return new WaitForSeconds(decoyLitDuration); // wait for duration decoy is lit for
+        DisableDecoy(); // disable decoy
         
     }
 }

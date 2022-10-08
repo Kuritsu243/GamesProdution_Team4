@@ -3,6 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public static class Helper
+{
+    public static GameObject FindGameObjectInChildWithTag(this GameObject gameObject, string tag)
+    {
+        Transform t = gameObject.transform;
+        foreach (Transform transform in t)
+        {
+            if (transform.CompareTag(tag))
+            {
+                return transform.gameObject;
+            }
+        }
+        return null;
+    }
+}
+
+
+
+
 public class playerController : MonoBehaviour
 {
     [Header("Health Settings")] // Health Settings
@@ -30,6 +49,7 @@ public class playerController : MonoBehaviour
     private bool _isReadyToFire = true;
     private GameObject _spawnedObject;
     private projectileScript _spawnedObjectScript;
+    private GameObject _projectileSpawnPoint;
     
     // Encapsulated Fields
     public float PlayerHealth
@@ -47,6 +67,7 @@ public class playerController : MonoBehaviour
     void Start()
     {
         PlayerHealth = MaxPlayerHealth; // set player health to max health
+        _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint");
     }
     private void FixedUpdate()
     {
@@ -95,8 +116,8 @@ public class playerController : MonoBehaviour
     
     void Shoot(float projectileDamage)
     { // spawn object and assign it to a gameobject as reference
-        _projectileCharge = Mathf.Clamp(_projectileChargeDuration + projectileBaseDamage, projectileBaseDamage, playerMaxProjectileCharge) / 10;
-        _spawnedObject = Instantiate(playerProjectile, transform.position, transform.rotation);
+        _projectileCharge = Mathf.Clamp(_projectileChargeDuration + projectileBaseDamage, projectileBaseDamage, playerMaxProjectileCharge);
+        _spawnedObject = Instantiate(playerProjectile, _projectileSpawnPoint.transform.position, transform.rotation);
         _spawnedObjectScript = _spawnedObject.GetComponent<projectileScript>(); // get projectile script of spawned object
         _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate, _projectileCharge); // pass through variables
         Debug.Log("Spawned Bullet with a damage value of " + projectileDamage);
@@ -113,3 +134,4 @@ public class playerController : MonoBehaviour
         Destroy(this.gameObject);
     }
 }
+

@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Everytime you're outside a zone the light radius shrinks until you reach a safe zone - if light radius reaches zero then player dies
+// TODO: the lower the health the lower the light of the player
+// TODO: scale fuel with projectile charge
+// TODO: Regain life from found candles / defeated moths
+
 public static class Helper
 {
     public static GameObject FindGameObjectInChildWithTag(this GameObject gameObject, string tag) // creates function to allow to search for a gameobject with a tag

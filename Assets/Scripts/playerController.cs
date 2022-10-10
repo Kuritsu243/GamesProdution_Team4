@@ -62,7 +62,7 @@ public class playerController : MonoBehaviour
     public float PlayerHealth
     {
         get => _playerHealth;
-        private set => _playerHealth = value;
+        set => _playerHealth = value;
     }
 
     public float MaxPlayerHealth

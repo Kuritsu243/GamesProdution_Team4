@@ -29,14 +29,24 @@ public static class Helper
 
 public class playerController : MonoBehaviour
 {
+    [Header("Camera Settings")]
+    [SerializeField] private float cameraHeight;
+    [SerializeField] private float cameraRaycastLength;
+    [SerializeField] private float cameraZOffset;
     [Header("Health Settings")] // Health Settings
     [SerializeField] private float burningRate;
-
     [SerializeField] private float maxPlayerHealth = 100;
 
+    [Header("Player Settings")] 
+    [SerializeField] private float playerMovementSpeed;
+    [SerializeField] private float jumpSpeed;
+    [SerializeField] private float mouseSensitivity;
+    [SerializeField] private float dashSpeed;
+    [SerializeField] private float dashCooldown;
+    [SerializeField] private float dashFuelConsumption;
+    
     [Header("Projectile Settings")] // Projectile Settings
     [SerializeField] private float playerMaxProjectileCharge;
-
     [SerializeField] private float playerProjectileChargeRate;
     [SerializeField] private float projectileHealthConsumption;
     [SerializeField] private float projectileDespawnRate;
@@ -44,19 +54,31 @@ public class playerController : MonoBehaviour
     [SerializeField] private float projectileBaseDamage;
     [SerializeField] private int shootingRate;
     [SerializeField] private GameObject playerProjectile;
+
+    [Header("World Settings")] 
+    [SerializeField] private float worldGravity;
+    //Private variables
+    private int _maskingLayer;
     private bool _isAlive = true;
     private bool _isCharging;
     private bool _isReadyToFire = true;
-
-    //Private variables
+    private bool _canDodge = true;
+    private bool _currentlyDodging;
     private float _playerHealth;
     private float _projectileCalculatedDamage;
     private float _projectileCharge;
     private float _projectileChargeDuration = 0f;
     private float _projectileChargeStartTime;
+    private Camera _playerCamera;
+    private cameraFollow _cameraFollowScript;
+    private CharacterController _playerCharController;
     private GameObject _projectileSpawnPoint;
     private GameObject _spawnedObject;
     private projectileScript _spawnedObjectScript;
+    private Quaternion _playerNewRotation;
+    private Rigidbody _playerRigidbody;
+    private Vector3 _playerVelocity = Vector3.zero;
+    private Vector3 _playerToMouse;
 
     // Encapsulated Fields
     public float PlayerHealth
@@ -74,10 +96,17 @@ public class playerController : MonoBehaviour
 
     void Start()
     {
+        _playerRigidbody = GetComponent<Rigidbody>();
+        _playerCharController = GetComponent<CharacterController>();
+        _maskingLayer = LayerMask.GetMask("Floor");
+        _playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        _cameraFollowScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>();
         PlayerHealth = MaxPlayerHealth; // set player health to max health
         _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint"); // find spawn point by tag in child
     }
-
+    
+    
+    
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && _isReadyToFire && !_isCharging) // detect mouse 1 down
@@ -102,6 +131,13 @@ public class playerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        var horizontal = Input.GetAxisRaw("Horizontal");
+        var vertical = Input.GetAxisRaw("Vertical");
+        
+        Move(horizontal, vertical);
+        Turn();
+        _cameraFollowScript.MoveCamera(cameraHeight, cameraZOffset, transform.position);
+        
         if (_isAlive)
         {  // Decay health 
             _playerHealth = Mathf.Clamp(_playerHealth - (Time.deltaTime * burningRate), 0f, MaxPlayerHealth); 
@@ -142,5 +178,28 @@ public class playerController : MonoBehaviour
     { // destroys player gameobject
         Destroy(this.gameObject);
     }
+
+    void Move(float horizontal, float vertical)
+    {
+        _playerVelocity.Set(horizontal, 0, vertical);
+        _playerVelocity = _playerVelocity.normalized * (playerMovementSpeed * Time.deltaTime);
+        _playerCharController.Move(_playerVelocity);
+        // _playerRigidbody.MovePosition(_playerRigidbody.position + _playerVelocity);
+    }
+
+    void Turn()
+    {
+        var mouseLocation = _playerCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit floorHit;
+
+        if (Physics.Raycast(mouseLocation, out floorHit, cameraRaycastLength, _maskingLayer))
+        {
+            _playerToMouse = floorHit.point - _playerRigidbody.position;
+            _playerToMouse.y = 0;
+            _playerNewRotation = Quaternion.LookRotation(_playerToMouse);
+            _playerRigidbody.MoveRotation(_playerNewRotation);
+        }
+    }
+    
 }
 

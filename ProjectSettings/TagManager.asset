@@ -10,6 +10,9 @@ TagManager:
   - activeDecoy
   - recentlyDisabledDecoy
   - postProcessingController
+  - healthPickup
+  - Enemy
+  - projectileSpawnPoint
   layers:
   - Default
   - TransparentFX
@@ -18,7 +21,7 @@ TagManager:
   - Water
   - UI
   - PostProcessing
-  - 
+  - Floor
   - 
   - 
   - 

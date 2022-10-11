@@ -9,20 +9,24 @@ TagManager:
   - eventManager
   - activeDecoy
   - recentlyDisabledDecoy
+  - postProcessingController
+  - healthPickup
+  - Enemy
+  - projectileSpawnPoint
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Game
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PostProcessing
+  - Floor
+  - Enemies
+  - Decoys
+  - Projectiles
+  - Collectibles
+  - NoPostProcessing
   - 
   - 
   - 

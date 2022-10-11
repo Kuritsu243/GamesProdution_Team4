@@ -4,38 +4,37 @@ using UnityEngine;
 
 public class lightDecoyController : MonoBehaviour
 {
-    
+    // serialized variables
     [SerializeField] private float sphereCastRadius;
     [SerializeField] private float decoyLitDuration;
-    private GameObject _player;
-    private GameObject _decoyInRange;
     private CharacterController _characterController;
+    private GameObject _decoyInRange;
     private lightDecoyPawn _decoyPawnScript;
-    // Start is called before the first frame update
+
+    // private variables
+    private GameObject _player;
+
     void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _characterController = _player.GetComponent<CharacterController>();
+        _player = GameObject.FindGameObjectWithTag("Player"); // get player gameobject
+        _characterController = _player.GetComponent<CharacterController>(); // get players character controller
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F)) // if decoy activated
         {
-            Collider[] hitColliders = Physics.OverlapSphere(_player.transform.position, sphereCastRadius);
-            foreach (var hitCollider in hitColliders)
+            Collider[] hitColliders = Physics.OverlapSphere(_player.transform.position, sphereCastRadius); // get array of colliders in range
+            foreach (var hitCollider in hitColliders) // for each collider detected
             {
-                if (hitCollider.CompareTag("decoy"))
+                if (hitCollider.CompareTag("decoy")) // if collider is decoy
                 {
-                    _decoyInRange = hitCollider.gameObject;
-                    _decoyPawnScript = _decoyInRange.GetComponent<lightDecoyPawn>();
-                    _decoyPawnScript.ActivateDecoy(decoyLitDuration);
+                    _decoyInRange = hitCollider.gameObject; // store decoy as var
+                    _decoyPawnScript = _decoyInRange.GetComponent<lightDecoyPawn>(); // get decoy script
+                    _decoyPawnScript.ActivateDecoy(decoyLitDuration); // active decoy
                 }
 
             }
         }
     }
-
-
 }

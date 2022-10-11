@@ -1,18 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class renderWithinRadius : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int postProcessingLayer;
+    [SerializeField] private int noPostProcessingLayer;
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.layer != LayerMask.NameToLayer("Floor"))
+        {
+            other.gameObject.layer = noPostProcessingLayer;
+        }
+
+        Debug.Log("changed obj " + other.gameObject + "to no post process");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        
+        other.gameObject.layer = postProcessingLayer;
     }
 }

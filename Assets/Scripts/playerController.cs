@@ -70,10 +70,13 @@ public class playerController : MonoBehaviour
     private float _projectileChargeDuration = 0f;
     private float _projectileChargeStartTime;
     private Camera _playerCamera;
+    private Color _lightRadiusColor;
     private cameraFollow _cameraFollowScript;
     private CharacterController _playerCharController;
     private GameObject _projectileSpawnPoint;
     private GameObject _spawnedObject;
+    private GameObject _lightRadius;
+    private Material _lightRadiusMaterial;
     private projectileScript _spawnedObjectScript;
     private Quaternion _playerNewRotation;
     private Rigidbody _playerRigidbody;
@@ -103,6 +106,10 @@ public class playerController : MonoBehaviour
         _cameraFollowScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>();
         PlayerHealth = MaxPlayerHealth; // set player health to max health
         _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint"); // find spawn point by tag in child
+        _lightRadius = gameObject.FindGameObjectInChildWithTag("lightRadius");
+        _lightRadiusMaterial = _lightRadius.GetComponent<Renderer>().material;
+        _lightRadiusColor = _lightRadiusMaterial.color;
+        _lightRadiusColor.a = 0.025f;
     }
     
     
@@ -136,6 +143,7 @@ public class playerController : MonoBehaviour
         
         Move(horizontal, vertical);
         Turn();
+
         _cameraFollowScript.MoveCamera(cameraHeight, cameraZOffset, transform.position);
         
         if (_isAlive)
@@ -148,6 +156,7 @@ public class playerController : MonoBehaviour
             this.Die();
         }
     }
+    
 
     IEnumerator ShootingCooldown()
     {
@@ -183,16 +192,15 @@ public class playerController : MonoBehaviour
     {
         _playerVelocity.Set(horizontal, 0, vertical);
         _playerVelocity = _playerVelocity.normalized * (playerMovementSpeed * Time.deltaTime);
-        _playerCharController.Move(_playerVelocity);
-        // _playerRigidbody.MovePosition(_playerRigidbody.position + _playerVelocity);
+        // _playerCharController.Move(_playerVelocity);
+        _playerRigidbody.MovePosition(_playerRigidbody.position + _playerVelocity);
     }
 
     void Turn()
     {
         var mouseLocation = _playerCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit floorHit;
 
-        if (Physics.Raycast(mouseLocation, out floorHit, cameraRaycastLength, _maskingLayer))
+        if (Physics.Raycast(mouseLocation, out var floorHit, cameraRaycastLength, _maskingLayer))
         {
             _playerToMouse = floorHit.point - _playerRigidbody.position;
             _playerToMouse.y = 0;

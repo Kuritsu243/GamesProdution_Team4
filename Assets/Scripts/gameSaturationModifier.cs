@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 
 public class gameSaturationModifier : MonoBehaviour
 {
-    private ColorGrading _colorGrading;
+    private ColorAdjustments _colorGrading;
     private float _enemiesCurrentlyInScene;
 
     // private variables
     private float _enemiesInSceneCount;
     private GameObject _postProcessController;
-    private PostProcessVolume _postProcessVolume;
+    private Volume _postProcessVolume;
     private float _saturation;
 
     // encapsulated fields
@@ -28,8 +30,8 @@ public class gameSaturationModifier : MonoBehaviour
     {
 
         _postProcessController = GameObject.FindGameObjectWithTag("postProcessingController"); // get post processing controller
-        _postProcessVolume = _postProcessController.GetComponent<PostProcessVolume>(); // get post process volume component
-        _postProcessVolume.profile.TryGetSettings(out _colorGrading); // apply colour grading settings
+        _postProcessVolume = _postProcessController.GetComponent<Volume>(); // get post process volume component
+        _postProcessVolume.profile.TryGet(out _colorGrading); // apply colour grading settings
         GetAllEnemiesInScene(); // gets count of enemies
         SetSaturationLevel(); // set saturation level
 
@@ -65,6 +67,6 @@ public class gameSaturationModifier : MonoBehaviour
     void SetSaturationLevel() // set saturation level
     {
         _colorGrading.saturation.value = (int)(_saturation); // set value to saturation variable after being converted to int from float
-        _postProcessVolume.profile.TryGetSettings(out _colorGrading); // apply saturation value
+        _postProcessVolume.profile.TryGet(out _colorGrading); // apply saturation value
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,24 +10,31 @@ public class mothController : MonoBehaviour
     // serialized fields
     [SerializeField] private float enemyHealth;
     [SerializeField] private float sphereCastRadius;
-
+    [SerializeField] private float damageAmount;
     [SerializeField] private float checkSurroundingFrequency;
+    [SerializeField] private float timeInBetweenDealingDamage;
     private GameObject _detectedActiveDecoy;
+    private GameObject _collidedObject;
     private lightDecoyPawn _detectedDecoyScript;
     private GameObject _eventManager;
     private gameSaturationModifier _gameSaturationModifier;
     private bool _isTargetingPlayer = true;
+    private bool _canDealDamage = true;
     private lightDecoyController _lightDecoyController;
     private NavMeshAgent _mothNavMeshAgent;
+    private playerController _playerController;
+    
 
     // private variables
     private GameObject _player;
 
     void Start()
     {
+        Physics.IgnoreLayerCollision(8, 9, true);
         _eventManager = GameObject.FindGameObjectWithTag("eventManager"); // find event manager
         _lightDecoyController = _eventManager.GetComponent<lightDecoyController>(); // find light controller script
         _player = GameObject.FindGameObjectWithTag("Player"); // find player
+        _playerController = _player.GetComponent<playerController>();
         _mothNavMeshAgent = GetComponent<NavMeshAgent>(); // get AI nav component
         _gameSaturationModifier =
             _eventManager.GetComponent<gameSaturationModifier>(); // find saturation modifier script
@@ -89,8 +97,26 @@ public class mothController : MonoBehaviour
         Destroy(this.gameObject); // despawn
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        _collidedObject = collision.gameObject;
+        if (_collidedObject.CompareTag("Player") && _canDealDamage)
+        {
+            _playerController.PlayerHealth -= damageAmount;
+        }
+    }
+
+    private IEnumerator DamageCooldown(float cooldown)
+    {
+        _canDealDamage = false;
+        yield return new WaitForSeconds(cooldown);
+        _canDealDamage = true;
+    }
+    
+
     public void Damage(float amount) // take damage 
     {
         enemyHealth -= amount;
+        StartCoroutine(DamageCooldown(timeInBetweenDealingDamage));
     }
 }

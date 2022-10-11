@@ -22,11 +22,11 @@ TagManager:
   - UI
   - PostProcessing
   - Floor
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Enemies
+  - Decoys
+  - Projectiles
+  - Collectibles
+  - NoPostProcessing
   - 
   - 
   - 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7955768921641992952}
   - component: {fileID: 7955768921641992953}
   - component: {fileID: -2734884326552648821}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: healthPickup
   m_TagString: healthPickup
   m_Icon: {fileID: 0}
@@ -110,3 +110,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c302d1d757f46b4494401c6b950704a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healAmount: 0

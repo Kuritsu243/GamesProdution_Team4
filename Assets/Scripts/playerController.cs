@@ -33,10 +33,19 @@ public class playerController : MonoBehaviour
     [SerializeField] private float cameraHeight;
     [SerializeField] private float cameraRaycastLength;
     [SerializeField] private float cameraZOffset;
+    
     [Header("Health Settings")] // Health Settings
     [SerializeField] private float burningRate;
     [SerializeField] private float maxPlayerHealth = 100;
 
+    [Header("Light Radius Settings")] 
+    [SerializeField] private Vector3 maxRadiusSize;
+    [SerializeField] private int radiusSizeChangeRate;
+    [SerializeField] private int radiusStartSize;
+
+    [Header("Safe Zone Settings")] 
+    [SerializeField] private int safeZoneRadius;
+    
     [Header("Player Settings")] 
     [SerializeField] private float playerMovementSpeed;
     [SerializeField] private float jumpSpeed;
@@ -78,6 +87,7 @@ public class playerController : MonoBehaviour
     private GameObject _lightRadius;
     private Material _lightRadiusMaterial;
     private projectileScript _spawnedObjectScript;
+    private renderWithinRadius _renderWithinRadiusScript;
     private Quaternion _playerNewRotation;
     private Rigidbody _playerRigidbody;
     private Vector3 _playerVelocity = Vector3.zero;
@@ -96,20 +106,40 @@ public class playerController : MonoBehaviour
         set => maxPlayerHealth = value;
     }
 
+    public int SafeZoneRadius
+    {
+        get => safeZoneRadius;
+        set => safeZoneRadius = value;
+    }
+
 
     void Start()
     {
-        _playerRigidbody = GetComponent<Rigidbody>();
-        _playerCharController = GetComponent<CharacterController>();
-        _maskingLayer = LayerMask.GetMask("Floor");
-        _playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        _cameraFollowScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>();
-        PlayerHealth = MaxPlayerHealth; // set player health to max health
+        // Find objects with tag
         _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint"); // find spawn point by tag in child
         _lightRadius = gameObject.FindGameObjectInChildWithTag("lightRadius");
+        
+        // Get Components
+        _playerRigidbody = GetComponent<Rigidbody>();
+        _playerCharController = GetComponent<CharacterController>();
+        _playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        _cameraFollowScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>();
+        _renderWithinRadiusScript = _lightRadius.GetComponent<renderWithinRadius>();
         _lightRadiusMaterial = _lightRadius.GetComponent<Renderer>().material;
-        _lightRadiusColor = _lightRadiusMaterial.color;
-        _lightRadiusColor.a = 0.025f;
+        _maskingLayer = LayerMask.GetMask("Floor"); // Get Layer mask
+        
+        PlayerHealth = MaxPlayerHealth; // set player health to max health
+        
+ 
+        // set light radius alpha
+        // _lightRadiusColor = _lightRadiusMaterial.color;
+        // _lightRadiusColor.a = 0.025f;
+        
+        // set render within radius variables
+        _renderWithinRadiusScript.MaxRadiusSize = maxRadiusSize;
+        _renderWithinRadiusScript.RadiusSizeChangeRate = radiusSizeChangeRate;
+        _renderWithinRadiusScript.RadiusStartSize = radiusStartSize;
+
     }
     
     

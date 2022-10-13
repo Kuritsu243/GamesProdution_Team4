@@ -40,15 +40,15 @@ public class gameSaturationModifier : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            CalculateSaturationLevel();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            SetSaturationLevel();
-        }
+        // if (Input.GetKeyDown(KeyCode.Q))
+        // {
+        //     CalculateSaturationLevel();
+        // }
+        //
+        // if (Input.GetKeyDown(KeyCode.E))
+        // {
+        //     SetSaturationLevel();
+        // }
         Debug.Log(_saturation);
     }
 

@@ -22,19 +22,19 @@ public class lightDecoyController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F)) // if decoy activated
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(_player.transform.position, sphereCastRadius); // get array of colliders in range
-            foreach (var hitCollider in hitColliders) // for each collider detected
-            {
-                if (hitCollider.CompareTag("decoy")) // if collider is decoy
-                {
-                    _decoyInRange = hitCollider.gameObject; // store decoy as var
-                    _decoyPawnScript = _decoyInRange.GetComponent<lightDecoyPawn>(); // get decoy script
-                    _decoyPawnScript.ActivateDecoy(decoyLitDuration); // active decoy
-                }
-
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.F)) // if decoy activated
+        // {
+        //     Collider[] hitColliders = Physics.OverlapSphere(_player.transform.position, sphereCastRadius); // get array of colliders in range
+        //     foreach (var hitCollider in hitColliders) // for each collider detected
+        //     {
+        //         if (hitCollider.CompareTag("decoy")) // if collider is decoy
+        //         {
+        //             _decoyInRange = hitCollider.gameObject; // store decoy as var
+        //             _decoyPawnScript = _decoyInRange.GetComponent<lightDecoyPawn>(); // get decoy script
+        //             _decoyPawnScript.ActivateDecoy(decoyLitDuration); // active decoy
+        //         }
+        //
+        //     }
+        // }
     }
 }

@@ -77,6 +77,8 @@ GameObject:
   - component: {fileID: 6658288757633335876}
   - component: {fileID: 6658288757631432900}
   - component: {fileID: 6658288757946271607}
+  - component: {fileID: 5641168923871773038}
+  - component: {fileID: 8446684310540339225}
   m_Layer: 12
   m_Name: TPSController
   m_TagString: Player
@@ -250,7 +252,10 @@ MonoBehaviour:
   cameraZOffset: 6
   burningRate: 0
   maxPlayerHealth: 100
-  playerMovementSpeed: 5
+  maxRadiusSize: {x: 0, y: 0, z: 0}
+  radiusSizeChangeRate: 0
+  radiusStartSize: 0
+  safeZoneRadius: 0
   jumpSpeed: 0
   mouseSensitivity: 0
   dashSpeed: 0
@@ -265,6 +270,37 @@ MonoBehaviour:
   shootingRate: 1
   playerProjectile: {fileID: 5315226020846044873, guid: 52bea41a062f39d419a16c0703fd9622, type: 3}
   worldGravity: 0
+--- !u!114 &5641168923871773038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658288757636440356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798c132fa3e7fef4aaba5f132e25eb0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovementSpeed: 0.25
+  rotateSmoothing: 0
+--- !u!114 &8446684310540339225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658288757636440356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a657d402c26e4348b1f6c83559617a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mousePos: {x: 0, y: 0}
+  verticalInput: 0
+  horizontalInput: 0
+  mousePosX: 0
+  mousePosY: 0
 --- !u!1 &6658288757636440358
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,3 +949,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3739a5c459f2d6e4e9f3834001c330e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  postProcessingLayer: 0
+  noPostProcessingLayer: 0

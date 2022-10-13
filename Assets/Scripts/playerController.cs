@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // TODO: Everytime you're outside a zone the light radius shrinks until you reach a safe zone - if light radius reaches zero then player dies
 // TODO: the lower the health the lower the light of the player
@@ -46,8 +47,7 @@ public class playerController : MonoBehaviour
     [Header("Safe Zone Settings")] 
     [SerializeField] private int safeZoneRadius;
     
-    [Header("Player Settings")] 
-    [SerializeField] private float playerMovementSpeed;
+    [Header("Player Settings")]
     [SerializeField] private float jumpSpeed;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float dashSpeed;
@@ -92,6 +92,8 @@ public class playerController : MonoBehaviour
     private Rigidbody _playerRigidbody;
     private Vector3 _playerVelocity = Vector3.zero;
     private Vector3 _playerToMouse;
+    private inputSystem _inputSystem;
+    private playerMovement _playerMovement;
 
     // Encapsulated Fields
     public float PlayerHealth
@@ -116,29 +118,32 @@ public class playerController : MonoBehaviour
     void Start()
     {
         // Find objects with tag
-        _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint"); // find spawn point by tag in child
-        _lightRadius = gameObject.FindGameObjectInChildWithTag("lightRadius");
+        // _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint"); // find spawn point by tag in child
+        // _lightRadius = gameObject.FindGameObjectInChildWithTag("lightRadius");
+        //
+        // // Get Components
+        // _playerRigidbody = GetComponent<Rigidbody>();
+        // _playerCharController = GetComponent<CharacterController>();
+        // _playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        // _cameraFollowScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>();
+        // _renderWithinRadiusScript = _lightRadius.GetComponent<renderWithinRadius>();
+        // _lightRadiusMaterial = _lightRadius.GetComponent<Renderer>().material;
+        // _maskingLayer = LayerMask.GetMask("Floor"); // Get Layer mask
+        //
+        // PlayerHealth = MaxPlayerHealth; // set player health to max health
         
-        // Get Components
-        _playerRigidbody = GetComponent<Rigidbody>();
-        _playerCharController = GetComponent<CharacterController>();
-        _playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        _cameraFollowScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>();
-        _renderWithinRadiusScript = _lightRadius.GetComponent<renderWithinRadius>();
-        _lightRadiusMaterial = _lightRadius.GetComponent<Renderer>().material;
-        _maskingLayer = LayerMask.GetMask("Floor"); // Get Layer mask
-        
-        PlayerHealth = MaxPlayerHealth; // set player health to max health
-        
- 
         // set light radius alpha
         // _lightRadiusColor = _lightRadiusMaterial.color;
         // _lightRadiusColor.a = 0.025f;
+        // get input system components
+        _inputSystem = GetComponent<inputSystem>();
+        _playerMovement = GetComponent<playerMovement>();
+        
         
         // set render within radius variables
-        _renderWithinRadiusScript.MaxRadiusSize = maxRadiusSize;
-        _renderWithinRadiusScript.RadiusSizeChangeRate = radiusSizeChangeRate;
-        _renderWithinRadiusScript.RadiusStartSize = radiusStartSize;
+        // _renderWithinRadiusScript.MaxRadiusSize = maxRadiusSize;
+        // _renderWithinRadiusScript.RadiusSizeChangeRate = radiusSizeChangeRate;
+        // _renderWithinRadiusScript.RadiusStartSize = radiusStartSize;
 
     }
     
@@ -146,98 +151,101 @@ public class playerController : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && _isReadyToFire && !_isCharging) // detect mouse 1 down
-        {
-            _projectileChargeStartTime = Time.time; // stores value of the time when mouse 1 was down
-            _isCharging = true;
-            // calculates charge duration and clamps within set value of parameters
-        }
-        else if (Input.GetMouseButtonUp(0) && _isReadyToFire)
-        {
-        
-            _projectileCalculatedDamage = projectileBaseDamage * _projectileChargeDuration; // calculates damage
-            Shoot(_projectileCalculatedDamage); // shoots bullet
-            StartCoroutine(ShootingCooldown());// start cooldown
-            _isCharging = false;  
-        }
-        else if (_projectileChargeStartTime >= 0 && _isCharging)
-        {
-            _projectileChargeDuration = Time.time - _projectileChargeStartTime;
-        }
+        _inputSystem.HandleAllInputs();
+        _playerMovement.HandleAllMovement();
+        // if (Input.GetMouseButtonDown(0) && _isReadyToFire && !_isCharging) // detect mouse 1 down
+        // {
+        //     _projectileChargeStartTime = Time.time; // stores value of the time when mouse 1 was down
+        //     _isCharging = true;
+        //     // calculates charge duration and clamps within set value of parameters
+        // }
+        // else if (Input.GetMouseButtonUp(0) && _isReadyToFire)
+        // {
+        //
+        //     _projectileCalculatedDamage = projectileBaseDamage * _projectileChargeDuration; // calculates damage
+        //     Shoot(_projectileCalculatedDamage); // shoots bullet
+        //     StartCoroutine(ShootingCooldown());// start cooldown
+        //     _isCharging = false;  
+        // }
+        // else if (_projectileChargeStartTime >= 0 && _isCharging)
+        // {
+        //     _projectileChargeDuration = Time.time - _projectileChargeStartTime;
+        // }
     }
 
     private void FixedUpdate()
     {
-        var horizontal = Input.GetAxisRaw("Horizontal");
-        var vertical = Input.GetAxisRaw("Vertical");
-        
-        Move(horizontal, vertical);
-        Turn();
+        // var horizontal = Input.GetAxisRaw("Horizontal");
+        // var vertical = Input.GetAxisRaw("Vertical");
+        //
+        // Move(horizontal, vertical);
+        // Turn();
 
-        _cameraFollowScript.MoveCamera(cameraHeight, cameraZOffset, transform.position);
-        
-        if (_isAlive)
-        {  // Decay health 
-            _playerHealth = Mathf.Clamp(_playerHealth - (Time.deltaTime * burningRate), 0f, MaxPlayerHealth); 
-        }
-        if (_playerHealth  <= 0)
-        { // Player death
-            _isAlive = false;
-            this.Die();
-        }
+        //
+        // _cameraFollowScript.MoveCamera(cameraHeight, cameraZOffset, transform.position);
+        //
+        // if (_isAlive)
+        // {  // Decay health 
+        //     _playerHealth = Mathf.Clamp(_playerHealth - (Time.deltaTime * burningRate), 0f, MaxPlayerHealth); 
+        // }
+        // if (_playerHealth  <= 0)
+        // { // Player death
+        //     _isAlive = false;
+        //     this.Die();
+        // }
     }
     
 
-    IEnumerator ShootingCooldown()
-    {
-        _isReadyToFire = false; // player temporarily unable to fire
-        yield return new WaitForSeconds(shootingRate); // cooldown 
-        _isReadyToFire = true; // player can now fire
-        _projectileChargeStartTime = 0f;
-        _projectileChargeDuration = 0f;
+    // IEnumerator ShootingCooldown()
+    // {
+    //     _isReadyToFire = false; // player temporarily unable to fire
+    //     yield return new WaitForSeconds(shootingRate); // cooldown 
+    //     _isReadyToFire = true; // player can now fire
+    //     _projectileChargeStartTime = 0f;
+    //     _projectileChargeDuration = 0f;
+    //
+    // }
 
-    }
+    // public void Shoot(float projectileDamage)
+    // { // spawn object and assign it to a gameobject as reference
+    //     // _projectileCharge = Mathf.Clamp(_projectileChargeDuration + projectileBaseDamage, projectileBaseDamage, playerMaxProjectileCharge); // min value is base damage, max value is max charge value
+    //     // _spawnedObject = Instantiate(playerProjectile, _projectileSpawnPoint.transform.position, transform.rotation);
+    //     // _spawnedObjectScript = _spawnedObject.GetComponent<projectileScript>(); // get projectile script of spawned object
+    //     // _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate, _projectileCharge); // pass through variables
+    //     // Debug.Log("Spawned Bullet with a damage value of " + projectileDamage);
+    //     // Damage(projectileHealthConsumption); // damage player
+    // }
 
-    void Shoot(float projectileDamage)
-    { // spawn object and assign it to a gameobject as reference
-        _projectileCharge = Mathf.Clamp(_projectileChargeDuration + projectileBaseDamage, projectileBaseDamage, playerMaxProjectileCharge); // min value is base damage, max value is max charge value
-        _spawnedObject = Instantiate(playerProjectile, _projectileSpawnPoint.transform.position, transform.rotation);
-        _spawnedObjectScript = _spawnedObject.GetComponent<projectileScript>(); // get projectile script of spawned object
-        _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate, _projectileCharge); // pass through variables
-        Debug.Log("Spawned Bullet with a damage value of " + projectileDamage);
-        Damage(projectileHealthConsumption); // damage player
-    }
+    // void Damage(float damageAmount) // damage function
+    // {
+    //     _playerHealth -= damageAmount; // reduces health by damage value passed through 
+    // }
+    //
+    // void Die()
+    // { // destroys player gameobject
+    //     Destroy(this.gameObject);
+    // }
 
-    void Damage(float damageAmount) // damage function
-    {
-        _playerHealth -= damageAmount; // reduces health by damage value passed through 
-    }
+    // public void Move(float horizontal, float vertical)
+    // {
+    //     _playerVelocity.Set(horizontal, 0, vertical);
+    //     _playerVelocity = _playerVelocity.normalized * (playerMovementSpeed * Time.deltaTime);
+    //     // _playerCharController.Move(_playerVelocity);
+    //     _playerRigidbody.MovePosition(_playerRigidbody.position + _playerVelocity);
+    // }
 
-    void Die()
-    { // destroys player gameobject
-        Destroy(this.gameObject);
-    }
-
-    void Move(float horizontal, float vertical)
-    {
-        _playerVelocity.Set(horizontal, 0, vertical);
-        _playerVelocity = _playerVelocity.normalized * (playerMovementSpeed * Time.deltaTime);
-        // _playerCharController.Move(_playerVelocity);
-        _playerRigidbody.MovePosition(_playerRigidbody.position + _playerVelocity);
-    }
-
-    void Turn()
-    {
-        var mouseLocation = _playerCamera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(mouseLocation, out var floorHit, cameraRaycastLength, _maskingLayer))
-        {
-            _playerToMouse = floorHit.point - _playerRigidbody.position;
-            _playerToMouse.y = 0;
-            _playerNewRotation = Quaternion.LookRotation(_playerToMouse);
-            _playerRigidbody.MoveRotation(_playerNewRotation);
-        }
-    }
+    // public void Turn()
+    // {
+    //     var mouseLocation = _playerCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+    //
+    //     if (Physics.Raycast(mouseLocation, out var floorHit, cameraRaycastLength, _maskingLayer))
+    //     {
+    //         _playerToMouse = floorHit.point - _playerRigidbody.position;
+    //         _playerToMouse.y = 0;
+    //         _playerNewRotation = Quaternion.LookRotation(_playerToMouse);
+    //         _playerRigidbody.MoveRotation(_playerNewRotation);
+    //     }
+    // }
     
 }
 

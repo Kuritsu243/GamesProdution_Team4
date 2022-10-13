@@ -91,24 +91,24 @@ public class renderWithinRadius : MonoBehaviour
     
     private void Update()
     {
-        _targetScale = _targetScale.ClampMagnitude(_maxRadiusScale.x, 0f);
-        if (_targetScale.IsGreaterOrEqual(new Vector3(0,0,0)))
+        // _targetScale = _targetScale.ClampMagnitude(_maxRadiusScale.x, 0f);
+        if (_targetScale.IsGreaterOrEqual(Vector3.zero));
         {
-            _sphereRadiusTransform.localScale = Vector3.Lerp(_sphereRadiusTransform.localScale, _targetScale.ClampMagnitude(_maxRadiusScale.x, 0f), _radiusSizeChangeRate * Time.deltaTime);
+            _sphereRadiusTransform.localScale = _targetScale;
         }
 
         if (_isWithinSafeZone && _targetScale.IsLesserOrEqual(_maxRadiusScale))
         {
-            _targetScale.x+= Time.deltaTime * _radiusSizeChangeRate;
-            _targetScale.y+= Time.deltaTime * _radiusSizeChangeRate;
-            _targetScale.z+= Time.deltaTime * _radiusSizeChangeRate;
+            Debug.Log("scaling up");
+            _targetScale += new Vector3(Time.deltaTime * _radiusSizeChangeRate, Time.deltaTime * _radiusSizeChangeRate,
+                Time.deltaTime * _radiusSizeChangeRate);
 
         }
         else if (!_isWithinSafeZone && _targetScale.IsGreaterOrEqual(new Vector3(0,0,0)))
         {
-            _targetScale.x-= Time.deltaTime * _radiusSizeChangeRate;
-            _targetScale.y-= Time.deltaTime * _radiusSizeChangeRate;
-            _targetScale.z-= Time.deltaTime * _radiusSizeChangeRate;
+            Debug.Log("scaling down");
+            _targetScale -= new Vector3(Time.deltaTime * _radiusSizeChangeRate, Time.deltaTime * _radiusSizeChangeRate,
+                Time.deltaTime * _radiusSizeChangeRate);
         }
         else if (_currentScale == 0)
         {
@@ -117,7 +117,8 @@ public class renderWithinRadius : MonoBehaviour
         
         
     }
-    
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -131,9 +132,10 @@ public class renderWithinRadius : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        other.gameObject.layer = postProcessingLayer;
+        if (other.gameObject.layer != LayerMask.NameToLayer("Floor"))
+        {
+            other.gameObject.layer = postProcessingLayer;
+        }
+
     }
-
-
 }
-  

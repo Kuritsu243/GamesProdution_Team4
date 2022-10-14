@@ -22,7 +22,7 @@ public class mothController : MonoBehaviour
     private bool _canDealDamage = true;
     private lightDecoyController _lightDecoyController;
     private NavMeshAgent _mothNavMeshAgent;
-    private playerController _playerController;
+    private playerHealth _playerHealth;
     
 
     // private variables
@@ -34,7 +34,7 @@ public class mothController : MonoBehaviour
         _eventManager = GameObject.FindGameObjectWithTag("eventManager"); // find event manager
         _lightDecoyController = _eventManager.GetComponent<lightDecoyController>(); // find light controller script
         _player = GameObject.FindGameObjectWithTag("Player"); // find player
-        _playerController = _player.GetComponent<playerController>();
+        _playerHealth = _player.GetComponent<playerHealth>();
         _mothNavMeshAgent = GetComponent<NavMeshAgent>(); // get AI nav component
         _gameSaturationModifier =
             _eventManager.GetComponent<gameSaturationModifier>(); // find saturation modifier script
@@ -102,7 +102,7 @@ public class mothController : MonoBehaviour
         _collidedObject = collision.gameObject;
         if (_collidedObject.CompareTag("Player") && _canDealDamage)
         {
-            _playerController.PlayerHealth -= damageAmount;
+            _playerHealth.PlayerHealth -= damageAmount;
         }
     }
 

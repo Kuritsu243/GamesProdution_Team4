@@ -8,6 +8,8 @@ public class projectileScript : MonoBehaviour
 {
     // collision variables
     private GameObject _collidedEnemy;
+    private GameObject _collidedDecoy;
+    private lightDecoyPawn _decoyScript;
     private mothController _collidedEnemyScript;
     private float _projectileCharge;
     private float _projectileDamage;
@@ -37,7 +39,17 @@ public class projectileScript : MonoBehaviour
             _collidedEnemyScript.Damage(_projectileDamage); // deal damage to the enemy
             Despawn(); // despawn the bullet
         }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.gameObject.CompareTag("decoy"))
+        {
+            _collidedDecoy = other.gameObject;
+            _decoyScript = _collidedDecoy.GetComponent<lightDecoyPawn>();
+            _decoyScript.ActivateDecoy();
+        }
     }
 
     public void Init(float projectileSpeed, float projectileDamage, float projectileDespawnRate, float projectileCharge) // set the variables once instantiated

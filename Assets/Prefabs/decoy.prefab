@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2640702136883312751}
   - component: {fileID: 2178622608647076449}
   - component: {fileID: 5824921401890202827}
+  - component: {fileID: 54100670309259645}
   m_Layer: 9
   m_Name: decoy
   m_TagString: decoy
@@ -112,3 +113,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inactiveDecoyMaterial: {fileID: 2100000, guid: 1805a45cf637ad9408c9918940dc9f75, type: 2}
   activeDecoyMaterial: {fileID: 2100000, guid: 6a3f541cdef43fb4082736aacdf85a79, type: 2}
+  decoyActiveDuration: 5
+--- !u!65 &54100670309259645
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6684624487626173722}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.2730305, z: 1}
+  m_Center: {x: 0, y: 0.63651586, z: 0}

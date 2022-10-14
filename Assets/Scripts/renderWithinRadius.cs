@@ -46,7 +46,7 @@ public class renderWithinRadius : MonoBehaviour
     private Transform _sphereRadiusTransform;
     private GameObject _player;
     private playerController _playerController;
-    private bool _isWithinSafeZone = true;
+    private bool _isWithinSafeZone = false;
     private Vector3 _maxRadiusScale;
     private Vector3 _currentRadiusSize;
     private Vector3 _baseRadiusSize;
@@ -118,6 +118,12 @@ public class renderWithinRadius : MonoBehaviour
         
     }
 
+    public void Init(int radiusSizeChangeRate, int radiusStartSize, Vector3 radiusMaxSize)
+    {
+        _radiusSizeChangeRate = radiusSizeChangeRate;
+        _radiusStartSize = radiusStartSize;
+        _maxRadiusScale = radiusMaxSize;
+    }
 
 
     private void OnTriggerEnter(Collider other)

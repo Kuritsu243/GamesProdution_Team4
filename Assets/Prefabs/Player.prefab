@@ -73,12 +73,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6658288757636218116}
-  - component: {fileID: 6658288757625459940}
   - component: {fileID: 6658288757633335876}
-  - component: {fileID: 6658288757631432900}
-  - component: {fileID: 6658288757946271607}
-  - component: {fileID: 5641168923871773038}
-  - component: {fileID: 8446684310540339225}
+  - component: {fileID: 2581160419581216495}
+  - component: {fileID: 5983406868800269783}
+  - component: {fileID: 736113945510686035}
+  - component: {fileID: 2823554052907256962}
+  - component: {fileID: 8649017132169495513}
   m_Layer: 12
   m_Name: TPSController
   m_TagString: Player
@@ -105,24 +105,6 @@ Transform:
   m_Father: {fileID: 6658288757448593100}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &6658288757625459940
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6658288757636440356}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1.8
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6658288757633335876
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -139,103 +121,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!82 &6658288757631432900
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6658288757636440356}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
---- !u!114 &6658288757946271607
+--- !u!114 &2581160419581216495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,47 +130,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6658288757636440356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30adb16718ee2934c8bb80b6e30de13b, type: 3}
+  m_Script: {fileID: 11500000, guid: ff8fadaecb885644aa66bdc58b2db75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraHeight: 8
-  cameraRaycastLength: 45
-  cameraZOffset: 6
-  burningRate: 0
-  maxPlayerHealth: 100
-  maxRadiusSize: {x: 0, y: 0, z: 0}
-  radiusSizeChangeRate: 0
-  radiusStartSize: 0
-  safeZoneRadius: 0
-  jumpSpeed: 0
-  mouseSensitivity: 0
-  dashSpeed: 0
-  dashCooldown: 0
-  dashFuelConsumption: 0
-  playerMaxProjectileCharge: 20
-  playerProjectileChargeRate: 2.5
-  projectileHealthConsumption: 5
-  projectileDespawnRate: 5
-  projectileSpeed: 5
-  projectileBaseDamage: 5
-  shootingRate: 1
-  playerProjectile: {fileID: 5315226020846044873, guid: 52bea41a062f39d419a16c0703fd9622, type: 3}
-  worldGravity: 0
---- !u!114 &5641168923871773038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6658288757636440356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 798c132fa3e7fef4aaba5f132e25eb0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovementSpeed: 0.25
-  rotateSmoothing: 0
---- !u!114 &8446684310540339225
+--- !u!114 &5983406868800269783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -301,6 +150,52 @@ MonoBehaviour:
   horizontalInput: 0
   mousePosX: 0
   mousePosY: 0
+  mouseFire: 0
+  worldPos: {x: 0, y: 0, z: 0}
+--- !u!114 &736113945510686035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658288757636440356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798c132fa3e7fef4aaba5f132e25eb0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovementSpeed: 0
+--- !u!114 &2823554052907256962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658288757636440356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c9fabbc972de7344b0aef3607693e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMaxHealth: 0
+--- !u!114 &8649017132169495513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658288757636440356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f2c5d6eec06784bb0420456150e2d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileBaseDamage: 2
+  projectileMaxCharge: 6
+  projectileSpeed: 2
+  projectileDespawnRate: 10
+  projectileCooldown: 0.8
+  playerProjectile: {fileID: 5315226020846044873, guid: 52bea41a062f39d419a16c0703fd9622, type: 3}
 --- !u!1 &6658288757636440358
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +746,7 @@ GameObject:
   - component: {fileID: 3321907039495148184}
   - component: {fileID: 6234977650545072664}
   - component: {fileID: 7746838686080679367}
-  - component: {fileID: 8231591397827556391}
+  - component: {fileID: 1910214422501806363}
   m_Layer: 12
   m_Name: lightRadius
   m_TagString: lightRadius
@@ -937,7 +832,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8231591397827556391
+--- !u!114 &1910214422501806363
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

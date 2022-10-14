@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class canvasScript : MonoBehaviour
 {
     private GameObject _player;
-    private playerController _playerController;
+    private playerHealth _playerHealth;
 
     // serialized fields that can be accessed in the inspector
     [SerializeField] private Image healthBar;
@@ -15,10 +15,10 @@ public class canvasScript : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player gameobject
-        _playerController = _player.GetComponent<playerController>(); // get player controller component from player gameobject
+        _playerHealth = _player.GetComponent<playerHealth>(); // get player controller component from player gameobject
     }
     void Update()
     { 
-        healthBar.fillAmount = _playerController.PlayerHealth / _playerController.MaxPlayerHealth; // fills the health bar image by how much health the player has compared to their max health
+        healthBar.fillAmount = _playerHealth.PlayerHealth / _playerHealth.PlayerMaxHealth; // fills the health bar image by how much health the player has compared to their max health
     }
 }

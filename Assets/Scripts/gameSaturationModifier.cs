@@ -33,7 +33,7 @@ public class gameSaturationModifier : MonoBehaviour
         _postProcessVolume = _postProcessController.GetComponent<Volume>(); // get post process volume component
         _postProcessVolume.profile.TryGet(out _colorGrading); // apply colour grading settings
         GetAllEnemiesInScene(); // gets count of enemies
-        SetSaturationLevel(); // set saturation level
+        CalculateSaturationLevel(); // set saturation level
 
     }
 

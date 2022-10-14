@@ -10,27 +10,20 @@ public class safeZoneScript : MonoBehaviour
     private Transform _playerTransform;
     private Vector3 _playerPos;
     private renderWithinRadius _renderWithinRadius;
-    private float _safeZoneRadius;
-
-    public float SafeZoneRadius
-    {
-        set => _safeZoneRadius = value;
-        get => _safeZoneRadius;
-    }
+    [SerializeField] private float safeZoneRadius;
+    
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        _playerController = _player.GetComponent<playerController>();
         _playerTransform = _player.transform;
         _renderWithinRadius = _player.GetComponentInChildren<renderWithinRadius>();
-        _safeZoneRadius = _playerController.SafeZoneRadius;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(_playerTransform.position, this.transform.position) < _playerController.SafeZoneRadius)
+        if (Vector3.Distance(_playerTransform.position, this.transform.position) < safeZoneRadius)
         {
             _renderWithinRadius.IsWithinSafeZone = true;
         }

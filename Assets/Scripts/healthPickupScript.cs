@@ -8,12 +8,12 @@ public class healthPickupScript : MonoBehaviour
     [SerializeField] private float healAmount;
     private GameObject _player;
     private GameObject _collidedObject;
-    private playerController _playerController;
+    private playerHealth _playerHealth;
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        _playerController = _player.GetComponent<playerController>();
+        _playerHealth = _player.GetComponent<playerHealth>();
     }
     
     private void OnTriggerEnter(Collider other)
@@ -22,7 +22,7 @@ public class healthPickupScript : MonoBehaviour
         _collidedObject = other.gameObject;
         if (_collidedObject.CompareTag("Player") || _collidedObject.CompareTag("lightRadius"))
         {
-            _playerController.PlayerHealth += healAmount;
+            _playerHealth.PlayerHealth += healAmount;
             Despawn();
         }
     }

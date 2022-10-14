@@ -7,9 +7,11 @@ public class lightDecoyPawn : MonoBehaviour
     // Serialized variables
     [SerializeField] private Material inactiveDecoyMaterial;
     [SerializeField] private Material activeDecoyMaterial;
-
+    [SerializeField] private int decoyActiveDuration;
     // private variables
+    #pragma warning disable CS0219
     private bool _isLit = false;
+    #pragma warning restore CS0219
     private Renderer _lightDecoyRenderer;
 
     void Start()
@@ -24,19 +26,21 @@ public class lightDecoyPawn : MonoBehaviour
         gameObject.tag = "recentlyDisabledDecoy"; // set tag to recently disabled decoy
     }
 
-    public void ActivateDecoy(float duration) // activate decoy
+    public void ActivateDecoy() // activate decoy
     {
         _lightDecoyRenderer.material = activeDecoyMaterial; // set material to lit material
-        StartCoroutine(DecoyActive(duration)); // start countdown for duration it's enabled
+        StartCoroutine(DecoyActive(decoyActiveDuration)); // start countdown for duration it's enabled
         _isLit = true; // is lit is true
         gameObject.tag = "activeDecoy"; // change tag to indicate it is active
     }
 
     private IEnumerator DecoyActive(float decoyLitDuration) // decoy countdown
     {
+        gameObject.layer = 12;
         yield return new WaitForSeconds(decoyLitDuration); // wait for duration decoy is lit for
         DisableDecoy(); // disable decoy
-        
+        gameObject.layer = 6;
+
     }
 }
 //

@@ -7,7 +7,6 @@ public class lightDecoyController : MonoBehaviour
     // serialized variables
     [SerializeField] private float sphereCastRadius;
     [SerializeField] private float decoyLitDuration;
-    private CharacterController _characterController;
     private GameObject _decoyInRange;
     private lightDecoyPawn _decoyPawnScript;
 
@@ -17,7 +16,6 @@ public class lightDecoyController : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player gameobject
-        _characterController = _player.GetComponent<CharacterController>(); // get players character controller
     }
 
     void Update()

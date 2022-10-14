@@ -201,16 +201,7 @@ public class playerController : MonoBehaviour
     //     // Debug.Log("Spawned Bullet with a damage value of " + projectileDamage);
     //     // Damage(projectileHealthConsumption); // damage player
     // }
-
-    void damage(float damageamount) // damage function
-    {
-        _playerhealth -= damageamount; // reduces health by damage value passed through 
-    }
-
-    void die()
-    { // destroys player gameobject
-        destroy(this.gameobject);
-    }
+    
 
     // public void Move(float horizontal, float vertical)
     // {

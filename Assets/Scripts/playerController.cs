@@ -9,21 +9,7 @@ using UnityEngine.InputSystem;
 // TODO: scale fuel with projectile charge
 // TODO: Regain life from found candles / defeated moths
 
-public static class Helper
-{
-    public static GameObject FindGameObjectInChildWithTag(this GameObject gameObject, string tag) // creates function to allow to search for a gameobject with a tag
-    {
-        Transform t = gameObject.transform;
-        foreach (Transform transform in t)
-        {
-            if (transform.CompareTag(tag))
-            {
-                return transform.gameObject;
-            }
-        }
-        return null;
-    }
-}
+
 
 
 
@@ -194,7 +180,7 @@ public class playerController : MonoBehaviour
         //     this.Die();
         // }
     }
-    
+
 
     // IEnumerator ShootingCooldown()
     // {
@@ -216,15 +202,15 @@ public class playerController : MonoBehaviour
     //     // Damage(projectileHealthConsumption); // damage player
     // }
 
-    // void Damage(float damageAmount) // damage function
-    // {
-    //     _playerHealth -= damageAmount; // reduces health by damage value passed through 
-    // }
-    //
-    // void Die()
-    // { // destroys player gameobject
-    //     Destroy(this.gameObject);
-    // }
+    void damage(float damageamount) // damage function
+    {
+        _playerhealth -= damageamount; // reduces health by damage value passed through 
+    }
+
+    void die()
+    { // destroys player gameobject
+        destroy(this.gameobject);
+    }
 
     // public void Move(float horizontal, float vertical)
     // {
@@ -246,6 +232,6 @@ public class playerController : MonoBehaviour
     //         _playerRigidbody.MoveRotation(_playerNewRotation);
     //     }
     // }
-    
+
 }
 

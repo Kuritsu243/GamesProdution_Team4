@@ -11,7 +11,6 @@ public class playerMovement : MonoBehaviour
     private Vector3 _moveDirection;
     private Vector2 _mousePos;
     private Vector3 _worldPos;
-    private Vector3 _targetDirection;
     private Quaternion _newRotation;
     private Quaternion _targetQuat;
     private Transform _mainCameraTransform;
@@ -50,15 +49,12 @@ public class playerMovement : MonoBehaviour
     private void HandleRotation()
     {
         _mousePos = _inputSystem.mousePos;
-        if (_mousePos.x != 0f && _mousePos.y != 0f)
+        if (Physics.Raycast(_mainCamera.ScreenPointToRay(_inputSystem.mousePos), out RaycastHit hit))
         {
-            _worldPos = _mainCamera.ScreenToWorldPoint(new Vector3(_mousePos.x, 0f, _mousePos.y));
-            _targetDirection = _worldPos - transform.position;
-            // _newRotation = Quaternion.LookRotation(_targetDirection);
-            // _playerRigidbody.MoveRotation(_newRotation);
-            _angle = Mathf.Atan2(_targetDirection.y, _targetDirection.x) * Mathf.Rad2Deg;
-            _targetQuat = Quaternion.Euler((new Vector3(0f, -_angle + 90, 0f)));
-            _playerRigidbody.MoveRotation(_targetQuat);
+            _worldPos = hit.point - _playerRigidbody.position;
+            _worldPos.y = 0f;
+            _newRotation = Quaternion.LookRotation(_worldPos);
+            _playerRigidbody.MoveRotation(_newRotation);
         }
 
     }

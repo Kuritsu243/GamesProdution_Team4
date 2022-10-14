@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class inputSystem : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class inputSystem : MonoBehaviour
     public float horizontalInput;
     public float mousePosX;
     public float mousePosY;
+    private bool _mouseFire;
+    public bool mouseFire;
     private Camera mainCamera;
     public Vector3 worldPos;
     private void OnEnable()
@@ -22,7 +25,9 @@ public class inputSystem : MonoBehaviour
             _playerControls = new PlayerControls();
             _playerControls.Player.Move.performed += i => _movementInput = i.ReadValue<Vector2>();
             _playerControls.Player.Look.performed += i => mousePos = i.ReadValue<Vector2>();
-            
+            _playerControls.Player.Fire.performed += i => ClickAction(i.ReadValue<float>());
+
+
         }
         
         _playerControls.Enable();
@@ -49,10 +54,21 @@ public class inputSystem : MonoBehaviour
         horizontalInput = _movementInput.x;
     }
 
+    private void Update()
+    {
+        Debug.Log(mouseFire);
+
+    }
+
     private void HandleCursorInput()
     {
         mousePosX = mousePos.x;
         mousePosY = mousePos.y;
+        mouseFire = _mouseFire;
     }
-    
+
+    private void ClickAction(float b)
+    {
+        _mouseFire = System.Convert.ToBoolean(b);
+    }
 }

@@ -384,6 +384,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8fadaecb885644aa66bdc58b2db75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &370557018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370557004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bbf13f62d79d6f438436e3544dd2e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileBaseDamage: 1
+  projectileMaxCharge: 4
+  projectileSpeed: 2
+  projectileDespawnRate: 10
+  projectileCooldown: 2
+  playerProjectile: {fileID: 5315226020846044873, guid: 52bea41a062f39d419a16c0703fd9622, type: 3}
 --- !u!1 &684784372
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,6 +1198,10 @@ PrefabInstance:
     - target: {fileID: 2909463902099079177, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_Antialiasing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641168923871773038, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
+      propertyPath: playerMovementSpeed
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 5736033065667857869, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_Layer

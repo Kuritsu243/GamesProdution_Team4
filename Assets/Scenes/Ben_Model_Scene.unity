@@ -1017,11 +1017,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c28ad79624cf983468c0f67fcbb3b387, type: 2}
     - target: {fileID: 919132149155446097, guid: dd86139275e9a3248a270d8eb4173a86, type: 3}
       propertyPath: m_Name
-<<<<<<< HEAD
-      value: ChestFixed
-=======
       value: Chest
->>>>>>> main
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

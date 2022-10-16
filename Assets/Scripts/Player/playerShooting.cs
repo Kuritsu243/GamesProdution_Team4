@@ -26,46 +26,52 @@ public class playerShooting : MonoBehaviour
     [SerializeField] private float projectileSpeed;
     [SerializeField] private float projectileDespawnRate;
     [SerializeField] private float projectileCooldown;
+    [SerializeField] private float projectileCost;
     [SerializeField] private GameObject playerProjectile;
     private inputSystem _inputSystem;
     private float _projectileCharge;
-    private float _projectileChargeDuration;
+    public float projectileChargeDuration;
     private float _projectileChargeStartTime;
     private float _projectileCalculatedDamage;
     private bool _canFire = true;
-    private bool _isCharging;
     private GameObject _spawnedObject;
     private GameObject _projectileSpawnPoint;
     private projectileScript _spawnedObjectScript;
+    private playerHealth _playerHealth;
 
+
+    public bool IsCharging { get; private set; }
+
+    public float ProjectileMaxCharge => projectileMaxCharge;
 
     // Start is called before the first frame update
     private void Awake()
     {
         _inputSystem = GetComponent<inputSystem>();
+        _playerHealth = GetComponent<playerHealth>();
         _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint");
 
     }
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (_inputSystem.mouseFire && _canFire && !_isCharging)
+        if (_inputSystem.mouseFire && _canFire && !IsCharging)
         {
             _projectileChargeStartTime = Time.time;
-            _isCharging = true;
+            IsCharging = true;
         }
-        else if (!_inputSystem.mouseFire && _canFire && _isCharging)
+        else if (!_inputSystem.mouseFire && _canFire && IsCharging)
         {
-            _projectileCalculatedDamage = projectileBaseDamage * _projectileChargeDuration;
+            _projectileCalculatedDamage = projectileBaseDamage * projectileChargeDuration;
             Shoot(_projectileCalculatedDamage);
             StartCoroutine(FiringCooldown());
-            _isCharging = false;
+            IsCharging = false;
         }
-        else if (_projectileChargeStartTime >= 0 && _isCharging)
+        else if (_projectileChargeStartTime >= 0 && IsCharging)
         {
-            _projectileChargeDuration = Time.time - _projectileChargeStartTime;
+            projectileChargeDuration = Time.time - _projectileChargeStartTime;
         }
 
         
@@ -80,10 +86,10 @@ public class playerShooting : MonoBehaviour
 
     public void Shoot(float projectileDamage)
     { // spawn object and assign it to a gameobject as reference
-        _projectileCharge = Mathf.Clamp(_projectileChargeDuration + projectileBaseDamage, projectileBaseDamage, projectileMaxCharge); // min value is base damage, max value is max charge value
+        _projectileCharge = Mathf.Clamp(projectileChargeDuration + projectileBaseDamage, projectileBaseDamage, projectileMaxCharge); // min value is base damage, max value is max charge value
         _spawnedObject = Instantiate(playerProjectile, _projectileSpawnPoint.transform.position, transform.rotation);
         _spawnedObjectScript = _spawnedObject.GetComponent<projectileScript>(); // get projectile script of spawned object
         _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate, _projectileCharge); // pass through variables
-        Debug.Log("Spawned Bullet with a damage value of " + projectileDamage);
+        _playerHealth.Damage(projectileCost);
     }
 }

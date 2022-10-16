@@ -67,11 +67,11 @@ public class inputSystem : MonoBehaviour
         horizontalInput = _movementInput.x;
     }
 
-    private void Update()
-    {
-        Debug.Log(mouseFire);
-
-    }
+    // private void Update()
+    // {
+    //     Debug.Log(mouseFire);
+    //
+    // }
 
     private void HandleCursorInput()
     {

@@ -18,6 +18,7 @@ public class gameSaturationModifier : MonoBehaviour
     private GameObject _postProcessController;
     private Volume _postProcessVolume;
     private float _saturation;
+    private playerHealth _playerHealth;
 
     // encapsulated fields
     public float EnemiesCurrentlyInScene
@@ -28,7 +29,7 @@ public class gameSaturationModifier : MonoBehaviour
 
     void Start()
     {
-
+        _playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
         _postProcessController = GameObject.FindGameObjectWithTag("postProcessingController"); // get post processing controller
         _postProcessVolume = _postProcessController.GetComponent<Volume>(); // get post process volume component
         _postProcessVolume.profile.TryGet(out _colorGrading); // apply colour grading settings
@@ -60,7 +61,15 @@ public class gameSaturationModifier : MonoBehaviour
 
     public void CalculateSaturationLevel() // calculates saturation level
     {
-        _saturation = (_enemiesCurrentlyInScene / _enemiesInSceneCount) * -100; // calculate percentage to set after seeing how many enemies are left
+        if (_playerHealth.PlayerHealth / _playerHealth.PlayerMaxHealth >= 0.99)
+        {
+            _saturation = 0;
+        }
+        else
+        {
+            _saturation = -100 + ((_playerHealth.PlayerHealth / _playerHealth.PlayerMaxHealth) * 100); // calculate percentage to scale with player health
+        }
+
         SetSaturationLevel();
     }
 

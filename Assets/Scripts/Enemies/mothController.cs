@@ -36,8 +36,6 @@ public class mothController : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player"); // find player
         _playerHealth = _player.GetComponent<playerHealth>();
         _mothNavMeshAgent = GetComponent<NavMeshAgent>(); // get AI nav component
-        _gameSaturationModifier =
-            _eventManager.GetComponent<gameSaturationModifier>(); // find saturation modifier script
     }
 
     void Update()
@@ -92,8 +90,6 @@ public class mothController : MonoBehaviour
 
     void Die()
     {
-        _gameSaturationModifier.EnemiesCurrentlyInScene--; // decrement enemies value
-        _gameSaturationModifier.CalculateSaturationLevel(); // update saturation level
         Destroy(this.gameObject); // despawn
     }
 

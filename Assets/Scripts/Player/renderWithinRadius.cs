@@ -99,14 +99,12 @@ public class renderWithinRadius : MonoBehaviour
 
         if (_isWithinSafeZone && _targetScale.IsLesserOrEqual(_maxRadiusScale))
         {
-            Debug.Log("scaling up");
             _targetScale += new Vector3(Time.deltaTime * _radiusSizeChangeRate, Time.deltaTime * _radiusSizeChangeRate,
                 Time.deltaTime * _radiusSizeChangeRate);
 
         }
         else if (!_isWithinSafeZone && _targetScale.IsGreaterOrEqual(new Vector3(0,0,0)))
         {
-            Debug.Log("scaling down");
             _targetScale -= new Vector3(Time.deltaTime * _radiusSizeChangeRate, Time.deltaTime * _radiusSizeChangeRate,
                 Time.deltaTime * _radiusSizeChangeRate);
         }
@@ -132,8 +130,7 @@ public class renderWithinRadius : MonoBehaviour
         {
             other.gameObject.layer = noPostProcessingLayer;
         }
-
-        Debug.Log("changed obj " + other.gameObject + "to no post process");
+        
     }
 
     private void OnTriggerExit(Collider other)

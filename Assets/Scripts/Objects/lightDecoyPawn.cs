@@ -21,14 +21,14 @@ public class lightDecoyPawn : MonoBehaviour
 
     public void DisableDecoy()
     {
-        _lightDecoyRenderer.material = inactiveDecoyMaterial; // set decoy material to inactive material
+        _lightDecoyRenderer.sharedMaterial = inactiveDecoyMaterial; // set decoy material to inactive material
         _isLit = false; // is lit is false
         gameObject.tag = "recentlyDisabledDecoy"; // set tag to recently disabled decoy
     }
 
     public void ActivateDecoy() // activate decoy
     {
-        _lightDecoyRenderer.material = activeDecoyMaterial; // set material to lit material
+        _lightDecoyRenderer.sharedMaterial = activeDecoyMaterial; // set material to lit material
         StartCoroutine(DecoyActive(decoyActiveDuration)); // start countdown for duration it's enabled
         _isLit = true; // is lit is true
         gameObject.tag = "activeDecoy"; // change tag to indicate it is active

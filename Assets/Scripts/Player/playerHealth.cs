@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerHealth : MonoBehaviour
 {
@@ -42,5 +43,6 @@ public class playerHealth : MonoBehaviour
     void Die()
     { // destroys player gameobject
         Destroy(this.gameObject);
+        SceneManager.LoadScene("Lose_Screen");
     }
 }

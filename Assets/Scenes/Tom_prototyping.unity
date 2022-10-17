@@ -433,6 +433,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3edcee0dda41127448694c1724222336, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a5b627ce3029094cb4a32aa0718bbe0, type: 2}
     - target: {fileID: 919132149155446097, guid: 3edcee0dda41127448694c1724222336, type: 3}
       propertyPath: m_Name
       value: Cuckoo clock
@@ -492,6 +496,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 298cdfa283614964a882b3e35fe2b961, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8065b784936072f4187c57c3d991105c, type: 2}
     - target: {fileID: 919132149155446097, guid: 298cdfa283614964a882b3e35fe2b961, type: 3}
       propertyPath: m_Name
       value: Chair

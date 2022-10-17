@@ -46,6 +46,7 @@ public class inputSystem : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
         _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
     }
@@ -67,11 +68,11 @@ public class inputSystem : MonoBehaviour
         horizontalInput = _movementInput.x;
     }
 
-    private void Update()
-    {
-        Debug.Log(mouseFire);
-
-    }
+    // private void Update()
+    // {
+    //     Debug.Log(mouseFire);
+    //
+    // }
 
     private void HandleCursorInput()
     {

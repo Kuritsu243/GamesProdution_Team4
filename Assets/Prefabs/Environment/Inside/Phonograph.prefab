@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3762520867894606511}
   - component: {fileID: 259224564311340298}
   - component: {fileID: 2628980782576026048}
-  - component: {fileID: 3861832092759208758}
+  - component: {fileID: 1029380239063117628}
   m_Layer: 0
   m_Name: Phonograph
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4574804446867513365}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 1.3932264, y: 0, z: 2.5097446}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3861832092759208758
+--- !u!65 &1029380239063117628
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,5 +95,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.029552406, y: 0.032095402, z: 0.046501704}
-  m_Center: {x: 0.0029871473, y: 0.0006226095, z: -0.023250852}
+  m_Size: {x: 5.9104815, y: 6.4190807, z: 9.300342}
+  m_Center: {x: 0.5974295, y: 0.12452184, z: -4.650171}

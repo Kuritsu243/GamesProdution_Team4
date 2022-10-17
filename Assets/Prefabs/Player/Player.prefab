@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5736033065667857869}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.65}
+  m_LocalPosition: {x: 0, y: 0, z: 1.046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -133,6 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8fadaecb885644aa66bdc58b2db75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraHeight: 0
+  cameraZOffset: 0
+  radiusStartSize: 0
+  radiusChangeRate: 0
+  radiusMaxSize: {x: 0, y: 0, z: 0}
 --- !u!114 &5983406868800269783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +155,8 @@ MonoBehaviour:
   horizontalInput: 0
   mousePosX: 0
   mousePosY: 0
+  rightJoyX: 0
+  rightJoyY: 0
   mouseFire: 0
   worldPos: {x: 0, y: 0, z: 0}
 --- !u!114 &736113945510686035
@@ -195,7 +202,9 @@ MonoBehaviour:
   projectileSpeed: 2
   projectileDespawnRate: 10
   projectileCooldown: 0.8
+  projectileCost: 0
   playerProjectile: {fileID: 5315226020846044873, guid: 52bea41a062f39d419a16c0703fd9622, type: 3}
+  projectileChargeDuration: 0
 --- !u!1 &6658288757636440358
 GameObject:
   m_ObjectHideFlags: 0

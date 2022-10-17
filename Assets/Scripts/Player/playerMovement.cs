@@ -57,7 +57,6 @@ public class playerMovement : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsEditor)
         {
-            Debug.Log("you're on android or are in editor");
             if (_inputSystem.rightJoyX != 0 || _inputSystem.rightJoyY != 0)
             {
                 float angle = Mathf.Atan2(_inputSystem.rightJoyX, _inputSystem.rightJoyY) * Mathf.Rad2Deg;

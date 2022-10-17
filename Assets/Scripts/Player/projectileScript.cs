@@ -9,8 +9,10 @@ public class projectileScript : MonoBehaviour
     // collision variables
     private GameObject _collidedEnemy;
     private GameObject _collidedDecoy;
+    private GameObject _collidedFurnace;
     private lightDecoyPawn _decoyScript;
     private mothController _collidedEnemyScript;
+    private furnaceScript _collidedFurnaceScript;
     private float _projectileCharge;
     private float _projectileDamage;
     private float _projectileDespawnRate;
@@ -38,6 +40,17 @@ public class projectileScript : MonoBehaviour
             _collidedEnemyScript = _collidedEnemy.GetComponent<mothController>(); // get collided enemies controller script
             _collidedEnemyScript.Damage(_projectileDamage); // deal damage to the enemy
             Despawn(); // despawn the bullet
+        }
+        else if (collision.gameObject.CompareTag("furnace"))
+        {
+            _collidedFurnace = collision.gameObject;
+            _collidedFurnaceScript = _collidedFurnace.GetComponent<furnaceScript>();
+            _collidedFurnaceScript.AddProgress(_projectileDamage);
+            Despawn();
+        }
+        else
+        {
+            Despawn();
         }
     }
 

@@ -13,6 +13,11 @@ TagManager:
   - healthPickup
   - Enemy
   - projectileSpawnPoint
+  - lightRadius
+  - startButton
+  - exitButton
+  - furnaceText
+  - furnace
   layers:
   - Default
   - TransparentFX

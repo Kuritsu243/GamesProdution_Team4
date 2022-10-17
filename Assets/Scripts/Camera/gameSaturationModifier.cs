@@ -10,57 +10,36 @@ using UnityEngine.UI;
 
 public class gameSaturationModifier : MonoBehaviour
 {
-    private ColorAdjustments _colorGrading;
-    private float _enemiesCurrentlyInScene;
-
+    
     // private variables
-    private float _enemiesInSceneCount;
+    private ColorAdjustments _colorGrading;
     private GameObject _postProcessController;
     private Volume _postProcessVolume;
     private float _saturation;
-
-    // encapsulated fields
-    public float EnemiesCurrentlyInScene
-    {
-        get => _enemiesCurrentlyInScene;
-        set => _enemiesCurrentlyInScene = value;
-    }
+    private playerHealth _playerHealth;
 
     void Start()
     {
-
+        _playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
         _postProcessController = GameObject.FindGameObjectWithTag("postProcessingController"); // get post processing controller
         _postProcessVolume = _postProcessController.GetComponent<Volume>(); // get post process volume component
         _postProcessVolume.profile.TryGet(out _colorGrading); // apply colour grading settings
-        GetAllEnemiesInScene(); // gets count of enemies
         CalculateSaturationLevel(); // set saturation level
 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // if (Input.GetKeyDown(KeyCode.Q))
-        // {
-        //     CalculateSaturationLevel();
-        // }
-        //
-        // if (Input.GetKeyDown(KeyCode.E))
-        // {
-        //     SetSaturationLevel();
-        // }
-        Debug.Log(_saturation);
-    }
-
-    void GetAllEnemiesInScene() // get count of enemies
-    {
-        _enemiesInSceneCount = GameObject.FindGameObjectsWithTag("Enemy").Length; // creates array of all enemies and counts how many exist
-        _enemiesCurrentlyInScene = _enemiesInSceneCount; // sets currently in scene to size of array above
-    }
-
+    
+    
     public void CalculateSaturationLevel() // calculates saturation level
     {
-        _saturation = (_enemiesCurrentlyInScene / _enemiesInSceneCount) * -100; // calculate percentage to set after seeing how many enemies are left
+        if (_playerHealth.PlayerHealth / _playerHealth.PlayerMaxHealth >= 0.99)
+        {
+            _saturation = 0;
+        }
+        else
+        {
+            _saturation = -100 + ((_playerHealth.PlayerHealth / _playerHealth.PlayerMaxHealth) * 100); // calculate percentage to scale with player health
+        }
+
         SetSaturationLevel();
     }
 

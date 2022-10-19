@@ -18,6 +18,7 @@ public class furnaceScript : MonoBehaviour
     private GameObject _furnaceUITextParent;
     private Image _furnaceBarImage;
     private TextMeshProUGUI _furnaceBarText;
+    private winZoneScript _winZoneScript;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class furnaceScript : MonoBehaviour
         _furnaceUITextParent = GameObject.FindGameObjectWithTag("furnaceText");
         _furnaceBarImage = _furnaceUITextParent.GetComponentInChildren<Image>();
         _furnaceBarText = _furnaceUITextParent.GetComponentInChildren<TextMeshProUGUI>();
+        _winZoneScript = GameObject.FindGameObjectWithTag("winZone").GetComponent<winZoneScript>();
         ToggleUIAssets(false);
     }
 
@@ -42,12 +44,12 @@ public class furnaceScript : MonoBehaviour
         {
             _furnaceBarImage.fillAmount = _currentProgressionPercentage;
         }
-
     }
 
     private void LightFurnace()
     {
-        Debug.Log("furnace lit");
+        _isLit = true;
+        _winZoneScript.haveConditionsBeenMet = true;
     }
 
     private bool NearPlayer()

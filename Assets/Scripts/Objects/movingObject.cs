@@ -17,7 +17,7 @@ public class movingObject : MonoBehaviour
         {
             _direction = destinationPos - transform.position;
             _distance = _direction.magnitude;
-            transform.Translate(_direction.normalized * (Time.deltaTime * _distance / timeToTake));
+            transform.Translate(_direction.normalized * (Time.deltaTime * _distance / timeToTake), Space.World);
         }
     }
 }

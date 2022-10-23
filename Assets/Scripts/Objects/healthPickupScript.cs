@@ -20,7 +20,8 @@ public class healthPickupScript : MonoBehaviour
     {
         Debug.Log("Collided object");
         _collidedObject = other.gameObject;
-        if (_collidedObject.CompareTag("Player") || _collidedObject.CompareTag("lightRadius"))
+        Debug.Log(_collidedObject);
+        if (_collidedObject.CompareTag("Player") || _collidedObject.CompareTag("lightRadius") || _collidedObject.CompareTag("playerCapsule"))
         {
             _playerHealth.PlayerHealth += healAmount;
             Despawn();

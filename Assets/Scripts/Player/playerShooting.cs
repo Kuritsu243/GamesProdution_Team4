@@ -90,6 +90,6 @@ public class playerShooting : MonoBehaviour
         _spawnedObject = Instantiate(playerProjectile, _projectileSpawnPoint.transform.position, transform.rotation);
         _spawnedObjectScript = _spawnedObject.GetComponent<projectileScript>(); // get projectile script of spawned object
         _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate, _projectileCharge); // pass through variables
-        _playerHealth.Damage(projectileCost);
+        _playerHealth.Damage(projectileCost * _projectileCharge);
     }
 }

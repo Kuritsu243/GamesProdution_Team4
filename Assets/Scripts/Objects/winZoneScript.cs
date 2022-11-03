@@ -10,10 +10,11 @@ public class winZoneScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && haveConditionsBeenMet)
-        {
-            _collidedPlayer = other.gameObject;
-            SceneManager.LoadScene("Win_Screen");
-        }
+        Debug.Log(other.gameObject.tag);
+        if ((!other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("playerCapsule") &&
+             !other.gameObject.CompareTag("lightRadius")) || !haveConditionsBeenMet) return;
+        _collidedPlayer = other.gameObject;
+        SceneManager.LoadScene("Win_Screen");
+
     }
 }

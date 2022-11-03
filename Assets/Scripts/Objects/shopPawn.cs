@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using TMPro;
 
 public class shopPawn : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class shopPawn : MonoBehaviour
     private GameObject _selectedItem;
     private GameObject _spawnedItem;
     private Transform _pawnTransform;
+    private TextMeshProUGUI _costText;
     public int cost;
     public bool isSelectedByPlayer;
     // Start is called before the first frame update
@@ -19,6 +21,7 @@ public class shopPawn : MonoBehaviour
         _shopSystem = GetComponentInParent<shopSystem>();
         _shopItems = _shopSystem.ShopItems;
         _pawnTransform = transform;
+        _costText = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -44,6 +47,7 @@ public class shopPawn : MonoBehaviour
     public void CalculateCost(int damage)
     {
         cost = damage;
+        _costText.text = cost.ToString();
     }
 
     public void DestroySelfAndItem()

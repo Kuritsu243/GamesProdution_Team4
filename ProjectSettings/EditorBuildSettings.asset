@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Start_Screen.unity
     guid: a0632546b4fa2eb45848acb4c91c2e05
   - enabled: 1
+    path: Assets/Scenes/Greybox.unity
+    guid: 9ffc8f1095b8c8a44a28f8294c1bcdc4
+  - enabled: 0
     path: Assets/Scenes/charlie_prototyping.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1

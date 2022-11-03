@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d0099412c25a14b9d296fdd553ef97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 0
+  enemyHealth: 2
   sphereCastRadius: 5
   damageAmount: 5
   checkSurroundingFrequency: 2

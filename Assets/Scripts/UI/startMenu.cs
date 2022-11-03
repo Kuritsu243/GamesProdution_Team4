@@ -28,7 +28,7 @@ public class startMenu : MonoBehaviour
 
     void OnStartButtonClicked()
     {
-        SceneManager.LoadScene("charlie_prototyping");
+        SceneManager.LoadScene("Greybox");  
     }
 
     void OnExitButtonClicked()

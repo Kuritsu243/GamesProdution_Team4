@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3772012537213348275}
   - component: {fileID: 3939125577180078165}
+  - component: {fileID: 9218586475635775695}
   m_Layer: 0
-  m_Name: Frame_1
+  m_Name: playerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,12 +25,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 48350508289230800}
-  m_LocalRotation: {x: 0, y: 0.70710677, z: 0, w: -0.70710677}
-  m_LocalPosition: {x: 0, y: 1.896, z: 0}
-  m_LocalScale: {x: 0.29835835, y: 0.29835835, z: 0.29835835}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
+  m_LocalPosition: {x: 0.3760233, y: 2.1707215, z: -0.6240635}
+  m_LocalScale: {x: 0.2983583, y: 0.29835835, z: 0.2983583}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6658288757636218116}
+  m_Father: {fileID: 6658288757448593100}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -99.375, z: 0}
 --- !u!212 &3939125577180078165
@@ -84,6 +85,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9218586475635775695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48350508289230800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 583230e21b83ac84788a09467b41c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5723886314751145618
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +271,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3772012537213348275}
   - {fileID: 6658288757636218118}
   - {fileID: 6658288757636218116}
   m_Father: {fileID: 0}
@@ -303,7 +317,6 @@ Transform:
   - {fileID: 4995464074297171487}
   - {fileID: 8651681268329031707}
   - {fileID: 7847724418078991853}
-  - {fileID: 3772012537213348275}
   m_Father: {fileID: 6658288757448593100}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

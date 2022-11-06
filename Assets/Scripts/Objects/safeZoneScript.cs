@@ -4,32 +4,25 @@ using UnityEngine;
 
 public class safeZoneScript : MonoBehaviour
 {
-
+    // vars accessible in editor
+    [SerializeField] private float safeZoneRadius;
+    // private vars
     private GameObject _player;
     private playerController _playerController;
     private Transform _playerTransform;
     private Vector3 _playerPos;
     private renderWithinRadius _renderWithinRadius;
-    [SerializeField] private float safeZoneRadius;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _playerTransform = _player.transform;
-        _renderWithinRadius = _player.GetComponentInChildren<renderWithinRadius>();
-    }
 
-    // Update is called once per frame
-    void Update()
+    
+    private void Start()
     {
-        if (Vector3.Distance(_playerTransform.position, this.transform.position) < safeZoneRadius)
-        {
-            _renderWithinRadius.IsWithinSafeZone = true;
-        }
-        else
-        {
-            _renderWithinRadius.IsWithinSafeZone = false;
-        }
+        _player = GameObject.FindGameObjectWithTag("Player"); // get player
+        _playerTransform = _player.transform; // get player transform
+        _renderWithinRadius = _player.GetComponentInChildren<renderWithinRadius>(); // get render script
+    }
+    
+    private void Update()
+    {
+        _renderWithinRadius.IsWithinSafeZone = Vector3.Distance(_playerTransform.position, this.transform.position) < safeZoneRadius; //
     }
 }

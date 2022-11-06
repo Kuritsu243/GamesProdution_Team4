@@ -40,7 +40,7 @@ public class playerHealth : MonoBehaviour
         }
     }
 
-    void Die()
+    private void Die()
     { // destroys player gameobject
         Destroy(this.gameObject);
         SceneManager.LoadScene("Lose_Screen");

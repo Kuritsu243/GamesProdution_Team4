@@ -1323,15 +1323,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8651681268329031707, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 5.4
       objectReference: {fileID: 0}
     - target: {fileID: 8651681268329031707, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 5.4
       objectReference: {fileID: 0}
     - target: {fileID: 8651681268329031707, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 5.4
       objectReference: {fileID: 0}
     - target: {fileID: 8651681268329031707, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1339,7 +1339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8651681268329031707, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.053
       objectReference: {fileID: 0}
     - target: {fileID: 8651681268329031707, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7276,6 +7276,10 @@ PrefabInstance:
     - target: {fileID: 5495732648329243965, guid: 782d2a0813b914c4e988a36673a0e6a0, type: 3}
       propertyPath: m_Name
       value: moth
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495732648329243965, guid: 782d2a0813b914c4e988a36673a0e6a0, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

@@ -14,12 +14,12 @@ public class lightDecoyPawn : MonoBehaviour
     #pragma warning restore CS0219
     private Renderer _lightDecoyRenderer;
 
-    void Start()
+    private void Start()
     {
         _lightDecoyRenderer = GetComponent<Renderer>(); // get light renderer
     }
 
-    public void DisableDecoy()
+    private void DisableDecoy()
     {
         _lightDecoyRenderer.sharedMaterial = inactiveDecoyMaterial; // set decoy material to inactive material
         _isLit = false; // is lit is false

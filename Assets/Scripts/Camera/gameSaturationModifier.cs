@@ -18,7 +18,7 @@ public class gameSaturationModifier : MonoBehaviour
     private float _saturation;
     private playerHealth _playerHealth;
 
-    void Start()
+    private void Start()
     {
         _playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
         _postProcessController = GameObject.FindGameObjectWithTag("postProcessingController"); // get post processing controller
@@ -43,7 +43,7 @@ public class gameSaturationModifier : MonoBehaviour
         SetSaturationLevel();
     }
 
-    void SetSaturationLevel() // set saturation level
+    private void SetSaturationLevel() // set saturation level
     {
         _colorGrading.saturation.value = (int)(_saturation); // set value to saturation variable after being converted to int from float
         _postProcessVolume.profile.TryGet(out _colorGrading); // apply saturation value

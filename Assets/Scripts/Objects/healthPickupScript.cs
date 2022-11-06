@@ -5,27 +5,25 @@ using UnityEngine;
 
 public class healthPickupScript : MonoBehaviour
 {
+    // vars accessible in editor
     [SerializeField] private float healAmount;
+    // private vars
     private GameObject _player;
     private GameObject _collidedObject;
     private playerHealth _playerHealth;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _playerHealth = _player.GetComponent<playerHealth>();
+        _player = GameObject.FindGameObjectWithTag("Player"); // get player
+        _playerHealth = _player.GetComponent<playerHealth>(); // get player health
     }
     
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) // on collision
     {
-        Debug.Log("Collided object");
         _collidedObject = other.gameObject;
-        Debug.Log(_collidedObject);
-        if (_collidedObject.CompareTag("Player") || _collidedObject.CompareTag("lightRadius") || _collidedObject.CompareTag("playerCapsule"))
-        {
-            _playerHealth.PlayerHealth += healAmount;
-            Despawn();
-        }
+        if (!_collidedObject.CompareTag("Player") && !_collidedObject.CompareTag("lightRadius") &&
+            !_collidedObject.CompareTag("playerCapsule")) return;
+        _playerHealth.PlayerHealth += healAmount; // heal player
+        Despawn(); // destroy object
     }
 
     void Despawn()

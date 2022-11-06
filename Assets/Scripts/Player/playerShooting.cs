@@ -55,7 +55,7 @@ public class playerShooting : MonoBehaviour
 
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (_inputSystem.mouseFire && _canFire && !IsCharging)
         {
@@ -77,7 +77,7 @@ public class playerShooting : MonoBehaviour
         
     }
 
-    IEnumerator FiringCooldown()
+    private IEnumerator FiringCooldown()
     {
         _canFire = false;
         yield return new WaitForSeconds(projectileCooldown);

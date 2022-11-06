@@ -26,23 +26,25 @@ public class startMenu : MonoBehaviour
 
     // Update is called once per frame
 
-    void OnStartButtonClicked()
+    private static void OnStartButtonClicked()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Greybox");  
     }
 
-    void OnExitButtonClicked()
+    private static void OnExitButtonClicked()
     {
 #if UNITY_EDITOR
-        if (Application.platform == RuntimePlatform.WindowsEditor)
+        switch (Application.platform)
         {
-            EditorApplication.Exit(0);
+            case RuntimePlatform.WindowsEditor:
+                EditorApplication.Exit(0);
+                break;
+            case RuntimePlatform.Android:
+            case RuntimePlatform.WindowsPlayer:
+                Application.Quit();
+                break;
         }
 #endif
-        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsPlayer)
-        {
-            Application.Quit();
-        }
     }
 }

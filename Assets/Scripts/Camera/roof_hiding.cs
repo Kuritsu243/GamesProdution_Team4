@@ -15,14 +15,14 @@ public class roof_hiding : MonoBehaviour
     private GameObject _previouslyDisabledObject;
     private GameObject _roof;
 
-    void Start()
+    private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // find player
         _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>(); // get main camera component
         
     }
 
-    void Update()
+    private void Update()
     {
         CheckIfTouchingRoof(); // check if touching roof
         UpdateDistanceBetweenPlayerAndRoof(); // get distance between player and roof
@@ -32,30 +32,29 @@ public class roof_hiding : MonoBehaviour
         }
     }
 
-    void ToggleRoof(GameObject roof)
+    private void ToggleRoof(GameObject roof)
     {
         _isRoofActive = !_isRoofActive; 
         roof.SetActive(_isRoofActive); // enable / disable roof
         _previouslyDisabledObject = _hitObject; // store recently disabled roof as previously disabled
     }
 
-    void CheckIfTouchingRoof()
+    private void CheckIfTouchingRoof()
     {
-        if (Physics.Raycast(_camera.transform.position, (_player.transform.position - _camera.transform.position), out var hit)) // raycast, checks if roof is blocking a line between camera to player
+        if (!Physics.Raycast(_camera.transform.position, (_player.transform.position - _camera.transform.position),
+                out var hit)) return;
+        _hitObject = hit.collider.gameObject; // object in between camera and player stored as var
+        if (hit.collider.gameObject.CompareTag("roof")) // if object is roof
         {
-            _hitObject = hit.collider.gameObject; // object in between camera and player stored as var
-            if (hit.collider.gameObject.CompareTag("roof")) // if object is roof
-            {
-                Debug.Log("<b> Hit Object: </b> " + _hitObject);
-                _roof = _hitObject; // store collided object as roof
-                ToggleRoof(_roof); // disable roof
-            }
-            else if (hit.collider.gameObject.tag == "") // if object has no tag
-                Debug.Log("no tag, ignoring error");
+            Debug.Log("<b> Hit Object: </b> " + _hitObject);
+            _roof = _hitObject; // store collided object as roof
+            ToggleRoof(_roof); // disable roof
         }
+        else if (hit.collider.gameObject.tag == "") // if object has no tag
+            Debug.Log("no tag, ignoring error");
     }
 
-    void UpdateDistanceBetweenPlayerAndRoof() 
+    private void UpdateDistanceBetweenPlayerAndRoof() 
     {
         distanceBetweenRoof = Vector3.Distance(_player.transform.position, _previouslyDisabledObject.transform.position); // calculates distance between player and roof
     }

@@ -66,13 +66,11 @@ public class playerMovement : MonoBehaviour
         else
         {
             _mousePos = _inputSystem.mousePos;
-            if (Physics.Raycast(_mainCamera.ScreenPointToRay(_inputSystem.mousePos), out RaycastHit hit))
-            {
-                _worldPos = hit.point - _playerRigidbody.position;
-                _worldPos.y = 0f;
-                _newRotation = Quaternion.LookRotation(_worldPos);
-                _playerRigidbody.MoveRotation(_newRotation);
-            }
+            if (!Physics.Raycast(_mainCamera.ScreenPointToRay(_inputSystem.mousePos), out RaycastHit hit)) return;
+            _worldPos = hit.point - _playerRigidbody.position;
+            _worldPos.y = 0f;
+            _newRotation = Quaternion.LookRotation(_worldPos);
+            _playerRigidbody.MoveRotation(_newRotation);
         }
 
 

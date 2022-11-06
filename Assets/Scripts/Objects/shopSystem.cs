@@ -38,11 +38,7 @@ public class shopSystem : MonoBehaviour
     private bool IsNearPlayer()
     {
         _distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
-        if (_distanceToPlayer < rangeToSpawn)
-        {
-            return true;
-        }
-        return false;
+        return _distanceToPlayer < rangeToSpawn;
     }
 
     private void SpawnItems()

@@ -37,11 +37,10 @@ public class shopPawn : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject);
-        if (other.CompareTag("Player") || other.CompareTag("lightRadius") || other.CompareTag("playerCapsule"))
-        {
-            isSelectedByPlayer = true;
-            _shopSystem.PlayerHasCollectedItem(cost);
-        }
+        if (!other.CompareTag("Player") && !other.CompareTag("lightRadius") &&
+            !other.CompareTag("playerCapsule")) return;
+        isSelectedByPlayer = true;
+        _shopSystem.PlayerHasCollectedItem(cost);
     }
 
     public void CalculateCost(int damage)

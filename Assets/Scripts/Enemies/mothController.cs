@@ -28,56 +28,56 @@ public class mothController : MonoBehaviour
     // private variables
     private GameObject _player;
 
-    void Start()
+    private void Start()
     {
-        Physics.IgnoreLayerCollision(8, 9, true);
+        Physics.IgnoreLayerCollision(8, 9, true); // ignore collisions with other enemies and decoys
         _eventManager = GameObject.FindGameObjectWithTag("eventManager"); // find event manager
         _lightDecoyController = _eventManager.GetComponent<lightDecoyController>(); // find light controller script
         _player = GameObject.FindGameObjectWithTag("Player"); // find player
-        _playerHealth = _player.GetComponent<playerHealth>();
+        _playerHealth = _player.GetComponent<playerHealth>(); // get player health script from player
         _mothNavMeshAgent = GetComponent<NavMeshAgent>(); // get AI nav component
     }
 
-    void Update()
+    private void Update()
     {
-        if (_isTargetingPlayer)
+        if (_isTargetingPlayer) // if currently targeting player
         {
             _mothNavMeshAgent.destination = _player.transform.position; // set target to player location
         }
 
-        if (enemyHealth <= 0)
+        if (enemyHealth <= 0.01f) // if enemy health is 0
         {
-            Die();
+            Die(); // despawn enemy
         }
 
         StartCoroutine(CheckForDecoys()); // check for decoys periodically
     }
 
-    void CheckSurroundings()
+    private void CheckSurroundings()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, sphereCastRadius);
-        foreach (var hitCollider in hitColliders)
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, sphereCastRadius); // store all hit colliders in a var
+        foreach (var hitCollider in hitColliders) // for each collider that was hit
         {
-            if (hitCollider.CompareTag("activeDecoy"))
+            if (hitCollider.CompareTag("activeDecoy")) // if tag is an active decoy
             {
                 _detectedActiveDecoy = hitCollider.gameObject;
                 _detectedDecoyScript = _detectedActiveDecoy.GetComponent<lightDecoyPawn>();
-                TargetDecoy();
+                TargetDecoy(); // target the decoy object instead of player
             }
             else if (hitCollider.CompareTag("recentlyDisabledDecoy"))
             {
-                TargetPlayer();
+                TargetPlayer(); // if decoy is disabled then target player
             }
         }
     }
 
-    IEnumerator CheckForDecoys() // check for decoys
+    private IEnumerator CheckForDecoys() // check for decoys
     {
         yield return new WaitForSeconds(checkSurroundingFrequency); // wait for the set period of time
         CheckSurroundings();
     }
 
-    void TargetDecoy() // target lit decoy
+    private void TargetDecoy() // target lit decoy
     {
         _mothNavMeshAgent.destination = _detectedActiveDecoy.transform.position; // set target to lit decoy pos
         _isTargetingPlayer = false; // no longer targeting player
@@ -90,6 +90,7 @@ public class mothController : MonoBehaviour
 
     void Die()
     {
+        Debug.Log("moth death");
         Destroy(this.gameObject); // despawn
     }
 
@@ -98,11 +99,11 @@ public class mothController : MonoBehaviour
         _collidedObject = collision.gameObject;
         if (_collidedObject.CompareTag("Player") && _canDealDamage)
         {
-            _playerHealth.PlayerHealth -= damageAmount;
+            _playerHealth.PlayerHealth -= damageAmount; // deal damage to player
         }
     }
 
-    private IEnumerator DamageCooldown(float cooldown)
+    private IEnumerator DamageCooldown(float cooldown) // cooldown for damaging the enemy
     {
         _canDealDamage = false;
         yield return new WaitForSeconds(cooldown);

@@ -15,7 +15,7 @@ public class playerController2 : MonoBehaviour
     private renderWithinRadius _playerLight;
     private GameObject _player;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _player = gameObject;
         _inputSystem = GetComponent<inputSystem>();
@@ -26,7 +26,7 @@ public class playerController2 : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         _inputSystem.HandleAllInputs();
         _playerMovement.HandleAllMovement();

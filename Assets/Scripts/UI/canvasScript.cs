@@ -21,7 +21,7 @@ public class canvasScript : MonoBehaviour
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button quitButton;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player gameobject
         _playerHealth = _player.GetComponent<playerHealth>();
@@ -33,18 +33,16 @@ public class canvasScript : MonoBehaviour
         quitButton.onClick.AddListener(QuitButtonClicked);
         pauseScreen.SetActive(false);
     }
-    void FixedUpdate()
+
+    private void FixedUpdate()
     {
         healthBar.fillAmount = _playerHealth.PlayerHealth / _playerHealth.PlayerMaxHealth;
-        // fills the health bar image by how much health the player has compared to their max health
-        if (_playerShooting.IsCharging)
+        chargeBar.fillAmount = _playerShooting.IsCharging switch
         {
-            chargeBar.fillAmount = _playerShooting.projectileChargeDuration / _playerShooting.ProjectileMaxCharge;
-        }
-        else if (!_playerShooting.IsCharging)
-        {
-            chargeBar.fillAmount = 0;
-        }
+            // fills the health bar image by how much health the player has compared to their max health
+            true => _playerShooting.projectileChargeDuration / _playerShooting.ProjectileMaxCharge,
+            false => 0
+        };
     }
 
     private void PauseButtonClicked()
@@ -65,18 +63,20 @@ public class canvasScript : MonoBehaviour
     private static void QuitButtonClicked()
     {
 #if UNITY_EDITOR
-        if (Application.platform == RuntimePlatform.WindowsEditor)
+        switch (Application.platform)
         {
-            EditorApplication.Exit(0);
+            case RuntimePlatform.WindowsEditor:
+                EditorApplication.Exit(0);
+                break;
+            case RuntimePlatform.Android:
+            case RuntimePlatform.WindowsPlayer:
+                Application.Quit();
+                break;
         }
 #endif
-        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsPlayer)
-        {
-            Application.Quit();
-        }
     }
 
-    static void MainMenuButtonClicked()
+    private static void MainMenuButtonClicked()
     {
         SceneManager.LoadScene(0);
     }

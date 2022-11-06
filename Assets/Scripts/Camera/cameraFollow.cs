@@ -12,8 +12,8 @@ public class cameraFollow : MonoBehaviour
         _cameraStartingPosition = transform.position;
     }
 
-    public void MoveCamera(float cameraHeight, float zOffset, Vector3 playerPos)
+    public void MoveCamera(float cameraHeight, float zOffset, Vector3 playerPos) // make camera follow player
     {
-        transform.position = new Vector3(playerPos.x, cameraHeight, playerPos.z - zOffset);
+        transform.position = new Vector3(playerPos.x, cameraHeight, playerPos.z - zOffset); // apply transform with Z offset
     }
 }

@@ -13,7 +13,7 @@ public class lightDecoyController : MonoBehaviour
     // private variables
     private GameObject _player;
 
-    void Start()
+    private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player gameobject
     }

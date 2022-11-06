@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class floorFix : MonoBehaviour
 {
-    void Start()
+    private void Start()
     {
         Destroy(GetComponent<MeshRenderer>());
     }

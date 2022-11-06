@@ -28,6 +28,7 @@ public class startMenu : MonoBehaviour
 
     void OnStartButtonClicked()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Greybox");  
     }
 

@@ -34,7 +34,7 @@ public class playerHealth : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_playerHealth == 0)
+        if (_playerHealth <= 0.01f)
         {
             Die();
         }

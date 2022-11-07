@@ -13,7 +13,7 @@ public class furnaceScript : MonoBehaviour
     private bool _isLit;
     private GameObject _player;
     private float _distanceToPlayer;
-    private float _currentLightProgression = 0f;
+    private float _currentLightProgress;
     private float _currentProgressionPercentage;
     private Transform _playerTransform;
     private playerHealth _playerHealth;
@@ -34,22 +34,20 @@ public class furnaceScript : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (NearPlayer())
+        if (NearPlayer() && !_winZoneScript.haveConditionsBeenMet)
         {
-            Debug.Log("near player");
             ToggleUIAssets(true); // enable UI assets
         }
-
-        if (_furnaceUITextParent.activeSelf) // if text is enabled
-        {
-            _furnaceBarImage.fillAmount = _currentProgressionPercentage; // adjust bar on how filled the furnace is
-        }
+        Debug.Log(_currentLightProgress);
+        _furnaceBarImage.fillAmount = _currentLightProgress / lightCost; // adjust bar on how filled the furnace is
     }
 
     private void LightFurnace() // light furnace
     {
         _isLit = true; 
         _winZoneScript.haveConditionsBeenMet = true; // enable win zone
+        _furnaceBarImage.enabled = false;
+        _furnaceBarText.text = "Furnace lit! Go to the window to complete the level";
     }
 
     private bool NearPlayer()
@@ -66,8 +64,8 @@ public class furnaceScript : MonoBehaviour
 
     public void AddProgress(float projectileAmount) // add progress to lighting the furnace
     {
-        _currentLightProgression += projectileAmount; 
-        _currentProgressionPercentage = _currentLightProgression / lightCost;
+        _currentLightProgress += projectileAmount; 
+        _currentProgressionPercentage = _currentLightProgress / lightCost;
         if (_currentProgressionPercentage > 0.99f)
         {
             LightFurnace(); // if progression is full, light the furnace

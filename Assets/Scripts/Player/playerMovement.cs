@@ -17,6 +17,8 @@ public class playerMovement : MonoBehaviour
     private Camera _mainCamera;
     private float _mousePosZ;
     private float _angle;
+    private bool _isMoving;
+    public bool IsMoving { get => _isMoving; set => _isMoving = value; }
 
     private void Awake()
     {
@@ -48,6 +50,8 @@ public class playerMovement : MonoBehaviour
         Vector3 movementVelocity = _moveDirection;
         _playerRigidbody.velocity = movementVelocity;
         _playerRigidbody.MovePosition(_playerRigidbody.position + _playerRigidbody.velocity);
+        _isMoving = movementVelocity.magnitude > 0;
+        
         // if ((Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsEditor) && movementVelocity != Vector3.zero)
         // {
         //     transform.forward = movementVelocity;

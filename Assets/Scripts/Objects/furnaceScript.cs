@@ -38,7 +38,7 @@ public class furnaceScript : MonoBehaviour
         {
             ToggleUIAssets(true); // enable UI assets
         }
-        Debug.Log(_currentLightProgress);
+        // Debug.Log(_currentLightProgress);
         _furnaceBarImage.fillAmount = _currentLightProgress / lightCost; // adjust bar on how filled the furnace is
     }
 

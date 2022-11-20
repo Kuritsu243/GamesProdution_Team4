@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 
 public class playerAnimation : MonoBehaviour
 {
-    private Animator _playerAnimator;
     private playerMovement _playerMovement;
     private GameObject _player;
     private SpriteRenderer _playerSpriteRenderer;
@@ -20,14 +19,16 @@ public class playerAnimation : MonoBehaviour
     private Vector3 _spritePos;
     [SerializeField] private AnimationClip movingAnim;
     [SerializeField] private AnimationClip idleAnim;
-    
+
+    public Animator PlayerAnimator { get; private set; }
+
     private void Awake()
     {
-        _playerAnimator = GetComponent<Animator>();
+        PlayerAnimator = GetComponent<Animator>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
         _player = GameObject.FindGameObjectWithTag("Player");
         _playerMovement = _player.GetComponent<playerMovement>();
-        _playerAnimator.speed = 1f;
+        PlayerAnimator.speed = 1f;
         _spriteTransform = transform;
 
     }
@@ -39,31 +40,29 @@ public class playerAnimation : MonoBehaviour
         switch (_isPlayerMoving)
         {
             case false:
-                _playerAnimator.Play("playerIdle");
-                _playerAnimator.speed = 1f;
-                _clipWeight = _playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                PlayerAnimator.Play("playerIdle");
+                PlayerAnimator.speed = 1f;
+                _clipWeight = PlayerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 _clipLength = idleAnim.length;
                 _clipFrameRate = idleAnim.frameRate;
                 break;
             case true:
-                _playerAnimator.Play("playerAnimation");
-                _playerAnimator.speed = 1f;
-                _clipWeight = _playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                PlayerAnimator.Play("playerAnimation");
+                PlayerAnimator.speed = 1f;
+                _clipWeight = PlayerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 _clipLength = movingAnim.length;
                 _clipFrameRate = movingAnim.frameRate;
                 break;
         }
         
+
+
+    }
+    public string GetCurrentFrame()
+    {
         _currentFrame = _playerSpriteRenderer.sprite.name;
         _currentFrame = Regex.Match(_currentFrame, RegexPattern).Value;
-        
-        _spritePos = _spriteTransform.position;
-        switch (_currentFrame)
-        {
-            case "8":
-                _spritePos.y += 1000f;
-                break;
-        }
-        
-        }
+        return _currentFrame;
+    }
+
 }

@@ -42,10 +42,10 @@ public class playerMovement : MonoBehaviour
     private void HandleMovement()
     {
         _moveDirection =  _mainCameraTransform.forward * _inputSystem.verticalInput;
-        _moveDirection = _moveDirection + _mainCameraTransform.right * _inputSystem.horizontalInput;
+        _moveDirection += _mainCameraTransform.right * _inputSystem.horizontalInput;
         _moveDirection.Normalize();
         _moveDirection.y = 0;
-        _moveDirection = _moveDirection * playerMovementSpeed;
+        _moveDirection *= playerMovementSpeed;
 
         Vector3 movementVelocity = _moveDirection;
         _playerRigidbody.velocity = movementVelocity;

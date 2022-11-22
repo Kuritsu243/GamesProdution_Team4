@@ -18,7 +18,7 @@ public class gameSaturationModifier : MonoBehaviour
     private float _saturation;
     private playerHealth _playerHealth;
 
-    private void Start()
+    private void Awake()
     {
         _playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
         _postProcessController = GameObject.FindGameObjectWithTag("postProcessingController"); // get post processing controller

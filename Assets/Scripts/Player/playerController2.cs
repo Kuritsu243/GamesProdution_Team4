@@ -22,7 +22,7 @@ public class playerController2 : MonoBehaviour
         _playerMovement = GetComponent<playerMovement>();
         _playerLight = GetComponentInChildren<renderWithinRadius>();
         _cameraFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>();
-        _playerLight.Init(radiusChangeRate, radiusStartSize, radiusMaxSize);
+        // _playerLight.Init(radiusChangeRate, radiusStartSize, radiusMaxSize);
     }
 
     // Update is called once per frame

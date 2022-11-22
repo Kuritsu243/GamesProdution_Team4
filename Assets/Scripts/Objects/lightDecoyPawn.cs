@@ -9,10 +9,11 @@ public class lightDecoyPawn : MonoBehaviour
     [SerializeField] private Material activeDecoyMaterial;
     [SerializeField] private int decoyActiveDuration;
     // private variables
-    #pragma warning disable CS0219
+#pragma warning disable CS0219
     private bool _isLit = false;
-    #pragma warning restore CS0219
     private Renderer _lightDecoyRenderer;
+#pragma warning restore CS0414
+
 
     private void Start()
     {

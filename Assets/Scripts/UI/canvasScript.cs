@@ -10,7 +10,9 @@ public class canvasScript : MonoBehaviour
     private GameObject _player;
     private playerHealth _playerHealth;
     private playerShooting _playerShooting;
-    private bool _isCurrentlyPaused;
+#pragma warning disable CS0414
+    private bool _isCurrentlyPaused = false;
+#pragma warning restore CS0414
     // serialized fields that can be accessed in the inspector
     [SerializeField] private Image healthBar;
     [SerializeField] private Image healthBarBackground;

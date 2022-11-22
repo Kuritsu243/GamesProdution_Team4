@@ -18,6 +18,10 @@ TagManager:
   - exitButton
   - furnaceText
   - furnace
+  - winZone
+  - playerCapsule
+  - playerParent
+  - Canvas
   layers:
   - Default
   - TransparentFX

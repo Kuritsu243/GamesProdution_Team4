@@ -33,7 +33,6 @@ public class playerSpriteRotation : MonoBehaviour
     {
         _currentFrame = _playerAnimation.GetCurrentFrame();
         _playerPos = _playerTransform.position;
-        // I have no fucking clue how I coded this
         if (IsAirborne(_currentFrame))
         {
             // get airborne height depending on frame

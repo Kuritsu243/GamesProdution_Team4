@@ -28,40 +28,40 @@ public class shopSystem : MonoBehaviour
 
     private void Update()
     {
-        if (IsNearPlayer() && !_hasSpawnedItems)
+        if (IsNearPlayer() && !_hasSpawnedItems) // if player is near and items haven't spawned
         {
-            SpawnItems();
-            _hasSpawnedItems = true;
+            SpawnItems(); // spawn items
+            _hasSpawnedItems = true; // items have now been spawned
         }
     }
 
-    private bool IsNearPlayer()
+    private bool IsNearPlayer() // returns true or false whether if player is in range
     {
         _distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
         return _distanceToPlayer < rangeToSpawn;
     }
 
-    private void SpawnItems()
+    private void SpawnItems() // spawn items
     {
-        foreach(shopPawn pawn in _shopPawns)
+        foreach(shopPawn pawn in _shopPawns) // for every shop pawn childed to the shop system
         {
-            pawn.GenerateItem(Random.Range(0, _countOfShopItems));
-            pawn.CalculateCost(Random.Range(minItemCost, maxItemCost));
+            pawn.GenerateItem(Random.Range(0, _countOfShopItems)); // randomize number between 0 and the size of array
+            pawn.CalculateCost(Random.Range(minItemCost, maxItemCost)); // randomize number between mix and max cost
         }
     }
 
-    public void PlayerHasCollectedItem(int damage)
+    public void PlayerHasCollectedItem(int damage) // if player has selected item
     {
         foreach (shopPawn pawn in _shopPawns)
         {
-            if (pawn.isSelectedByPlayer)
+            if (pawn.isSelectedByPlayer) // checks if selected by player
             {
-                Destroy(pawn.gameObject);
-                _playerHealth.Damage(pawn.cost);
+                Destroy(pawn.gameObject); // destroy self
+                _playerHealth.Damage(pawn.cost); // damage player
             }
             else
             {
-                pawn.DestroySelfAndItem();
+                pawn.DestroySelfAndItem(); // destroy pawn if not selected
             }
         
         }

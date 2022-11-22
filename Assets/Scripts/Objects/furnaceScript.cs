@@ -10,7 +10,9 @@ public class furnaceScript : MonoBehaviour
     [SerializeField] private float interactableRadius;
     [SerializeField] private float lightCost;
     // private vars
+#pragma warning disable CS0414
     private bool _isLit;
+#pragma warning restore CS0414
     private GameObject _player;
     private float _distanceToPlayer;
     private float _currentLightProgress;

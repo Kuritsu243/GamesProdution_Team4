@@ -18,8 +18,13 @@ public class mothSpawnController : MonoBehaviour
     private int _numberOfMothPrefabs;
     private int _numberOfSpawnPoints;
     private bool _onCooldown;
-    // public vars
-    public bool spawnEnemies;
+    private bool _spawnEnemies;
+
+    public bool SpawnEnemies
+    {
+        get => _spawnEnemies;
+        set => _spawnEnemies = value;
+    }
     private void Awake()
     {
         _numberOfMothPrefabs = mothPrefabs.Length; // get number of prefabs
@@ -28,7 +33,7 @@ public class mothSpawnController : MonoBehaviour
 
     private void Update()
     {
-        if (spawnEnemies && !_onCooldown) // if can spawn enemies
+        if (_spawnEnemies && !_onCooldown) // if can spawn enemies
         {
             Spawn();
         }

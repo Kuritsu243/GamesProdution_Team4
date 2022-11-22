@@ -54,15 +54,17 @@ public class playerController : MonoBehaviour
     [SerializeField] private float worldGravity;
     //Private variables
     private int _maskingLayer;
+#pragma warning disable CS0414
     private bool _isAlive = true;
     private bool _isCharging;
     private bool _isReadyToFire = true;
     private bool _canDodge = true;
+    private float _projectileChargeDuration = 0f;
+#pragma warning restore CS0414
     private bool _currentlyDodging;
     private float _playerHealth;
     private float _projectileCalculatedDamage;
     private float _projectileCharge;
-    private float _projectileChargeDuration = 0f;
     private float _projectileChargeStartTime;
     private Camera _playerCamera;
     private Color _lightRadiusColor;

@@ -9,7 +9,7 @@ public class cameraFollow : MonoBehaviour
 
     private void Start()
     {
-        _cameraStartingPosition = transform.position;
+        _cameraStartingPosition = transform.position; 
     }
 
     public void MoveCamera(float cameraHeight, float zOffset, Vector3 playerPos) // make camera follow player

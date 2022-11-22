@@ -25,31 +25,31 @@ public class shopPawn : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void GenerateItem(int range)
+    public void GenerateItem(int range) // randomise item to create
     {
-        _selectedItem = _shopItems[range];
-        var position = _pawnTransform.position;
+        _selectedItem = _shopItems[range]; // get number of object to spawn
+        var position = _pawnTransform.position; // set pos
         _spawnedItem = Instantiate(_selectedItem, new Vector3(position.x, position.y + 1f, position.z),
-            quaternion.identity, transform);
+            quaternion.identity, transform); // instantiate shop item
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) // on collision
     {
         Debug.Log(other.gameObject);
         if (!other.CompareTag("Player") && !other.CompareTag("lightRadius") &&
-            !other.CompareTag("playerCapsule")) return;
-        isSelectedByPlayer = true;
-        _shopSystem.PlayerHasCollectedItem(cost);
+            !other.CompareTag("playerCapsule")) return; // if not player
+        isSelectedByPlayer = true; // if player chooses pawn's object
+        _shopSystem.PlayerHasCollectedItem(cost); // remove the cost from player health
     }
 
-    public void CalculateCost(int damage)
+    public void CalculateCost(int damage) // calculate damage
     {
         cost = damage;
-        _costText.text = cost.ToString();
+        _costText.text = cost.ToString(); // show cost in UI
     }
 
-    public void DestroySelfAndItem()
+    public void DestroySelfAndItem() // destroys self and spawned object 
     {
         Destroy(_spawnedItem);
         Destroy(gameObject);

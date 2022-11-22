@@ -36,13 +36,13 @@ public class playerHealth : MonoBehaviour
     {
         if (_playerHealth <= 0.01f)
         {
-            Die();
+            Die(); // kill player
         }
     }
 
     private void Die()
     { // destroys player gameobject
         Destroy(this.gameObject);
-        SceneManager.LoadScene("Lose_Screen");
+        SceneManager.LoadScene("Lose_Screen"); // loads lose screen
     }
 }

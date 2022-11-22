@@ -92,25 +92,32 @@ public class renderWithinRadius : MonoBehaviour
     private void Update()
     {
         // _targetScale = _targetScale.ClampMagnitude(_maxRadiusScale.x, 0f);
+#pragma warning disable CS0642
         if (_targetScale.IsGreaterOrEqual(Vector3.zero));
+#pragma warning restore CS0642
         {
             _sphereRadiusTransform.localScale = _targetScale;
         }
 
-        if (_isWithinSafeZone && _targetScale.IsLesserOrEqual(_maxRadiusScale))
+        switch (_isWithinSafeZone)
         {
-            _targetScale += new Vector3(Time.deltaTime * _radiusSizeChangeRate, Time.deltaTime * _radiusSizeChangeRate,
-                Time.deltaTime * _radiusSizeChangeRate);
+            case true when _targetScale.IsLesserOrEqual(_maxRadiusScale):
+                _targetScale += new Vector3(Time.deltaTime * _radiusSizeChangeRate, Time.deltaTime * _radiusSizeChangeRate,
+                    Time.deltaTime * _radiusSizeChangeRate);
+                break;
+            case false when _targetScale.IsGreaterOrEqual(new Vector3(0,0,0)):
+                _targetScale -= new Vector3(Time.deltaTime * _radiusSizeChangeRate, Time.deltaTime * _radiusSizeChangeRate,
+                    Time.deltaTime * _radiusSizeChangeRate);
+                break;
+            default:
+            {
+                if (_currentScale == 0)
+                {
+                    _playerController.PlayerHealth = 0f;
+                }
 
-        }
-        else if (!_isWithinSafeZone && _targetScale.IsGreaterOrEqual(new Vector3(0,0,0)))
-        {
-            _targetScale -= new Vector3(Time.deltaTime * _radiusSizeChangeRate, Time.deltaTime * _radiusSizeChangeRate,
-                Time.deltaTime * _radiusSizeChangeRate);
-        }
-        else if (_currentScale == 0)
-        {
-            _playerController.PlayerHealth = 0f;
+                break;
+            }
         }
         
         

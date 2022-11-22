@@ -12,9 +12,9 @@ public class winZoneScript : MonoBehaviour
     {
         Debug.Log(other.gameObject.tag);
         if ((!other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("playerCapsule") &&
-             !other.gameObject.CompareTag("lightRadius")) || !haveConditionsBeenMet) return;
+             !other.gameObject.CompareTag("lightRadius")) || !haveConditionsBeenMet) return; // if not player then do nothing
         _collidedPlayer = other.gameObject;
-        SceneManager.LoadScene("Win_Screen");
+        SceneManager.LoadScene("Win_Screen"); // load win screen
 
     }
 }

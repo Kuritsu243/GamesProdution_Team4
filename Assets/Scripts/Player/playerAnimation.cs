@@ -10,9 +10,6 @@ public class playerAnimation : MonoBehaviour
     private SpriteRenderer _playerSpriteRenderer;
     private bool _isPlayerMoving;
     private string _currentFrame;
-    private float _clipLength;
-    private float _clipFrameRate;
-    private float _clipWeight;
     private bool _isMoving;
     private const string RegexPattern = @"\d+";
     private Transform _spriteTransform;
@@ -36,33 +33,27 @@ public class playerAnimation : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        _isPlayerMoving = _playerMovement.IsMoving;
-        switch (_isPlayerMoving)
+        _isPlayerMoving = _playerMovement.IsMoving; // if player is moving
+        switch (_isPlayerMoving) // check the conditions
         {
             case false:
-                PlayerAnimator.Play("playerIdle");
+                PlayerAnimator.Play("playerIdle"); // play idle anim
                 PlayerAnimator.speed = 1f;
-                _clipWeight = PlayerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-                _clipLength = idleAnim.length;
-                _clipFrameRate = idleAnim.frameRate;
                 break;
             case true:
-                PlayerAnimator.Play("playerAnimation");
+                PlayerAnimator.Play("playerAnimation"); // play moving anim
                 PlayerAnimator.speed = 1f;
-                _clipWeight = PlayerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-                _clipLength = movingAnim.length;
-                _clipFrameRate = movingAnim.frameRate;
                 break;
         }
         
 
 
     }
-    public string GetCurrentFrame()
+    public string GetCurrentFrame() // gets current frame of anim
     {
-        _currentFrame = _playerSpriteRenderer.sprite.name;
-        _currentFrame = Regex.Match(_currentFrame, RegexPattern).Value;
-        return _currentFrame;
+        _currentFrame = _playerSpriteRenderer.sprite.name; // current frame = the name of the frame
+        _currentFrame = Regex.Match(_currentFrame, RegexPattern).Value; // removes text via regex, returns only a number
+        return _currentFrame; // return frame number
     }
 
 }

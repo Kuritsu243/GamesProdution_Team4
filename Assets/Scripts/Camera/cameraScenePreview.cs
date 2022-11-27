@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class cameraScenePreview : MonoBehaviour
 {
     [SerializeField] List<GameObject> followPoints = new List<GameObject>(); // creates a list of points
-    [SerializeField] private bool isMoving; 
+    [SerializeField] private bool isMoving;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
 
@@ -18,7 +19,12 @@ public class cameraScenePreview : MonoBehaviour
     private Camera _playerCamera;
     private Transform _targetPosition;
     private Transform _currentPosition;
-
+    private Vector3 _bezierPosition;
+    private bool _movingAlongBezier;
+    private bool _hasBezierMoveBeenCalled;
+    private bool _movingToCurve;
+    private bool _atStartOfCurve;
+    private const string CurvePattern = @"\bCurve\b\([0]\)";
     private int _targetPoint;
     private int _numberOfPoints;
 
@@ -27,6 +33,7 @@ public class cameraScenePreview : MonoBehaviour
         get => followPoints;
         set => followPoints = value;
     }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -39,12 +46,16 @@ public class cameraScenePreview : MonoBehaviour
         _numberOfPoints = followPoints.Count; // get number of points
         _playerParent.SetActive(false); // disable player GOs
         _canvas.SetActive(false); // disable UI
+        _movingAlongBezier = false;
+        _hasBezierMoveBeenCalled = false;
     }
-    
+
+
 
     // Update is called once per frame
     private void FixedUpdate()
     {
+
         if (_targetPoint >= followPoints.Count) // if the array has reached the end 
         {
             _playerParent.SetActive(true); // enable player
@@ -52,21 +63,92 @@ public class cameraScenePreview : MonoBehaviour
             _previewCamera.enabled = false; // disable preview camera
             Destroy(this.gameObject); // destroy self
         }
+        MoveCamera(_targetPoint);
+        Debug.Log(followPoints[_targetPoint].name);
+        Debug.Log(followPoints[_targetPoint].name.Contains("Curve(0)"));
+
+    }
+
+    private void MoveCamera(int pointNumber)
+    {
         var moveStep = moveSpeed * Time.deltaTime; // move speed calculation
         var rotateStep = rotateSpeed * Time.deltaTime; // rotate speed calculation
-        _cameraObject.transform.position =
-            Vector3.MoveTowards(_cameraObject.transform.position, followPoints[_targetPoint].transform.position, moveStep); // make camera move towards next point with the calculated move speed
-        if (followPoints[_targetPoint].transform.localRotation != _cameraObject.transform.localRotation) // if next point has rotation
+
+        _movingToCurve = CheckIfStartOfCurve(followPoints[pointNumber].name);
+        
+        if (_movingToCurve)
         {
-            _cameraObject.transform.rotation = Quaternion.RotateTowards(_cameraObject.transform.localRotation,
-                followPoints[_targetPoint].transform.localRotation, rotateStep); // rotate towards next point
+            var destination = followPoints[pointNumber].transform.position;
+            _cameraObject.transform.position = Vector3.MoveTowards(_cameraObject.transform.position,
+                destination, moveStep);
+            if (!(Vector3.Distance(_cameraObject.transform.position, destination) < 0.01)) return;
+            _movingAlongBezier = true;
+            _movingToCurve = false;
         }
 
-        if (!(Vector3.Distance(_cameraObject.transform.position, followPoints[_targetPoint].transform.position) <
-              0.001f) ||
-            _cameraObject.transform.localRotation != followPoints[_targetPoint].transform.localRotation) return; // return if not at next point, prevents nested if statements
-        _targetPoint++; // set target point to next
+        if (_movingAlongBezier && _movingToCurve)
+        {
+            return;
+        }
+        
+        switch (_movingAlongBezier)
+        {
+            case true:
+                MovingAlongBezier();
+                break;
+            case false:
+                MovingAlongPoint(moveStep, rotateStep);
+                break;
+        }
+
+
+    }
+
+    private IEnumerator EndOfBezier(float timeTaken)
+    {
+        yield return new WaitForSeconds(timeTaken);
+        _targetPoint += 4;
+        _movingAlongBezier = false;
+        _hasBezierMoveBeenCalled = false;
+    }
+
+    private void MovingAlongBezier()
+    {
+        var point1 = followPoints[_targetPoint].transform.position;
+        var point2 = followPoints[_targetPoint+1].transform.position;
+        var point3 = followPoints[_targetPoint+2].transform.position;
+        var point4 = followPoints[_targetPoint+3].transform.position;
+        var Points = new Vector3[4] {point1, point3, point2, point4};
+
+        if (_hasBezierMoveBeenCalled) return;
+        LeanTween.move(_cameraObject, new LTBezierPath(Points), moveSpeed);
+        StartCoroutine(EndOfBezier(moveSpeed));
+        _hasBezierMoveBeenCalled = true;
+    }
+
+    private void MovingAlongPoint(float moveSpeed, float rotateSpeed)
+    {
+
+        if (_movingAlongBezier) return;
+        _cameraObject.transform.position = Vector3.MoveTowards(_cameraObject.transform.position,
+            followPoints[_targetPoint].transform.position, moveSpeed);
+        if (followPoints[_targetPoint].transform.localRotation != _cameraObject.transform.localRotation)
+        {
+            _cameraObject.transform.rotation = Quaternion.RotateTowards(_cameraObject.transform.localRotation,
+                followPoints[_targetPoint].transform.localRotation, rotateSpeed);
+        }
+        
+        if ((Vector3.Distance(_cameraObject.transform.position, followPoints[_targetPoint].transform.position) <
+                0.01f && !_movingAlongBezier|| _cameraObject.transform.localRotation != followPoints[_targetPoint].transform.localRotation) && !_movingAlongBezier)
+        {
+            _targetPoint++;
+        }
+
     }
     
+    private static bool CheckIfStartOfCurve(string pointName)
+    {
+        return Regex.Match(pointName, CurvePattern).Value == "Curve(0)";
+    }
     
-}
+    }

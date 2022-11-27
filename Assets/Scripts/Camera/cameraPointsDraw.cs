@@ -1,6 +1,9 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -15,6 +18,10 @@ public class cameraPointsDraw : Editor
     private SerializedProperty _listProperty;
     private SerializedProperty _moveSpeed;
     private SerializedProperty _rotateSpeed;
+    private const string CurvePattern = @"\bCurve\b\([0]\)";
+    private const string EndOfCurvePattern = @"\bCurve\b\([3]\)";
+    private const string MiddleOf1CurvePattern = @"\bCurve\b\([1]\)";
+    private const string MiddleOf2CurvePattern = @"\bCurve\b\([2]\)";
   
     private void OnSceneGUI()
     {
@@ -28,41 +35,81 @@ public class cameraPointsDraw : Editor
         for (var i = 0; i < numberOfPoints; i++) // for each point
         {
             var connectedObject = _connectedObjects.FollowPoints[i];
-            Handles.color = Color.green; // sets the drawn line colour to green
-            Handles.DrawLine( // draw line
-                i == 0
-                    ? _connectedObjects.transform.position // if primary point doesn't exist, set the position to the parent
-                    : _connectedObjects.FollowPoints[i - 1].transform.position, connectedObject.transform.position); // if previous points exist, set the point to follow the last point in the array
-
-
-            if (connectedObject.transform.localRotation.x != 0 || connectedObject.transform.localRotation.y != 0 || connectedObject.transform.localRotation.z != 0) // if point has any rotation
+            var pointName = connectedObject.name;
+            if (CheckIfStartOfCurve(pointName) && i+3 < numberOfPoints)
             {
-                Handles.color = Color.red; // sets drawn line colour to red
-                Handles.DrawLine(connectedObject.transform.position, connectedObject.transform.position + connectedObject.transform.forward * 5); // draws a line to show to the direction of rotation
+                DrawCurve(_connectedObjects.FollowPoints[i].transform.position, _connectedObjects.FollowPoints[i+1].transform.position, _connectedObjects.FollowPoints[i+2].transform.position, _connectedObjects.FollowPoints[i+3].transform.position);
             }
-        }
 
-        for (int i = 1; i < numberOfPoints; i+=2)
-        {
-            if (i + 2 < numberOfPoints)
+            if (CheckIfEndOfCurve(pointName) && i+1 < numberOfPoints)
             {
-                var p0 = Handles.PositionHandle(_connectedObjects.FollowPoints[i].transform.position, Quaternion.identity);
-                var p1 = Handles.PositionHandle(_connectedObjects.FollowPoints[i + 1].transform.position, Quaternion.identity);
-                var p2 = Handles.PositionHandle(_connectedObjects.FollowPoints[i + 2].transform.position, Quaternion.identity);
-                //var p0 = _connectedObjects.FollowPoints[i].transform.position;
-                //var p1 = _connectedObjects.FollowPoints[i+1].transform.position;
-                //var p2 = _connectedObjects.FollowPoints[i + 2].transform.position;
-                //var endTangent = Handles.PositionHandle(_connectedObjects.FollowPoints[i].transform.position, Quaternion.identity);
-                Handles.DrawBezier(p0, p2, p0, p1, Color.blue, null, 2f);
+                DrawLine(_connectedObjects.FollowPoints[i].transform, _connectedObjects.FollowPoints[i+1].transform);
             }
+            switch (i)
+            {
+                case 0:
+                    DrawLine(_connectedObjects.transform, _connectedObjects.transform);
+                    break;
+                case > 0 when !CheckIfMiddleOfCurve(pointName) && !CheckIfEndOfCurve(pointName):
+                {
+                    DrawLine(_connectedObjects.FollowPoints[i-1].transform, connectedObject.transform);
+                    if (connectedObject.transform.localRotation.x == 0 && connectedObject.transform.localRotation.y == 0 &&
+                        connectedObject.transform.localRotation.z == 0) continue;
+                    DrawRotation(connectedObject.transform);
+                    break;
+                }
+            }
+ 
         }
     }
+
+    private static void DrawCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+    {
+        var startPos = Handles.PositionHandle(p0, quaternion.identity);
+        var startTangent = Handles.PositionHandle(p1, quaternion.identity);
+        var endPos = Handles.PositionHandle(p3, quaternion.identity);
+        var endTangent = Handles.PositionHandle(p2, quaternion.identity);
+        
+        Handles.DrawBezier(startPos, endPos, startTangent, endTangent, Color.blue, null, 2f);
+    }
+
+    private static void DrawLine(Transform p0, Transform p1)
+    {
+        Handles.color = Color.green;
+        var startPos = p0.position;
+        var endPos = p1.position;
+        Handles.DrawLine(startPos, endPos);
+    }
+
+    private static void DrawRotation(Transform p0)
+    {
+        Handles.color = Color.red;
+        var startPos = p0.position;
+        var endPos = startPos + p0.forward * 5;
+        Handles.DrawLine(startPos, endPos);
+    }
+
+    private static bool CheckIfStartOfCurve(string pointName)
+    {
+        return Regex.Match(pointName, CurvePattern).Value == "Curve(0)";
+    }
+
+    private static bool CheckIfEndOfCurve(string pointName)
+    {
+        return Regex.Match(pointName, EndOfCurvePattern).Value == "Curve(3)";
+    }
+
+    private static bool CheckIfMiddleOfCurve(string pointName)
+    {
+        return Regex.Match(pointName, MiddleOf1CurvePattern).Value == "Curve(1)" || Regex.Match(pointName, MiddleOf2CurvePattern).Value == "Curve(2)";
+    }
+    
     
     public override void OnInspectorGUI()
     {
         
         serializedObject.Update(); // update the serialized object
-        _points.DoLayoutList(); // show the re-ordrable list in the inspector
+        _points.DoLayoutList(); // show the ordable list in the inspector
         serializedObject.ApplyModifiedProperties(); // apply properties to serialized object
 
         if (GUILayout.Button("Add new point")) // adds "add new point" button to inspector
@@ -72,12 +119,14 @@ public class cameraPointsDraw : Editor
             {
                 newObj.transform.parent = GameObject.Find("scenePreview").transform; // set parent 
                 newObj.transform.position = GameObject.Find("scenePreview").transform.position; // set pos to parent
+                newObj.name = "Point(0)";
             }
             else // if points exist
             {
                 newObj.transform.parent = _connectedObjects.FollowPoints[^1].transform.parent; // set parent
                 newObj.transform.position = _connectedObjects.FollowPoints[^1].transform.position +
                                             _connectedObjects.FollowPoints[^1].transform.forward * 5; // set position to in-front of the last point
+                newObj.name = $"Point({_connectedObjects.FollowPoints.Count + 1})";
             }
             _connectedObjects.FollowPoints.Add(newObj); // append to the list
         }
@@ -89,6 +138,7 @@ public class cameraPointsDraw : Editor
                 newObj.transform.parent = GameObject.Find("scenePreview").transform; // set parent
                 newObj.transform.position = GameObject.Find("scenePreview").transform.position; // sets pos to parent
                 newObj.transform.localRotation = GameObject.Find("scenePreview").transform.localRotation; // set rotation to the same as parent
+                newObj.name = "Point(0)";
             }
             else
             {
@@ -96,8 +146,32 @@ public class cameraPointsDraw : Editor
                 newObj.transform.position = _connectedObjects.FollowPoints[^1].transform.position +
                                             _connectedObjects.FollowPoints[^1].transform.forward * 5; // set pos to in-front of the last point
                 newObj.transform.rotation = _connectedObjects.FollowPoints[^1].transform.rotation; // set rotation to the same of the last point
+                newObj.name = $"Point({_connectedObjects.FollowPoints.Count + 1})";
             }
             _connectedObjects.FollowPoints.Add(newObj); // append to list
+        }
+
+        if (GUILayout.Button("Add new curve"))
+        {
+            for (var i = 0; i < 4; i++)
+            {
+                var newObj = new GameObject();
+                if (_connectedObjects.FollowPoints.Count == 0 && i == 0)
+                {
+                    newObj.transform.parent = GameObject.Find("scenePreview").transform; // set parent
+                    newObj.transform.position = GameObject.Find("scenePreview").transform.position; // sets pos to parent
+                    newObj.transform.localRotation = GameObject.Find("scenePreview").transform.localRotation; // set rotation to the same as parent
+                    newObj.name = $"Point(0),Curve({i})";
+                }
+                else
+                {
+                    newObj.transform.parent = _connectedObjects.FollowPoints[^1].transform.parent; // set parent
+                    newObj.transform.position = _connectedObjects.FollowPoints[^1].transform.position +
+                                                _connectedObjects.FollowPoints[^1].transform.forward * 5; // set pos to in-front of the last point
+                    newObj.name = $"Point({_connectedObjects.FollowPoints.Count + 1}),Curve({i})";
+                }
+                _connectedObjects.FollowPoints.Add(newObj);
+            }
         }
 
         EditorGUILayout.PropertyField(_moveSpeed); // create field for move speed, custom editor doesn't show this by default
@@ -147,5 +221,5 @@ public class cameraPointsDraw : Editor
 }
 
 
-
+#endif
 

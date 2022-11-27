@@ -10,6 +10,7 @@ public class projectileScript : MonoBehaviour
     private GameObject _collidedEnemy;
     private GameObject _collidedDecoy;
     private GameObject _collidedFurnace;
+    private GameObject _projectileParent;
     private lightDecoyPawn _decoyScript;
     private mothController _collidedEnemyScript;
     private furnaceScript _collidedFurnaceScript;
@@ -17,6 +18,9 @@ public class projectileScript : MonoBehaviour
     private float _projectileDamage;
     private float _projectileDespawnRate;
     private Rigidbody _projectileRigidbody;
+    private SpriteRenderer _projectileSprite;
+    private GameObject _projectileSpriteGameObject;
+    private Camera _playerCamera;
 
     // projectile variables
     private float _projectileSpeed;
@@ -26,8 +30,22 @@ public class projectileScript : MonoBehaviour
     {
         StartCoroutine(DespawnCountdown()); // start countdown until despawn
         _projectileRigidbody = GetComponent<Rigidbody>(); // get rigidbody of the projectile
+        _playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        _projectileSprite = transform.parent.GetComponentInChildren<SpriteRenderer>();
+        _projectileSpriteGameObject = _projectileSprite.gameObject;
+        _projectileSpriteGameObject.transform.LookAt(transform.forward);
+        _projectileParent = transform.parent.gameObject;
+        
         _projectileRigidbody.AddForce(transform.forward * _projectileSpeed, ForceMode.Impulse); // add force to travel in the intended direction
-        transform.localScale = transform.localScale * _projectileCharge * 1.5f; // adjust scale depending on how much the player charged up the shot
+        _projectileParent.transform.localScale = _projectileParent.transform.localScale * _projectileCharge * 1.5f; // adjust scale depending on how much the player charged up the shot
+
+    }
+
+    private void FixedUpdate()
+    {
+        _projectileSpriteGameObject.transform.position = transform.position;
+        _projectileSpriteGameObject.transform.LookAt(transform.forward);
+        _projectileSprite.flipX = !(transform.eulerAngles.y > 180f);
     }
 
     // Update is called once per frame
@@ -81,6 +99,6 @@ public class projectileScript : MonoBehaviour
 
     private void Despawn() // despawn the bullet
     {
-        Destroy(this.gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }

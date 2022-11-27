@@ -14,6 +14,7 @@ public class playerController2 : MonoBehaviour
     private cameraFollow _cameraFollow;
     private renderWithinRadius _playerLight;
     private GameObject _player;
+    private Camera _playerCamera;
     // Start is called before the first frame update
     private void Start()
     {
@@ -22,6 +23,7 @@ public class playerController2 : MonoBehaviour
         _playerMovement = GetComponent<playerMovement>();
         _playerLight = GetComponentInChildren<renderWithinRadius>();
         _cameraFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>();
+        _playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         // _playerLight.Init(radiusChangeRate, radiusStartSize, radiusMaxSize);
     }
 

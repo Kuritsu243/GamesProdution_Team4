@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,6 +24,7 @@ public class mothController : MonoBehaviour
     private lightDecoyController _lightDecoyController;
     private NavMeshAgent _mothNavMeshAgent;
     private playerHealth _playerHealth;
+    private Camera _playerCamera;
     
 
     // private variables
@@ -36,9 +38,10 @@ public class mothController : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player"); // find player
         _playerHealth = _player.GetComponent<playerHealth>(); // get player health script from player
         _mothNavMeshAgent = GetComponent<NavMeshAgent>(); // get AI nav component
+        _playerCamera = _player.transform.parent.GetComponentInChildren<Camera>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_isTargetingPlayer) // if currently targeting player
         {
@@ -51,6 +54,11 @@ public class mothController : MonoBehaviour
         }
 
         StartCoroutine(CheckForDecoys()); // check for decoys periodically
+    }
+
+    private void LateUpdate()
+    {
+        transform.LookAt(_playerCamera.transform);
     }
 
     private void CheckSurroundings()
@@ -83,12 +91,12 @@ public class mothController : MonoBehaviour
         _isTargetingPlayer = false; // no longer targeting player
     }
 
-    void TargetPlayer()
+    private void TargetPlayer()
     {
         _isTargetingPlayer = true; // targets player
     }
 
-    void Die()
+    private void Die()
     {
         Debug.Log("moth death");
         Destroy(this.gameObject); // despawn

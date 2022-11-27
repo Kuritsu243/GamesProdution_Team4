@@ -418,7 +418,7 @@ MonoBehaviour:
   projectileDespawnRate: 10
   projectileCooldown: 0.8
   projectileCost: 0
-  playerProjectile: {fileID: 5315226020846044873, guid: 52bea41a062f39d419a16c0703fd9622, type: 3}
+  playerProjectile: {fileID: 2604022971970273221, guid: 7b347fe8898c7dc4cb624f3628d0c58f, type: 3}
   projectileChargeDuration: 0
 --- !u!114 &3667045216700483928
 MonoBehaviour:

@@ -6,10 +6,11 @@ using UnityEngine;
 
 public class cameraScenePreview : MonoBehaviour
 {
-    [SerializeField] List<GameObject> followPoints = new List<GameObject>(); // creates a list of points
+    [SerializeField] private List<GameObject> followPoints = new List<GameObject>(); // creates a list of points
     [SerializeField] private bool isMoving;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
+    [SerializeField] public float lineDistanceMultiplier = 1f;
 
     private GameObject _player;
     private GameObject _playerParent;
@@ -61,7 +62,7 @@ public class cameraScenePreview : MonoBehaviour
             _playerParent.SetActive(true); // enable player
             _canvas.SetActive(true); // enable UI
             _previewCamera.enabled = false; // disable preview camera
-            Destroy(this.gameObject); // destroy self
+            gameObject.SetActive(false); // destroy self
         }
         MoveCamera(_targetPoint);
         Debug.Log(followPoints[_targetPoint].name);

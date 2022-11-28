@@ -2,12 +2,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using Unity.Mathematics;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
+
+
 
 [CustomEditor(typeof(cameraScenePreview))]
 public class cameraPointsDraw : Editor
@@ -18,6 +23,7 @@ public class cameraPointsDraw : Editor
     private SerializedProperty _listProperty;
     private SerializedProperty _moveSpeed;
     private SerializedProperty _rotateSpeed;
+    private SerializedProperty _lineDistanceMultiplier;
     private const string CurvePattern = @"\bCurve\b\([0]\)";
     private const string EndOfCurvePattern = @"\bCurve\b\([3]\)";
     private const string MiddleOf1CurvePattern = @"\bCurve\b\([1]\)";
@@ -125,7 +131,7 @@ public class cameraPointsDraw : Editor
             {
                 newObj.transform.parent = _connectedObjects.FollowPoints[^1].transform.parent; // set parent
                 newObj.transform.position = _connectedObjects.FollowPoints[^1].transform.position +
-                                            _connectedObjects.FollowPoints[^1].transform.forward * 5; // set position to in-front of the last point
+                                            _connectedObjects.FollowPoints[^1].transform.forward * (_connectedObjects.transform.localScale.x * _connectedObjects.lineDistanceMultiplier); // set position to in-front of the last point
                 newObj.name = $"Point({_connectedObjects.FollowPoints.Count + 1})";
             }
             _connectedObjects.FollowPoints.Add(newObj); // append to the list
@@ -144,7 +150,7 @@ public class cameraPointsDraw : Editor
             {
                 newObj.transform.parent = _connectedObjects.FollowPoints[^1].transform.parent; // set parent
                 newObj.transform.position = _connectedObjects.FollowPoints[^1].transform.position +
-                                            _connectedObjects.FollowPoints[^1].transform.forward * 5; // set pos to in-front of the last point
+                                            _connectedObjects.FollowPoints[^1].transform.forward * (_connectedObjects.transform.localScale.x * _connectedObjects.lineDistanceMultiplier); // set pos to in-front of the last point
                 newObj.transform.rotation = _connectedObjects.FollowPoints[^1].transform.rotation; // set rotation to the same of the last point
                 newObj.name = $"Point({_connectedObjects.FollowPoints.Count + 1})";
             }
@@ -167,7 +173,7 @@ public class cameraPointsDraw : Editor
                 {
                     newObj.transform.parent = _connectedObjects.FollowPoints[^1].transform.parent; // set parent
                     newObj.transform.position = _connectedObjects.FollowPoints[^1].transform.position +
-                                                _connectedObjects.FollowPoints[^1].transform.forward * 5; // set pos to in-front of the last point
+                                                _connectedObjects.FollowPoints[^1].transform.forward * (_connectedObjects.transform.localScale.x * _connectedObjects.lineDistanceMultiplier); // set pos to in-front of the last point
                     newObj.name = $"Point({_connectedObjects.FollowPoints.Count + 1}),Curve({i})";
                 }
                 _connectedObjects.FollowPoints.Add(newObj);
@@ -176,6 +182,7 @@ public class cameraPointsDraw : Editor
 
         EditorGUILayout.PropertyField(_moveSpeed); // create field for move speed, custom editor doesn't show this by default
         EditorGUILayout.PropertyField(_rotateSpeed); // create field to rotate speed, same reason as above
+        EditorGUILayout.PropertyField(_lineDistanceMultiplier); // see above
         serializedObject.ApplyModifiedProperties(); // apply changes if made
     }
     
@@ -184,6 +191,7 @@ public class cameraPointsDraw : Editor
         _listProperty = serializedObject.FindProperty("followPoints"); // find the followPoints list from the target script
         _moveSpeed = serializedObject.FindProperty("moveSpeed"); // finds the move speed from target script
         _rotateSpeed = serializedObject.FindProperty("rotateSpeed"); // finds the rotate speed from target script
+        _lineDistanceMultiplier = serializedObject.FindProperty("lineDistanceMultiplier");
         _points = new ReorderableList(serializedObject, _listProperty, true, true, false, false); // show list in inspector
         
         #region ReordableList Draw callback

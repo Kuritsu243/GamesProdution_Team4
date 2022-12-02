@@ -10,13 +10,16 @@ public class canvasScript : MonoBehaviour
     private GameObject _player;
     private playerHealth _playerHealth;
     private playerShooting _playerShooting;
+    private Vector2 _healthBarOriginalPos;
+    private RectTransform _healthBarFlameRect;
 #pragma warning disable CS0414
     private bool _isCurrentlyPaused = false;
 #pragma warning restore CS0414
     // serialized fields that can be accessed in the inspector
     [SerializeField] private Image healthBar;
-    [SerializeField] private Image healthBarBackground;
+    [SerializeField] private Image healthBarFlame;
     [SerializeField] private Image chargeBar;
+    [SerializeField] private Image chargeBarBG;
     [SerializeField] private Button pauseButton;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private Button resumeButton;
@@ -34,17 +37,39 @@ public class canvasScript : MonoBehaviour
         mainMenuButton.onClick.AddListener(MainMenuButtonClicked);
         quitButton.onClick.AddListener(QuitButtonClicked);
         pauseScreen.SetActive(false);
+        _healthBarOriginalPos = healthBar.rectTransform.rect.position;
+        _healthBarFlameRect = healthBarFlame.GetComponent<RectTransform>();
+        healthBarFlame.enabled = false;
     }
 
     private void FixedUpdate()
     {
         healthBar.fillAmount = _playerHealth.PlayerHealth / _playerHealth.PlayerMaxHealth;
-        chargeBar.fillAmount = _playerShooting.IsCharging switch
+        if (healthBar.fillAmount < 1)
         {
-            // fills the health bar image by how much health the player has compared to their max health
-            true => _playerShooting.projectileChargeDuration / _playerShooting.ProjectileMaxCharge,
-            false => 0
-        };
+            healthBarFlame.enabled = true;
+            _healthBarFlameRect.anchorMin = new Vector2(healthBar.fillAmount, _healthBarFlameRect.anchorMin.y);
+            _healthBarFlameRect.anchorMax = new Vector2(healthBar.fillAmount, _healthBarFlameRect.anchorMax.y);
+            _healthBarFlameRect.anchoredPosition = Vector2.zero;
+            ;
+        }
+
+        if (_playerShooting.IsCharging)
+        {
+            chargeBar.fillAmount = _playerShooting.projectileChargeDuration / _playerShooting.ProjectileMaxCharge;
+            chargeBarBG.enabled = true;
+        }
+        else
+        {
+            chargeBar.fillAmount = 0;
+            chargeBarBG.enabled = false;
+        }
+        // chargeBar.fillAmount = _playerShooting.IsCharging switch
+        // {
+        //     // fills the health bar image by how much health the player has compared to their max health
+        //     true => _playerShooting.projectileChargeDuration / _playerShooting.ProjectileMaxCharge,
+        //     false => 0
+        // };
     }
 
     private void PauseButtonClicked()

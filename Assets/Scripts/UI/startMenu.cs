@@ -11,14 +11,20 @@ public class startMenu : MonoBehaviour
 
     private Button _startButton;
     private Button _exitButton;
+
+    [SerializeField] private bool _isLoseScreen;
     // Start is called before the first frame update
 
     private void Awake()
     {
+        if (!_isLoseScreen)
+        {
+            _exitButton = GameObject.FindGameObjectWithTag("exitButton").GetComponent<Button>();
+            _exitButton.onClick.AddListener(OnExitButtonClicked);
+        }
         _startButton = GameObject.FindGameObjectWithTag("startButton").GetComponent<Button>();
-        _exitButton = GameObject.FindGameObjectWithTag("exitButton").GetComponent<Button>();
         _startButton.onClick.AddListener(OnStartButtonClicked);
-        _exitButton.onClick.AddListener(OnExitButtonClicked);
+
 #if UNITY_ANDROID
         Application.targetFrameRate = 30;
 #endif

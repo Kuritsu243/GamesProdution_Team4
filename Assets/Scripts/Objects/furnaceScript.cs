@@ -21,6 +21,7 @@ public class furnaceScript : MonoBehaviour
     private playerHealth _playerHealth;
     private GameObject _furnaceUITextParent;
     private Image _furnaceBarImage;
+    private Image _furnaceBarImageBG;
     private TextMeshProUGUI _furnaceBarText;
     private winZoneScript _winZoneScript;
     private void Awake()
@@ -28,7 +29,8 @@ public class furnaceScript : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player"); // get player
         _playerTransform = _player.transform; // get player transform
         _furnaceUITextParent = GameObject.FindGameObjectWithTag("furnaceText"); // get furnace canvas text
-        _furnaceBarImage = _furnaceUITextParent.GetComponentInChildren<Image>(); // get furnace progress bar
+        _furnaceBarImage = GameObject.FindGameObjectWithTag("furnaceFillBar").GetComponent<Image>(); // get furnace progress bar
+        _furnaceBarImageBG = GameObject.FindGameObjectWithTag("furnaceFillBarBG").GetComponent<Image>(); // get furnace progress bar bg
         _furnaceBarText = _furnaceUITextParent.GetComponentInChildren<TextMeshProUGUI>(); // get bar text
         _winZoneScript = GameObject.FindGameObjectWithTag("winZone").GetComponent<winZoneScript>(); // get winzone script
         ToggleUIAssets(false); // disable UI assets
@@ -49,6 +51,7 @@ public class furnaceScript : MonoBehaviour
         _isLit = true; 
         _winZoneScript.haveConditionsBeenMet = true; // enable win zone
         _furnaceBarImage.enabled = false;
+        _furnaceBarImageBG.enabled = false;
         _furnaceBarText.text = "Furnace lit! Go to the window to complete the level";
     }
 
@@ -61,6 +64,7 @@ public class furnaceScript : MonoBehaviour
     private void ToggleUIAssets(bool yn) // toggle ui assets script
     {
         _furnaceBarImage.enabled = yn;
+        _furnaceBarImageBG.enabled = yn;
         _furnaceBarText.enabled = yn;
     }
 

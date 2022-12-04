@@ -76,7 +76,7 @@ public class cameraScenePreview : MonoBehaviour
         var rotateStep = rotateSpeed * Time.deltaTime; // rotate speed calculation
 
         _movingToCurve = CheckIfStartOfCurve(followPoints[pointNumber].name);
-        
+        Debug.Log(_movingToCurve);
         if (_movingToCurve)
         {
             var destination = followPoints[pointNumber].transform.position;
@@ -140,7 +140,7 @@ public class cameraScenePreview : MonoBehaviour
         }
         
         if ((Vector3.Distance(_cameraObject.transform.position, followPoints[_targetPoint].transform.position) <
-                0.01f && !_movingAlongBezier|| _cameraObject.transform.localRotation != followPoints[_targetPoint].transform.localRotation) && !_movingAlongBezier)
+                0.01f && !_movingAlongBezier && _cameraObject.transform.localRotation == followPoints[_targetPoint].transform.localRotation))
         {
             _targetPoint++;
         }

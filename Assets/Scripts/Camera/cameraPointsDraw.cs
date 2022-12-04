@@ -180,6 +180,30 @@ public class cameraPointsDraw : Editor
             }
         }
 
+        if (GUILayout.Button("Add new curve with inherited rotation"))
+        {
+            for (var i = 0; i < 4; i++)
+            {
+                var newObj = new GameObject();
+                if (_connectedObjects.FollowPoints.Count == 0 && i == 0)
+                {
+                    newObj.transform.parent = GameObject.Find("scenePreview").transform; // set parent
+                    newObj.transform.position = GameObject.Find("scenePreview").transform.position; // sets pos to parent
+                    newObj.transform.localRotation = GameObject.Find("scenePreview").transform.localRotation; // set rotation to the same as parent
+                    newObj.name = $"Point(0),Curve({i})";
+                }
+                else
+                {
+                    newObj.transform.parent = _connectedObjects.FollowPoints[^1].transform.parent; // set parent
+                    newObj.transform.position = _connectedObjects.FollowPoints[^1].transform.position +
+                                                _connectedObjects.FollowPoints[^1].transform.forward * (_connectedObjects.transform.localScale.x * _connectedObjects.lineDistanceMultiplier); // set pos to in-front of the last point
+                    newObj.transform.localRotation = _connectedObjects.FollowPoints[^1].transform.rotation;
+                    newObj.name = $"Point({_connectedObjects.FollowPoints.Count + 1}),Curve({i})";
+                }
+                _connectedObjects.FollowPoints.Add(newObj);
+            }
+        }
+
         EditorGUILayout.PropertyField(_moveSpeed); // create field for move speed, custom editor doesn't show this by default
         EditorGUILayout.PropertyField(_rotateSpeed); // create field to rotate speed, same reason as above
         EditorGUILayout.PropertyField(_lineDistanceMultiplier); // see above

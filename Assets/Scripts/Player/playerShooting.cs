@@ -66,6 +66,10 @@ public class playerShooting : MonoBehaviour
         else if (!_inputSystem.mouseFire && _canFire && IsCharging)
         {
             _projectileCalculatedDamage = projectileBaseDamage * projectileChargeDuration;
+            if (_projectileCalculatedDamage < 1)
+            {
+                _projectileCalculatedDamage = 1;
+            }
             Shoot(_projectileCalculatedDamage);
             StartCoroutine(FiringCooldown());
             IsCharging = false;
@@ -91,6 +95,6 @@ public class playerShooting : MonoBehaviour
         _spawnedObject = Instantiate(playerProjectile, _projectileSpawnPoint.transform.position, transform.rotation);
         _spawnedObjectScript = _spawnedObject.GetComponentInChildren<projectileScript>(); // get projectile script of spawned object
         _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate, _projectileCharge); // pass through variables
-        _playerHealth.Damage(projectileCost * _projectileCharge);
+        _playerHealth.Damage(projectileDamage);
     }
 }

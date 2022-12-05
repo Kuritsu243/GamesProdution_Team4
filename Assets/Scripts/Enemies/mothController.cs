@@ -14,6 +14,7 @@ public class mothController : MonoBehaviour
     [SerializeField] private float damageAmount;
     [SerializeField] private float checkSurroundingFrequency;
     [SerializeField] private float timeInBetweenDealingDamage;
+    [SerializeField] private GameObject healthObject;
     private GameObject _detectedActiveDecoy;
     private GameObject _collidedObject;
     private lightDecoyPawn _detectedDecoyScript;
@@ -98,10 +99,10 @@ public class mothController : MonoBehaviour
 
     private void Die()
     {
+        var healthPickup = Instantiate(healthObject, transform.position, Quaternion.identity);
         Debug.Log("moth death");
         Destroy(this.gameObject); // despawn
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         _collidedObject = collision.gameObject;

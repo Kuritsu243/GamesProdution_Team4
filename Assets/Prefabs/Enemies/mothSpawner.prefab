@@ -168,7 +168,7 @@ Transform:
   - {fileID: 8525267378720431375}
   - {fileID: 8525267380126291252}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8525267380167654455
 MonoBehaviour:
@@ -189,5 +189,4 @@ MonoBehaviour:
   mothPrefabs:
   - {fileID: 5495732648329243965, guid: 782d2a0813b914c4e988a36673a0e6a0, type: 3}
   spawnCooldown: 1.5
-  spawnAmount: 2
-  spawnEnemies: 0
+  spawnAmount: 1

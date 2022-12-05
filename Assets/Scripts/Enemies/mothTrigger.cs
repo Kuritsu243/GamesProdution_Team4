@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class mothTrigger : MonoBehaviour
 {
     private GameObject _player;
     [SerializeField] private GameObject[] mothSpawnersToBeTriggered;
-
+    [SerializeField] private GameObject[] mothSpawnersToBeDisabled;
+    [SerializeField] private bool randomizeSpawning;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -23,9 +25,24 @@ public class mothTrigger : MonoBehaviour
 #pragma warning disable CS0642
         if (!other.gameObject == _player); // if object isn't player then return
 #pragma warning restore CS0642
+        if (randomizeSpawning)
+        {
+            foreach (var spawnController in mothSpawnersToBeTriggered)
+            {
+                spawnController.GetComponent<mothSpawnController>().RandomizeSpawning = true;
+            }
+        }
         foreach (var spawnController in mothSpawnersToBeTriggered) // for each moth spawner
         {
+            
             spawnController.GetComponent<mothSpawnController>().SpawnEnemies = true; // enable spawning
+        }
+
+        if (mothSpawnersToBeDisabled == null) return;
+        
+        foreach (var spawnController in mothSpawnersToBeDisabled)
+        {
+            spawnController.GetComponent<mothSpawnController>().SpawnEnemies = false;
         }
     }
 

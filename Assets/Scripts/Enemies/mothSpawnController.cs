@@ -19,11 +19,18 @@ public class mothSpawnController : MonoBehaviour
     private int _numberOfSpawnPoints;
     private bool _onCooldown;
     private bool _spawnEnemies;
+    private bool _randomizeSpawning;
 
     public bool SpawnEnemies
     {
         get => _spawnEnemies;
         set => _spawnEnemies = value;
+    }
+
+    public bool RandomizeSpawning
+    {
+        get => _randomizeSpawning;
+        set => _randomizeSpawning = value;
     }
     private void Awake()
     {
@@ -41,17 +48,29 @@ public class mothSpawnController : MonoBehaviour
 
     private void Spawn()
     {
-        foreach (var spawnPoint in spawnPoints) // for each spawn point
+        if (_randomizeSpawning)
         {
-            if (!spawnPoint.GetComponent<mothSpawnPawn>().isEnabled) continue; // if spawn point is enabled then
-            for (var i = 0; i < spawnAmount; i++) // for how many moths the point should spawn
+            var chosenInt = Random.Range(0, _numberOfSpawnPoints);
+            for (var i = 0; i < spawnAmount; i++)
             {
-                var position = spawnPoint.transform.position; 
-                var spawnedObject = Instantiate(mothPrefabs[RandomizeMothPrefab()], new Vector3(position.x, position.y + 2f, position.z),
-                    quaternion.identity);// spawn at spawn point pos
+                var position = spawnPoints[chosenInt].transform.position;
+                var spawnedObject = Instantiate(mothPrefabs[RandomizeMothPrefab()],
+        new Vector3(position.x, position.y, position.z), quaternion.identity);
             }
         }
-
+        else
+        {
+            foreach (var spawnPoint in spawnPoints) // for each spawn point
+            {
+                if (!spawnPoint.GetComponent<mothSpawnPawn>().isEnabled) continue; // if spawn point is enabled then
+                for (var i = 0; i < spawnAmount; i++) // for how many moths the point should spawn
+                {
+                    var position = spawnPoint.transform.position; 
+                    var spawnedObject = Instantiate(mothPrefabs[RandomizeMothPrefab()], new Vector3(position.x, position.y + 2f, position.z),
+                        quaternion.identity);// spawn at spawn point pos
+                }
+            }
+        }
         StartCoroutine(SpawnCooldown()); // start spawn cooldown
     }
 

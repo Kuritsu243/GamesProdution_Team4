@@ -84,11 +84,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d0099412c25a14b9d296fdd553ef97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 2
+  enemyHealth: 1
   sphereCastRadius: 5
   damageAmount: 5
   checkSurroundingFrequency: 2
   timeInBetweenDealingDamage: 1.5
+  healthObject: {fileID: 7955768921641992954, guid: e17f8b80ce31d12409ae52cb0e97f251, type: 3}
 --- !u!54 &-5888814701877389824
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -103,7 +104,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 32
   m_CollisionDetection: 0
 --- !u!212 &4401205724258114793
 SpriteRenderer:

@@ -30,6 +30,7 @@ public class playerHealth : MonoBehaviour
     {
         _playerHealth -= damageAmount; // reduces health by damage value passed through 
         _gameSaturationModifier.CalculateSaturationLevel();
+        _gameSaturationModifier.CalculateVignetteStrength();
     }
 
     private void FixedUpdate()

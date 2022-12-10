@@ -24,6 +24,7 @@ public class furnaceScript : MonoBehaviour
     private Image _furnaceBarImageBG;
     private TextMeshProUGUI _furnaceBarText;
     private winZoneScript _winZoneScript;
+    private Light _litLight;
     private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player
@@ -33,6 +34,8 @@ public class furnaceScript : MonoBehaviour
         _furnaceBarImageBG = GameObject.FindGameObjectWithTag("furnaceFillBarBG").GetComponent<Image>(); // get furnace progress bar bg
         _furnaceBarText = _furnaceUITextParent.GetComponentInChildren<TextMeshProUGUI>(); // get bar text
         _winZoneScript = GameObject.FindGameObjectWithTag("winZone").GetComponent<winZoneScript>(); // get winzone script
+        _litLight = GetComponentInChildren<Light>();
+        _litLight.enabled = false;
         ToggleUIAssets(false); // disable UI assets
     }
     
@@ -52,6 +55,7 @@ public class furnaceScript : MonoBehaviour
         _winZoneScript.haveConditionsBeenMet = true; // enable win zone
         _furnaceBarImage.enabled = false;
         _furnaceBarImageBG.enabled = false;
+        _litLight.enabled = true;
         _furnaceBarText.text = "Furnace lit! Go to the window to complete the level";
     }
 

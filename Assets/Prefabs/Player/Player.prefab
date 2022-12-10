@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3772012537213348275}
   - component: {fileID: 3939125577180078165}
   - component: {fileID: 9218586475635775695}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: playerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1338095401
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1ed22272d87cefc46b878d845e0cde76, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -98,117 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583230e21b83ac84788a09467b41c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2697378780931178595
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7370614756893642596}
-  - component: {fileID: 2722999261506654948}
-  - component: {fileID: 1358771978220286010}
-  - component: {fileID: 3595984625857639005}
-  - component: {fileID: 782665807141812150}
-  m_Layer: 0
-  m_Name: crosshair
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7370614756893642596
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2697378780931178595}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.33, y: 3.11, z: -0.67}
-  m_LocalScale: {x: 0.55806, y: 0.55806, z: 0.55806}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6658288757448593100}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2722999261506654948
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2697378780931178595}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1358771978220286010
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2697378780931178595}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3595984625857639005
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2697378780931178595}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &782665807141812150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2697378780931178595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ee1b430e922b1f42aa23ca78cd3bd88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crosshairDistanceFromPlayer: 10
 --- !u!1 &5723886314751145618
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +109,7 @@ GameObject:
   - component: {fileID: 7847724418078991853}
   - component: {fileID: 784075824792613237}
   - component: {fileID: 4053696033471314633}
-  m_Layer: 12
+  m_Layer: 3
   m_Name: lightObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4767928381377272293}
-  m_Layer: 12
+  m_Layer: 3
   m_Name: projectileSpawnPoint
   m_TagString: projectileSpawnPoint
   m_Icon: {fileID: 0}
@@ -364,7 +253,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6658288757448593100}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,7 +275,6 @@ Transform:
   - {fileID: 3772012537213348275}
   - {fileID: 6658288757636218118}
   - {fileID: 6658288757636218116}
-  - {fileID: 7370614756893642596}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -406,7 +294,7 @@ GameObject:
   - component: {fileID: 2823554052907256962}
   - component: {fileID: 8649017132169495513}
   - component: {fileID: 3667045216700483928}
-  m_Layer: 12
+  m_Layer: 3
   m_Name: TPSController
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -762,7 +650,7 @@ GameObject:
   - component: {fileID: 6658288759093783595}
   - component: {fileID: 6658288759093783592}
   - component: {fileID: 6658288759093783593}
-  m_Layer: 12
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -862,7 +750,7 @@ GameObject:
   - component: {fileID: 3030506806423302945}
   - component: {fileID: 4140865306930652242}
   - component: {fileID: 7829655764141206112}
-  m_Layer: 12
+  m_Layer: 3
   m_Name: TPS_NoPostProcCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

@@ -22,6 +22,10 @@ TagManager:
   - playerCapsule
   - playerParent
   - Canvas
+  - furnaceFillBar
+  - furnaceFillBarBG
+  - playerLight
+  - houseOBJ
   layers:
   - Default
   - TransparentFX
@@ -58,4 +62,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 1338095401
+    locked: 0
+  - name: Enemies
+    uniqueID: 4007753907
     locked: 0

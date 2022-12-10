@@ -15,6 +15,12 @@ public class playerController2 : MonoBehaviour
     private renderWithinRadius _playerLight;
     private GameObject _player;
     private Camera _playerCamera;
+
+    public float CameraZOffset
+    {
+        get => cameraZOffset;
+        set => cameraZOffset = value;
+    }
     // Start is called before the first frame update
     private void Start()
     {

@@ -1,45 +1,59 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class playerLight : MonoBehaviour
 {
+    // flicker script from: https://gist.github.com/sinbad/4a9ded6b00cf6063c36a4837b15df969
     [SerializeField] private float minLightIntensity;
     [SerializeField] private float maxLightIntensity;
-    [SerializeField] private float lightDampeningRate;
-    [SerializeField] private float lightStrength;
+    [Range(0,50)][SerializeField] private int lightSmoothing;
     [SerializeField] private bool enableLightFlicker;
+    [SerializeField] private bool isPlayer;
     
-    private Light _playerLight;
-    private float _lightIntensity;
-    private bool _isFlickering;
+    private Light _light;
+    private Queue<float> _lightQueue;
+    private float _lastSum = 0f;
 
     private void Start()
     {
-        _playerLight = GetComponentInChildren<Light>();
-        _lightIntensity = _playerLight.intensity;
-        StartCoroutine(FlickerLight());
+        if (isPlayer)
+        {
+            _light = GameObject.FindGameObjectWithTag("playerLight").GetComponentInChildren<Light>();
+        }
+        else
+        {
+            _light = GetComponentInChildren<Light>();
+        }
+
+        if (enableLightFlicker)
+        {
+            _lightQueue = new Queue<float>(lightSmoothing);
+        }
+
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (enableLightFlicker && !_isFlickering)
+        if (!enableLightFlicker) return;
+        while (_lightQueue.Count >= lightSmoothing)
         {
-            StartCoroutine(FlickerLight());
+            _lastSum -= _lightQueue.Dequeue();
         }
+
+        var newVal = Random.Range(minLightIntensity, maxLightIntensity);
+        _lightQueue.Enqueue(newVal);
+        _lastSum += newVal;
+
+        _light.intensity = _lastSum / (float)_lightQueue.Count;
+
     }
 
-    private IEnumerator FlickerLight()
+    private void Reset()
     {
-        _isFlickering = true;
-        while (enableLightFlicker)
-        {
-            _playerLight.intensity = Mathf.Lerp(_playerLight.intensity,
-                Random.Range(_lightIntensity - minLightIntensity, _lightIntensity + maxLightIntensity),
-                lightStrength * Time.deltaTime);
-            yield return new WaitForSeconds(lightDampeningRate);
-        }
-        _isFlickering = false;
+        _lightQueue.Clear();
+        _lastSum = 0f;
     }
-    
 }

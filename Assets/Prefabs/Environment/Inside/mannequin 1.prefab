@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7070245972515346446}
   - component: {fileID: 6174809841469937579}
   - component: {fileID: 8238670984802345825}
+  - component: {fileID: 7309149332809760188}
   m_Layer: 0
   m_Name: mannequin 1
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -22.024}
 --- !u!33 &6174809841469937579
 MeshFilter:
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7309149332809760188
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590078214368232116}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 12.882693, y: 16.029753, z: 48.83495}
+  m_Center: {x: 1.8906174, y: -0.000000002075673, z: -19.321253}

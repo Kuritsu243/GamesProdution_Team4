@@ -123,6 +123,9 @@ public class cameraScenePreview : MonoBehaviour
 
         if (_hasBezierMoveBeenCalled) return;
         LeanTween.move(_cameraObject, new LTBezierPath(Points), moveSpeed);
+        LeanTween.rotate(_cameraObject, new Vector3(0, followPoints[_targetPoint+3].transform.localRotation.eulerAngles.y, 0), moveSpeed);
+        // _cameraObject.transform.Rotate(_cameraObject.transform.rotation.x, 180 * Time.deltaTime, _cameraObject.transform.rotation.z);
+        Debug.Log(followPoints[_targetPoint+3].transform.localRotation.eulerAngles.y);
         StartCoroutine(EndOfBezier(moveSpeed));
         _hasBezierMoveBeenCalled = true;
     }

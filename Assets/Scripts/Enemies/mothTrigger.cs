@@ -23,7 +23,7 @@ public class mothTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other) // on collision
     {
 #pragma warning disable CS0642
-        if (!other.gameObject == _player); // if object isn't player then return
+        if (!other.gameObject == _player) return; // if object isn't player then return
 #pragma warning restore CS0642
         if (randomizeSpawning)
         {
@@ -32,13 +32,14 @@ public class mothTrigger : MonoBehaviour
                 spawnController.GetComponent<mothSpawnController>().RandomizeSpawning = true;
             }
         }
+        
         foreach (var spawnController in mothSpawnersToBeTriggered) // for each moth spawner
         {
             
             spawnController.GetComponent<mothSpawnController>().SpawnEnemies = true; // enable spawning
         }
 
-        if (mothSpawnersToBeDisabled == null) return;
+        if (mothSpawnersToBeDisabled == null || mothSpawnersToBeDisabled.Length == 0) return;
         
         foreach (var spawnController in mothSpawnersToBeDisabled)
         {

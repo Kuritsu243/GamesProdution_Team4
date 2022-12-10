@@ -21,6 +21,9 @@ public class projectileScript : MonoBehaviour
     private SpriteRenderer _projectileSprite;
     private GameObject _projectileSpriteGameObject;
     private Camera _playerCamera;
+    private Quaternion _playerRotation;
+    private Light _projectileLight;
+    
 
     // projectile variables
     private float _projectileSpeed;
@@ -33,19 +36,20 @@ public class projectileScript : MonoBehaviour
         _playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         _projectileSprite = transform.parent.GetComponentInChildren<SpriteRenderer>();
         _projectileSpriteGameObject = _projectileSprite.gameObject;
-        _projectileSpriteGameObject.transform.LookAt(transform.forward);
         _projectileParent = transform.parent.gameObject;
-        
+        _projectileLight = GetComponentInChildren<Light>();
+
         _projectileRigidbody.AddForce(transform.forward * _projectileSpeed, ForceMode.Impulse); // add force to travel in the intended direction
         _projectileParent.transform.localScale = _projectileParent.transform.localScale * _projectileCharge * 1.5f; // adjust scale depending on how much the player charged up the shot
-
+        _projectileLight.intensity = _projectileLight.intensity * _projectileCharge * 1.5f;
+        _projectileLight.range = _projectileLight.range * _projectileCharge * 1.5f;
+        Debug.Log(_playerRotation.eulerAngles.y);
     }
 
     private void FixedUpdate()
     {
         _projectileSpriteGameObject.transform.position = transform.position;
-        _projectileSpriteGameObject.transform.LookAt(transform.forward);
-        _projectileSprite.flipX = !(transform.eulerAngles.y > 180f);
+        // _projectileSprite.flipX = !(transform.eulerAngles.y > 180f);
     }
 
     // Update is called once per frame
@@ -66,6 +70,10 @@ public class projectileScript : MonoBehaviour
             _collidedFurnaceScript.AddProgress(_projectileDamage);
             Despawn();
         }
+        else if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("playerParent") || collision.gameObject.CompareTag("playerCapsule"))
+        {
+            return;
+        }
         else
         {
             Despawn();
@@ -83,12 +91,14 @@ public class projectileScript : MonoBehaviour
         }
     }
 
-    public void Init(float projectileSpeed, float projectileDamage, float projectileDespawnRate, float projectileCharge) // set the variables once instantiated
+    public void Init(float projectileSpeed, float projectileDamage, float projectileDespawnRate, float projectileCharge, Quaternion playerRotation) // set the variables once instantiated
     {
         _projectileSpeed = projectileSpeed;
         _projectileDamage = projectileDamage;
         _projectileDespawnRate = projectileDespawnRate;
         _projectileCharge = projectileCharge;
+        _playerRotation = playerRotation;
+
     }
 
     private IEnumerator DespawnCountdown() // despawn counter function

@@ -15,6 +15,8 @@ public class mothController : MonoBehaviour
     [SerializeField] private float checkSurroundingFrequency;
     [SerializeField] private float timeInBetweenDealingDamage;
     [SerializeField] private GameObject healthObject;
+    [SerializeField] private int defaultLayer;
+    [SerializeField] private int enemyLayer;
     private GameObject _detectedActiveDecoy;
     private GameObject _collidedObject;
     private lightDecoyPawn _detectedDecoyScript;
@@ -26,6 +28,8 @@ public class mothController : MonoBehaviour
     private NavMeshAgent _mothNavMeshAgent;
     private playerHealth _playerHealth;
     private Camera _playerCamera;
+    private playerController2 _playerController;
+    private SpriteRenderer _mothSprite;
     
 
     // private variables
@@ -40,6 +44,8 @@ public class mothController : MonoBehaviour
         _playerHealth = _player.GetComponent<playerHealth>(); // get player health script from player
         _mothNavMeshAgent = GetComponent<NavMeshAgent>(); // get AI nav component
         _playerCamera = _player.transform.parent.GetComponentInChildren<Camera>();
+        _playerController = _player.GetComponentInChildren<playerController2>();
+        _mothSprite = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
@@ -53,13 +59,26 @@ public class mothController : MonoBehaviour
         {
             Die(); // despawn enemy
         }
+        Debug.Log(Vector3.Distance(transform.position, _player.transform.position));
+        if (Vector3.Distance(transform.position, _player.transform.position) < 2f && transform.position.x > _player.transform.position.x)
+        {
+            _mothSprite.sortingOrder = enemyLayer;
+            _mothSprite.sortingLayerID = SortingLayer.NameToID("Enemies");
+        }
+        else
+        {
+            _mothSprite.sortingOrder = defaultLayer;
+            _mothSprite.sortingLayerID = SortingLayer.NameToID("Default");
+        }
+
 
         StartCoroutine(CheckForDecoys()); // check for decoys periodically
     }
 
     private void LateUpdate()
     {
-        transform.LookAt(_playerCamera.transform);
+        var cameraPos = _playerCamera.transform.position;
+        transform.LookAt(new Vector3(cameraPos.x, cameraPos.y, cameraPos.z - _playerController.CameraZOffset), Vector3.up);
     }
 
     private void CheckSurroundings()
@@ -79,6 +98,7 @@ public class mothController : MonoBehaviour
             }
         }
     }
+
 
     private IEnumerator CheckForDecoys() // check for decoys
     {
@@ -108,7 +128,7 @@ public class mothController : MonoBehaviour
         _collidedObject = collision.gameObject;
         if (_collidedObject.CompareTag("Player") && _canDealDamage)
         {
-            _playerHealth.PlayerHealth -= damageAmount; // deal damage to player
+            _playerHealth.Damage(damageAmount); // deal damage to player
         }
     }
 

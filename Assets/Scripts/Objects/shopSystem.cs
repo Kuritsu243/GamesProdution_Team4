@@ -26,13 +26,11 @@ public class shopSystem : MonoBehaviour
         _countOfShopItems = shopItems.Length;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (IsNearPlayer() && !_hasSpawnedItems) // if player is near and items haven't spawned
-        {
-            SpawnItems(); // spawn items
-            _hasSpawnedItems = true; // items have now been spawned
-        }
+        if (!IsNearPlayer() || _hasSpawnedItems) return; // if player is near and items haven't spawned
+        SpawnItems(); // spawn items
+        _hasSpawnedItems = true; // items have now been spawned
     }
 
     private bool IsNearPlayer() // returns true or false whether if player is in range

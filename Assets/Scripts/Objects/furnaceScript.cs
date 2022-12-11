@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +26,10 @@ public class furnaceScript : MonoBehaviour
     private TextMeshProUGUI _furnaceBarText;
     private winZoneScript _winZoneScript;
     private Light _litLight;
-    private void Awake()
+    private Animator _windowAnimator;
+    
+
+    private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player
         _playerTransform = _player.transform; // get player transform
@@ -35,10 +39,11 @@ public class furnaceScript : MonoBehaviour
         _furnaceBarText = _furnaceUITextParent.GetComponentInChildren<TextMeshProUGUI>(); // get bar text
         _winZoneScript = GameObject.FindGameObjectWithTag("winZone").GetComponent<winZoneScript>(); // get winzone script
         _litLight = GetComponentInChildren<Light>();
-        _litLight.enabled = false;
+        _windowAnimator = GameObject.FindGameObjectWithTag("houseOBJ").GetComponentInChildren<Animator>();
         ToggleUIAssets(false); // disable UI assets
+        _litLight.enabled = false;
     }
-    
+
     private void FixedUpdate()
     {
         if (NearPlayer() && !_winZoneScript.haveConditionsBeenMet)
@@ -57,6 +62,7 @@ public class furnaceScript : MonoBehaviour
         _furnaceBarImageBG.enabled = false;
         _litLight.enabled = true;
         _furnaceBarText.text = "Furnace lit! Go to the window to complete the level";
+        _windowAnimator.Play("windowOpen");
     }
 
     private bool NearPlayer()

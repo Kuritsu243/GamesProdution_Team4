@@ -21,7 +21,7 @@ public class gameSaturationModifier : MonoBehaviour
     private float _vignetteStrength;
     private playerHealth _playerHealth;
 
-    private void Awake()
+    private void Start()
     {
         _playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
         _postProcessController = GameObject.FindGameObjectWithTag("postProcessingController"); // get post processing controller

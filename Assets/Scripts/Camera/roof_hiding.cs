@@ -22,7 +22,7 @@ public class roof_hiding : MonoBehaviour
         
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         CheckIfTouchingRoof(); // check if touching roof
         UpdateDistanceBetweenPlayerAndRoof(); // get distance between player and roof

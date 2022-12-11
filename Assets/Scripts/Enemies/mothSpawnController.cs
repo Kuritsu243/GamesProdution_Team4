@@ -9,10 +9,12 @@ using Random = UnityEngine.Random;
 public class mothSpawnController : MonoBehaviour
 {
     // vars accessible in editor
-    [SerializeField] GameObject[] spawnPoints;
+    [SerializeField] private GameObject[] spawnPoints;
     [SerializeField] private GameObject[] mothPrefabs;
     [SerializeField] private float spawnCooldown;
     [SerializeField] private float spawnAmount;
+    [SerializeField] private bool limitedNumberOfMoths;
+    [SerializeField] private int numberOfMothsToSpawn;
     // private vars
     private GameObject _selectedPrefab;
     private int _numberOfMothPrefabs;
@@ -32,22 +34,33 @@ public class mothSpawnController : MonoBehaviour
         get => _randomizeSpawning;
         set => _randomizeSpawning = value;
     }
-    private void Awake()
+    private void Start()
     {
         _numberOfMothPrefabs = mothPrefabs.Length; // get number of prefabs
         _numberOfSpawnPoints = spawnPoints.Length; // get number of spawnpoints
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (_spawnEnemies && !_onCooldown) // if can spawn enemies
+        if (!_spawnEnemies || _onCooldown) return; // if can spawn enemies
+        switch (limitedNumberOfMoths)
         {
-            Spawn();
+            case true when numberOfMothsToSpawn != 0:
+                Spawn();
+                numberOfMothsToSpawn--;
+                break;
+            case true when numberOfMothsToSpawn == 0:
+                DisableSpawnPoint();
+                break;
+            default:
+                Spawn();
+                break;
         }
     }
 
     private void Spawn()
     {
+        
         if (_randomizeSpawning)
         {
             var chosenInt = Random.Range(0, _numberOfSpawnPoints);
@@ -74,9 +87,9 @@ public class mothSpawnController : MonoBehaviour
         StartCoroutine(SpawnCooldown()); // start spawn cooldown
     }
 
-    public void DisableSpawnPoint() // disable spawn point
+    private void DisableSpawnPoint() // disable spawn point
     {
-
+        _spawnEnemies = false;
     }
 
     private int RandomizeMothPrefab() // randomize the moth variation to spawn

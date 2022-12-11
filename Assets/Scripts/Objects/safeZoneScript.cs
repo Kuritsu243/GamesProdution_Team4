@@ -21,7 +21,7 @@ public class safeZoneScript : MonoBehaviour
         _renderWithinRadius = _player.GetComponentInChildren<renderWithinRadius>(); // get render script
     }
     
-    private void Update()
+    private void FixedUpdate()
     {
         _renderWithinRadius.IsWithinSafeZone = Vector3.Distance(_playerTransform.position, this.transform.position) < safeZoneRadius; //
     }

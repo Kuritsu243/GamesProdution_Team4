@@ -12,6 +12,8 @@ public class canvasScript : MonoBehaviour
     private playerShooting _playerShooting;
     private Vector2 _healthBarOriginalPos;
     private RectTransform _healthBarFlameRect;
+    private bool _hasFaded;
+    private Animator _crossFade;
 #pragma warning disable CS0414
     private bool _isCurrentlyPaused = false;
 #pragma warning restore CS0414

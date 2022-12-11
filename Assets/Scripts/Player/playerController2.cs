@@ -1,20 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class playerController2 : MonoBehaviour
 {
     [SerializeField] private float cameraHeight;
     [SerializeField] private float cameraZOffset;
-    [SerializeField] private int radiusStartSize;
-    [SerializeField] private int radiusChangeRate;
-    [SerializeField] private Vector3 radiusMaxSize;
     private inputSystem _inputSystem;
     private playerMovement _playerMovement;
     private cameraFollow _cameraFollow;
-    private renderWithinRadius _playerLight;
     private GameObject _player;
     private Camera _playerCamera;
+    private GameObject _indicatorTextParent;
+    private TextMeshProUGUI _topText;
+    private TextMeshProUGUI _bottomText;
 
     public float CameraZOffset
     {
@@ -27,10 +28,14 @@ public class playerController2 : MonoBehaviour
         _player = gameObject;
         _inputSystem = GetComponent<inputSystem>();
         _playerMovement = GetComponent<playerMovement>();
-        _playerLight = GetComponentInChildren<renderWithinRadius>();
         _cameraFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<cameraFollow>();
         _playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        // _playerLight.Init(radiusChangeRate, radiusStartSize, radiusMaxSize);
+        _indicatorTextParent = GameObject.FindGameObjectWithTag("indicatorText");
+        _topText = GameObject.FindGameObjectWithTag("topIndicator").GetComponent<TextMeshProUGUI>();
+        _bottomText = GameObject.FindGameObjectWithTag("bottomIndicator").GetComponent<TextMeshProUGUI>();
+        _topText.text = "";
+        _bottomText.text = "Left stick - move      Right stick - look / shoot";
+        StartCoroutine(DisableText());
     }
 
     // Update is called once per frame
@@ -39,5 +44,12 @@ public class playerController2 : MonoBehaviour
         _inputSystem.HandleAllInputs();
         _playerMovement.HandleAllMovement();
         _cameraFollow.MoveCamera(cameraHeight,cameraZOffset, _player.transform.position);
+    }
+    
+    private IEnumerator DisableText()
+    {
+        yield return new WaitForSeconds(2);
+        _bottomText.text = "";
+        _indicatorTextParent.SetActive(false);
     }
 }

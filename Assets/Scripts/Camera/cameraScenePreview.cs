@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 
 public class cameraScenePreview : MonoBehaviour
@@ -14,7 +15,6 @@ public class cameraScenePreview : MonoBehaviour
 
     private GameObject _player;
     private GameObject _playerParent;
-    private GameObject _canvas;
     private GameObject _cameraObject;
     private Camera _previewCamera;
     private Camera _playerCamera;
@@ -28,25 +28,33 @@ public class cameraScenePreview : MonoBehaviour
     private const string CurvePattern = @"\bCurve\b\([0]\)";
     private int _targetPoint;
     private int _numberOfPoints;
+    private GameObject _indicatorTextParent;
+    private TextMeshProUGUI _topText;
+    private TextMeshProUGUI _bottomText;
+    private GameObject _gameplayUI;
 
     public List<GameObject> FollowPoints // encapsulated field
     {
         get => followPoints;
         set => followPoints = value;
     }
+    
 
-    // Start is called before the first frame update
+
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player
         _playerParent = GameObject.FindGameObjectWithTag("playerParent"); // get player parent
-        _canvas = GameObject.FindGameObjectWithTag("Canvas"); // get canvas
+        _gameplayUI = GameObject.FindGameObjectWithTag("gameplayUI");
+        _indicatorTextParent = GameObject.FindGameObjectWithTag("indicatorText");
+        _topText = GameObject.FindGameObjectWithTag("topIndicator").GetComponent<TextMeshProUGUI>();
+        _bottomText = GameObject.FindGameObjectWithTag("bottomIndicator").GetComponent<TextMeshProUGUI>();
         _previewCamera = GetComponentInChildren<Camera>(); // get preview camera
         _cameraObject = _previewCamera.gameObject; // get preview camera game object
         _playerCamera = _player.GetComponentInChildren<Camera>(); // get player camera
         _numberOfPoints = followPoints.Count; // get number of points
         _playerParent.SetActive(false); // disable player GOs
-        _canvas.SetActive(false); // disable UI
+        _gameplayUI.SetActive(false); // disable UI
         _movingAlongBezier = false;
         _hasBezierMoveBeenCalled = false;
     }
@@ -60,8 +68,9 @@ public class cameraScenePreview : MonoBehaviour
         if (_targetPoint >= followPoints.Count) // if the array has reached the end 
         {
             _playerParent.SetActive(true); // enable player
-            _canvas.SetActive(true); // enable UI
+            _gameplayUI.SetActive(true); // enable UI
             _previewCamera.enabled = false; // disable preview camera
+            _topText.text = "";
             gameObject.SetActive(false); // destroy self
         }
         MoveCamera(_targetPoint);
@@ -113,6 +122,8 @@ public class cameraScenePreview : MonoBehaviour
         _hasBezierMoveBeenCalled = false;
     }
 
+
+    
     private void MovingAlongBezier()
     {
         var point1 = followPoints[_targetPoint].transform.position;

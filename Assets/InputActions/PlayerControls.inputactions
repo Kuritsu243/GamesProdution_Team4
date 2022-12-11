@@ -124,17 +124,6 @@
                 },
                 {
                     "name": "",
-                    "id": "ac751a27-a5b0-4bdf-b05c-6b1213bb63d1",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Press(behavior=2)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "75f03f77-8752-4014-a1a7-c4ec53966042",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",

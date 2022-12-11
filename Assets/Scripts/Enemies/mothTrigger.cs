@@ -11,7 +11,7 @@ public class mothTrigger : MonoBehaviour
     [SerializeField] private GameObject[] mothSpawnersToBeDisabled;
     [SerializeField] private bool randomizeSpawning;
     // Start is called before the first frame update
-    private void Awake()
+    private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player
 

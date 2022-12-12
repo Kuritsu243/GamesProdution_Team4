@@ -4,20 +4,45 @@ using UnityEngine;
 
 public class movingObject : MonoBehaviour
 {
-    // vars accessible in editor
-    [SerializeField] private float timeToTake;
-    [SerializeField] private Vector3 destinationPos;
-    // private vars
-    private float _distance;
-    private Vector3 _direction;
-    // public vars
-    public bool hasConditionBeenMet;
 
+    [SerializeField] private Vector3 destinationPos;
+    public bool haveConditionsBeenMet;
+    
+    [SerializeField] private float timeToTake;
+
+    private Vector3 _startPos;
+    private bool _hasMoved;
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        _startPos = transform.localPosition;
+        if (destinationPos.x == 0)
+        {
+            _startPos.x = transform.localPosition.x;
+        }
+        else if (destinationPos.y == 0)
+        {
+            _startPos.y = transform.localPosition.y;
+        }
+        else if (destinationPos.z == 0)
+        {
+            _startPos.z = transform.localPosition.z;
+        }
+    }
+
+    // Update is called once per frame
     private void FixedUpdate()
     {
-        if (!hasConditionBeenMet) return;
-        _direction = destinationPos - transform.position;
-        _distance = _direction.magnitude;
-        transform.Translate(_direction.normalized * (Time.deltaTime * _distance / timeToTake), Space.World); // move object to target in world space
+        if (!haveConditionsBeenMet || !(Vector3.Distance(transform.localPosition, destinationPos) > 0.01) ||
+            _hasMoved) return;
+        transform.Translate(destinationPos * (Time.deltaTime / timeToTake), Space.World);
+        StartCoroutine(Moved());
+    }
+
+    private IEnumerator Moved()
+    {
+        yield return new WaitForSeconds(timeToTake);
+        _hasMoved = true;
     }
 }

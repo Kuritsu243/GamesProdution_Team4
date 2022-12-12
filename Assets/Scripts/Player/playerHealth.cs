@@ -10,6 +10,8 @@ public class playerHealth : MonoBehaviour
     [SerializeField] private float playerMaxHealth;
     private float _playerHealth;
     private gameSaturationModifier _gameSaturationModifier;
+    private Animator _crossFade;
+    private bool _hasSceneChangeBeenCalled;
 
     public float PlayerHealth
     {
@@ -24,6 +26,7 @@ public class playerHealth : MonoBehaviour
         _playerHealth = playerMaxHealth;
         _gameSaturationModifier =
             GameObject.FindGameObjectWithTag("eventManager").GetComponent<gameSaturationModifier>();
+        _crossFade = GameObject.FindGameObjectWithTag("crossFade").GetComponent<Animator>();
     }
 
     public void Damage(float damageAmount) // damage function
@@ -43,7 +46,16 @@ public class playerHealth : MonoBehaviour
 
     private void Die()
     { // destroys player gameobject
-        Destroy(this.gameObject);
-        SceneManager.LoadScene("Lose_Screen"); // loads lose screen
+        if (_hasSceneChangeBeenCalled) return;
+        StartCoroutine(LoadDeathScene());
+    }
+    
+    private IEnumerator LoadDeathScene()
+    {
+        _crossFade.gameObject.SetActive(true);
+        _crossFade.SetTrigger("Start");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadSceneAsync("Lose_Screen");
+        _hasSceneChangeBeenCalled = true;
     }
 }

@@ -14,6 +14,7 @@ public class canvasScript : MonoBehaviour
     private RectTransform _healthBarFlameRect;
     private bool _hasFaded;
     private Animator _crossFade;
+    private GameObject _crossFadeObj;
 #pragma warning disable CS0414
     private bool _isCurrentlyPaused = false;
 #pragma warning restore CS0414
@@ -42,6 +43,10 @@ public class canvasScript : MonoBehaviour
         _healthBarOriginalPos = healthBar.rectTransform.rect.position;
         _healthBarFlameRect = healthBarFlame.GetComponent<RectTransform>();
         healthBarFlame.enabled = false;
+        _crossFadeObj = GameObject.FindGameObjectWithTag("crossFade");
+        _crossFade = _crossFadeObj.GetComponent<Animator>();
+
+        StartCoroutine(Transition());
     }
 
     private void FixedUpdate()
@@ -108,5 +113,11 @@ public class canvasScript : MonoBehaviour
     private static void MainMenuButtonClicked()
     {
         SceneManager.LoadScene(0);
+    }
+
+    private IEnumerator Transition()
+    {
+        yield return new WaitForSeconds(1f);
+        _crossFadeObj.SetActive(false);
     }
 }

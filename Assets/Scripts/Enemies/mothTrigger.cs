@@ -9,6 +9,7 @@ public class mothTrigger : MonoBehaviour
     private GameObject _player;
     [SerializeField] private GameObject[] mothSpawnersToBeTriggered;
     [SerializeField] private GameObject[] mothSpawnersToBeDisabled;
+    [SerializeField] private GameObject[] movingObjectsToTrigger;
     [SerializeField] private bool randomizeSpawning;
     // Start is called before the first frame update
     private void Start()
@@ -19,9 +20,11 @@ public class mothTrigger : MonoBehaviour
         {
             mothSpawner.GetComponent<mothSpawnController>().SpawnEnemies = false; // disable spawning
         }
+        
     }
     private void OnTriggerEnter(Collider other) // on collision
     {
+        Debug.Log(other);
 #pragma warning disable CS0642
         if (!other.gameObject == _player) return; // if object isn't player then return
 #pragma warning restore CS0642
@@ -31,6 +34,11 @@ public class mothTrigger : MonoBehaviour
             {
                 spawnController.GetComponent<mothSpawnController>().RandomizeSpawning = true;
             }
+        }
+        foreach (var movingObject in movingObjectsToTrigger)
+        {
+            Debug.Log(movingObject.name);
+            movingObject.GetComponent<movingObject>().haveConditionsBeenMet = true;
         }
         
         foreach (var spawnController in mothSpawnersToBeTriggered) // for each moth spawner
@@ -45,6 +53,10 @@ public class mothTrigger : MonoBehaviour
         {
             spawnController.GetComponent<mothSpawnController>().SpawnEnemies = false;
         }
+        //
+        // if (movingObjectsToTrigger == null || movingObjectsToTrigger.Length == 0) return;
+
+        
     }
 
 }

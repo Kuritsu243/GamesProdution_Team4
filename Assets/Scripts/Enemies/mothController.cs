@@ -59,7 +59,6 @@ public class mothController : MonoBehaviour
         {
             Die(); // despawn enemy
         }
-        Debug.Log(Vector3.Distance(transform.position, _player.transform.position));
         if (Vector3.Distance(transform.position, _player.transform.position) < 2f && transform.position.x > _player.transform.position.x)
         {
             _mothSprite.sortingOrder = enemyLayer;

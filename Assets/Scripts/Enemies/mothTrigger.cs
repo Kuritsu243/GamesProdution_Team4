@@ -12,15 +12,18 @@ public class mothTrigger : MonoBehaviour
     [SerializeField] private GameObject[] movingObjectsToTrigger;
     [SerializeField] private bool randomizeSpawning;
     // Start is called before the first frame update
-    private void Start()
+
+    private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player
+    }
 
+    private void Start()
+    {
         foreach (GameObject mothSpawner in mothSpawnersToBeTriggered) // for each moth spawner
         {
             mothSpawner.GetComponent<mothSpawnController>().SpawnEnemies = false; // disable spawning
         }
-        
     }
     private void OnTriggerEnter(Collider other) // on collision
     {

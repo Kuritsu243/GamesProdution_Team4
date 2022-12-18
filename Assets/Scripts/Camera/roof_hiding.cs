@@ -15,11 +15,10 @@ public class roof_hiding : MonoBehaviour
     private GameObject _previouslyDisabledObject;
     private GameObject _roof;
 
-    private void Start()
+    private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // find player
         _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>(); // get main camera component
-        
     }
 
     private void FixedUpdate()

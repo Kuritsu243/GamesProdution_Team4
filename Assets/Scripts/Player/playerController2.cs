@@ -23,7 +23,7 @@ public class playerController2 : MonoBehaviour
         set => cameraZOffset = value;
     }
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         _player = gameObject;
         _inputSystem = GetComponent<inputSystem>();
@@ -33,10 +33,9 @@ public class playerController2 : MonoBehaviour
         _indicatorTextParent = GameObject.FindGameObjectWithTag("indicatorText");
         _topText = GameObject.FindGameObjectWithTag("topIndicator").GetComponent<TextMeshProUGUI>();
         _bottomText = GameObject.FindGameObjectWithTag("bottomIndicator").GetComponent<TextMeshProUGUI>();
-        _topText.text = "";
-        _bottomText.text = "Left stick - move      Right stick - look / shoot";
-        StartCoroutine(DisableText());
+
     }
+    
 
     // Update is called once per frame
     public void FixedUpdate()
@@ -45,11 +44,25 @@ public class playerController2 : MonoBehaviour
         _playerMovement.HandleAllMovement();
         _cameraFollow.MoveCamera(cameraHeight,cameraZOffset, _player.transform.position);
     }
-    
+
+    // private void OnEnable()
+    // {
+    //     _topText.text = "";
+    //     _bottomText.text = "Left stick - move      Right stick - look / shoot";
+    //     StartCoroutine(DisableText());
+    // }
+
     private IEnumerator DisableText()
     {
         yield return new WaitForSeconds(2);
         _bottomText.text = "";
         _indicatorTextParent.SetActive(false);
+    }
+
+    public void EnableTextAtStart()
+    {
+        _topText.text = "";
+        _bottomText.text = "Left stick - move      Right stick - look / shoot";
+        StartCoroutine(DisableText());
     }
 }

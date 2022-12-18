@@ -53,7 +53,7 @@ public class inputSystem : MonoBehaviour
         _playerControls.Disable();
     }
 
-    private void Start()
+    private void Awake()
     {
         Application.targetFrameRate = 60;
         _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();

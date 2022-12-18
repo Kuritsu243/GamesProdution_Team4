@@ -3186,8 +3186,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: db54c1a0ad5238b4fabeb1a86b431077, type: 2}
-  m_sharedMaterial: {fileID: -1778639589578224880, guid: db54c1a0ad5238b4fabeb1a86b431077, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4a3aca5d71866224da52f65a2553d62d, type: 2}
+  m_sharedMaterial: {fileID: 7356945330400452693, guid: 4a3aca5d71866224da52f65a2553d62d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3195,13 +3195,13 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 0.9725491, g: 0.56078434, b: 0.003921569, a: 1}
+    topRight: {r: 0.9803922, g: 0.7960785, b: 0.12941177, a: 1}
+    bottomLeft: {r: 0.8980393, g: 0.7372549, b: 0.2509804, a: 1}
+    bottomRight: {r: 0.9333334, g: 0.8980393, b: 0.48235297, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -3211,7 +3211,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.75
+  m_fontSize: 32.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6795,8 +6795,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Kill the moths and re-light the furnace!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: db54c1a0ad5238b4fabeb1a86b431077, type: 2}
-  m_sharedMaterial: {fileID: -1778639589578224880, guid: db54c1a0ad5238b4fabeb1a86b431077, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4a3aca5d71866224da52f65a2553d62d, type: 2}
+  m_sharedMaterial: {fileID: 7356945330400452693, guid: 4a3aca5d71866224da52f65a2553d62d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6804,13 +6804,13 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 0.9725491, g: 0.56078434, b: 0.003921569, a: 1}
+    topRight: {r: 0.9803922, g: 0.7960785, b: 0.12941177, a: 1}
+    bottomLeft: {r: 0.8980393, g: 0.7372549, b: 0.2509804, a: 1}
+    bottomRight: {r: 0.9333334, g: 0.8980393, b: 0.48235297, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -6820,10 +6820,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70.3
-  m_fontSizeBase: 36
+  m_fontSize: 90
+  m_fontSizeBase: 90
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -8255,8 +8255,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: You are the last flame in the city!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: db54c1a0ad5238b4fabeb1a86b431077, type: 2}
-  m_sharedMaterial: {fileID: -1778639589578224880, guid: db54c1a0ad5238b4fabeb1a86b431077, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4a3aca5d71866224da52f65a2553d62d, type: 2}
+  m_sharedMaterial: {fileID: 7356945330400452693, guid: 4a3aca5d71866224da52f65a2553d62d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8264,13 +8264,13 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 0.9725491, g: 0.56078434, b: 0.003921569, a: 1}
+    topRight: {r: 0.9803922, g: 0.7960785, b: 0.12941177, a: 1}
+    bottomLeft: {r: 0.8962264, g: 0.7380059, b: 0.2508306, a: 1}
+    bottomRight: {r: 0.9339623, g: 0.8979457, b: 0.48166603, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -8280,10 +8280,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70.3
-  m_fontSizeBase: 36
+  m_fontSize: 90
+  m_fontSizeBase: 90
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0

@@ -46,7 +46,7 @@ public class playerShooting : MonoBehaviour
     public float ProjectileMaxCharge => projectileMaxCharge;
 
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         _inputSystem = GetComponent<inputSystem>();
         _playerHealth = GetComponent<playerHealth>();

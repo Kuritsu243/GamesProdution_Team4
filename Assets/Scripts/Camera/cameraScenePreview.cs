@@ -72,10 +72,12 @@ public class cameraScenePreview : MonoBehaviour
             _previewCamera.enabled = false; // disable preview camera
             _topText.text = "";
             gameObject.SetActive(false); // destroy self
+            _player.GetComponent<playerController2>().EnableTextAtStart();
+            return;
         }
         MoveCamera(_targetPoint);
-        Debug.Log(followPoints[_targetPoint].name);
-        Debug.Log(followPoints[_targetPoint].name.Contains("Curve(0)"));
+        // Debug.Log(followPoints[_targetPoint].name);
+        // Debug.Log(followPoints[_targetPoint].name.Contains("Curve(0)"));
 
     }
 

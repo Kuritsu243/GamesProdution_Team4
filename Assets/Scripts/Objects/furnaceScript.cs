@@ -27,9 +27,8 @@ public class furnaceScript : MonoBehaviour
     private winZoneScript _winZoneScript;
     private Light _litLight;
     private Animator _windowAnimator;
-    
 
-    private void Start()
+    private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player
         _playerTransform = _player.transform; // get player transform
@@ -37,6 +36,10 @@ public class furnaceScript : MonoBehaviour
         _furnaceBarImage = GameObject.FindGameObjectWithTag("furnaceFillBar").GetComponent<Image>(); // get furnace progress bar
         _furnaceBarImageBG = GameObject.FindGameObjectWithTag("furnaceFillBarBG").GetComponent<Image>(); // get furnace progress bar bg
         _furnaceBarText = _furnaceUITextParent.GetComponentInChildren<TextMeshProUGUI>(); // get bar text
+    }
+
+    private void Start()
+    {
         _winZoneScript = GameObject.FindGameObjectWithTag("winZone").GetComponent<winZoneScript>(); // get winzone script
         _litLight = GetComponentInChildren<Light>();
         _windowAnimator = GameObject.FindGameObjectWithTag("houseOBJ").GetComponentInChildren<Animator>();

@@ -11,7 +11,7 @@ public class healthPickupScript : MonoBehaviour
     private GameObject _player;
     private GameObject _collidedObject;
     private playerHealth _playerHealth;
-    private void Start()
+    private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player
         _playerHealth = _player.GetComponent<playerHealth>(); // get player health

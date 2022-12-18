@@ -20,7 +20,7 @@ public class playerMovement : MonoBehaviour
     private bool _isMoving;
     public bool IsMoving { get => _isMoving; set => _isMoving = value; }
 
-    private void Start()
+    private void Awake()
     {
         _inputSystem = GetComponent<inputSystem>();
         _playerRigidbody = GetComponent<Rigidbody>();

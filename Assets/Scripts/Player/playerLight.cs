@@ -19,20 +19,12 @@ public class playerLight : MonoBehaviour
 
     private void Start()
     {
-        if (isPlayer)
-        {
-            _light = GameObject.FindGameObjectWithTag("playerLight").GetComponentInChildren<Light>();
-        }
-        else
-        {
-            _light = GetComponentInChildren<Light>();
-        }
+        _light = isPlayer ? GameObject.FindGameObjectWithTag("playerLight").GetComponentInChildren<Light>() : GetComponentInChildren<Light>();
 
         if (enableLightFlicker)
         {
             _lightQueue = new Queue<float>(lightSmoothing);
         }
-
     }
 
     private void FixedUpdate()

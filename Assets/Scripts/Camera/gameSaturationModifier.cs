@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,16 +22,21 @@ public class gameSaturationModifier : MonoBehaviour
     private float _vignetteStrength;
     private playerHealth _playerHealth;
 
-    private void Start()
+
+    private void Awake()
     {
         _playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
+    }
+
+    private void Start()
+    {
+
         _postProcessController = GameObject.FindGameObjectWithTag("postProcessingController"); // get post processing controller
         _postProcessVolume = _postProcessController.GetComponent<Volume>(); // get post process volume component
         _postProcessVolume.profile.TryGet(out _colorGrading); // apply colour grading settings
         _postProcessVolume.profile.TryGet(out _vignette);
         CalculateSaturationLevel(); // set saturation level
         CalculateVignetteStrength();
-
     }
     
     

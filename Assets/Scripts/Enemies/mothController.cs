@@ -47,6 +47,7 @@ public class mothController : MonoBehaviour
         _playerController = _player.GetComponentInChildren<playerController2>();
         _mothSprite = GetComponent<SpriteRenderer>();
     }
+    
 
     private void FixedUpdate()
     {

@@ -65,7 +65,6 @@ public class cameraPointsDraw : Editor
                     break;
                 }
             }
- 
         }
     }
 

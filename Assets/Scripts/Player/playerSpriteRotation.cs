@@ -19,7 +19,7 @@ public class playerSpriteRotation : MonoBehaviour
     private float _airborneOffset;
     private float _spriteHeight;
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerAnimation = GetComponent<playerAnimation>();

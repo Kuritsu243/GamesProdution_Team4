@@ -39,6 +39,7 @@ public class playerShooting : MonoBehaviour
     private GameObject _projectileSpawnPoint;
     private projectileScript _spawnedObjectScript;
     private playerHealth _playerHealth;
+    private DontDestroy _dontDestroy;
 
 
     public bool IsCharging { get; private set; }
@@ -51,6 +52,11 @@ public class playerShooting : MonoBehaviour
         _inputSystem = GetComponent<inputSystem>();
         _playerHealth = GetComponent<playerHealth>();
         _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint");
+        _dontDestroy = GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroy>();
+
+        projectileMaxCharge += _dontDestroy.ChargeSizeUpgradesPurchased;
+        projectileBaseDamage += _dontDestroy.DamageUpgradesPurchased;
+        
 
     }
 

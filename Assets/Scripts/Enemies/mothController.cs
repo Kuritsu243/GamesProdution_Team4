@@ -18,6 +18,7 @@ public class mothController : MonoBehaviour
     [SerializeField] private int defaultLayer;
     [SerializeField] private int enemyLayer;
     [SerializeField] private Sprite mothPunch;
+    [SerializeField] private int scoreValue;
     private GameObject _detectedActiveDecoy;
     private GameObject _collidedObject;
     private lightDecoyPawn _detectedDecoyScript;
@@ -123,6 +124,10 @@ public class mothController : MonoBehaviour
     private void Die()
     {
         var healthPickup = Instantiate(healthObject, transform.position, Quaternion.identity);
+        healthPickup.GetComponent<healthPickupScript>().ScoreAmount = scoreValue;
+        var playerScoreScript = _player.GetComponent<playerScore>();
+        playerScoreScript.AddToScore(scoreValue);
+        playerScoreScript.SaveScore();
         Debug.Log("moth death");
         Destroy(this.gameObject); // despawn
     }

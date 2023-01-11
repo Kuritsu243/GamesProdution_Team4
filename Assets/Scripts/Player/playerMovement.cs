@@ -7,6 +7,7 @@ public class playerMovement : MonoBehaviour
 {
     [SerializeField] private float playerMovementSpeed;
     private inputSystem _inputSystem;
+    private DontDestroy _dontDestroy;
     private Vector3 _moveDirection;
     private Vector2 _mousePos;
     private Vector3 _worldPos;
@@ -27,6 +28,8 @@ public class playerMovement : MonoBehaviour
         _mainCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         _mousePosZ = _mainCamera.farClipPlane * 0.5f;
+        _dontDestroy = GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroy>();
+        playerMovementSpeed += (_dontDestroy.MoveSpeedUpgradesPurchased * 0.05f);
         // if (Application.platform == RuntimePlatform.Android)
         // {
         //     playerMovementSpeed *= 10;

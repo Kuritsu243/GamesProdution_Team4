@@ -5,31 +5,25 @@ using UnityEngine;
 public class lightDecoyPawn : MonoBehaviour
 {
     // Serialized variables
-    [SerializeField] private Material inactiveDecoyMaterial;
-    [SerializeField] private Material activeDecoyMaterial;
     [SerializeField] private int decoyActiveDuration;
     // private variables
 #pragma warning disable CS0219
     private bool _isLit = false;
-    private Renderer _lightDecoyRenderer;
+    private Light _decoyLight;
 #pragma warning restore CS0414
-
-
-    private void Start()
-    {
-        _lightDecoyRenderer = GetComponent<Renderer>(); // get light renderer
-    }
-
+    
     private void DisableDecoy()
     {
-        _lightDecoyRenderer.sharedMaterial = inactiveDecoyMaterial; // set decoy material to inactive material
+        _decoyLight.enabled = false;
         _isLit = false; // is lit is false
         gameObject.tag = "recentlyDisabledDecoy"; // set tag to recently disabled decoy
+        Destroy(this.gameObject);
     }
 
     public void ActivateDecoy() // activate decoy
     {
-        _lightDecoyRenderer.sharedMaterial = activeDecoyMaterial; // set material to lit material
+        _decoyLight = GetComponentInChildren<Light>();
+        _decoyLight.enabled = true;
         StartCoroutine(DecoyActive(decoyActiveDuration)); // start countdown for duration it's enabled
         _isLit = true; // is lit is true
         gameObject.tag = "activeDecoy"; // change tag to indicate it is active

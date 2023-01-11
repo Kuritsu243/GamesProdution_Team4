@@ -10,15 +10,17 @@ public class canvasScript : MonoBehaviour
     private GameObject _player;
     private playerHealth _playerHealth;
     private playerShooting _playerShooting;
+    private DontDestroy _dontDestroy;
     private Vector2 _healthBarOriginalPos;
     private RectTransform _healthBarFlameRect;
     private bool _hasFaded;
     private Animator _crossFade;
     private GameObject _crossFadeObj;
+
 #pragma warning disable CS0414
     private bool _isCurrentlyPaused = false;
 #pragma warning restore CS0414
-    public int LightDecoyInv = 1;
+    public int lightDecoyInv;
     // serialized fields that can be accessed in the inspector
     [SerializeField] private Image healthBar;
     [SerializeField] private Image healthBarFlame;
@@ -29,20 +31,19 @@ public class canvasScript : MonoBehaviour
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button quitButton;
-    [SerializeField] private Button lightDecoyButton;
     [SerializeField] private GameObject lightDecoyPrefab;
-    // Start is called before the first frame update
+    [SerializeField] private Button lightDecoyButton;
+
+
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player gameobject
         _playerHealth = _player.GetComponent<playerHealth>();
         _playerShooting =
             _player.GetComponent<playerShooting>(); // get player controller component from player gameobject
-        pauseButton.onClick.AddListener(PauseButtonClicked);
-        lightDecoyButton.onClick.AddListener(lightDecoyButtonClicked);
-        resumeButton.onClick.AddListener(ResumeButtonClicked);
-        mainMenuButton.onClick.AddListener(MainMenuButtonClicked);
-        quitButton.onClick.AddListener(QuitButtonClicked);
+        _dontDestroy = GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroy>();
+
+        lightDecoyInv = _dontDestroy.DecoysPurchased;
         pauseScreen.SetActive(false);
         _healthBarOriginalPos = healthBar.rectTransform.rect.position;
         _healthBarFlameRect = healthBarFlame.GetComponent<RectTransform>();
@@ -51,7 +52,17 @@ public class canvasScript : MonoBehaviour
         _crossFade = _crossFadeObj.GetComponent<Animator>();
 
         StartCoroutine(Transition());
+        
+        // button listeners
+        pauseButton.onClick.AddListener(PauseButtonClicked);
+        lightDecoyButton.onClick.AddListener(lightDecoyButtonClicked);
+        resumeButton.onClick.AddListener(ResumeButtonClicked);
+        mainMenuButton.onClick.AddListener(MainMenuButtonClicked);
+        quitButton.onClick.AddListener(QuitButtonClicked);
+
     }
+
+
 
     private void FixedUpdate()
     {
@@ -62,7 +73,6 @@ public class canvasScript : MonoBehaviour
             _healthBarFlameRect.anchorMin = new Vector2(healthBar.fillAmount, _healthBarFlameRect.anchorMin.y);
             _healthBarFlameRect.anchorMax = new Vector2(healthBar.fillAmount, _healthBarFlameRect.anchorMax.y);
             _healthBarFlameRect.anchoredPosition = Vector2.zero;
-            ;
         }
 
         if (_playerShooting.IsCharging)
@@ -128,11 +138,13 @@ public class canvasScript : MonoBehaviour
 
     private void lightDecoyButtonClicked()
     {
-        if (LightDecoyInv < 1) return;
-        LightDecoyInv--;
+        if (lightDecoyInv < 1) return;
+        lightDecoyInv--;
         var newDecoy = Instantiate(lightDecoyPrefab, _player.transform.position, _player.transform.rotation);
         newDecoy.GetComponent<lightDecoyPawn>().ActivateDecoy();
     }
+  
+
 
 
 }

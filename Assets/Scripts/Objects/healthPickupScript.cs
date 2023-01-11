@@ -11,6 +11,9 @@ public class healthPickupScript : MonoBehaviour
     private GameObject _player;
     private GameObject _collidedObject;
     private playerHealth _playerHealth;
+    private int _scoreAmount;
+    
+    public int ScoreAmount { get; set; }
     private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player"); // get player
@@ -23,6 +26,7 @@ public class healthPickupScript : MonoBehaviour
         if (!_collidedObject.CompareTag("Player") && !_collidedObject.CompareTag("lightRadius") &&
             !_collidedObject.CompareTag("playerCapsule")) return;
         _playerHealth.PlayerHealth += healAmount; // heal player
+        
         Despawn(); // destroy object
     }
 

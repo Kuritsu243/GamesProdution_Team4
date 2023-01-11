@@ -10,6 +10,7 @@ public class playerHealth : MonoBehaviour
     [SerializeField] private float playerMaxHealth;
     private float _playerHealth;
     private gameSaturationModifier _gameSaturationModifier;
+    private DontDestroy _dontDestroy;
     private Animator _crossFade;
     private bool _hasSceneChangeBeenCalled;
 
@@ -23,10 +24,13 @@ public class playerHealth : MonoBehaviour
 
     private void Start()
     {
-        _playerHealth = playerMaxHealth;
+
         _gameSaturationModifier =
             GameObject.FindGameObjectWithTag("eventManager").GetComponent<gameSaturationModifier>();
         _crossFade = GameObject.FindGameObjectWithTag("crossFade").GetComponent<Animator>();
+        _dontDestroy = GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroy>();
+        playerMaxHealth = playerMaxHealth + (_dontDestroy.HealthUpgradesPurchased * 10);
+        _playerHealth = playerMaxHealth;
     }
 
     public void Damage(float damageAmount) // damage function

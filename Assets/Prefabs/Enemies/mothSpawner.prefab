@@ -188,5 +188,9 @@ MonoBehaviour:
   - {fileID: 8525267380126291253}
   mothPrefabs:
   - {fileID: 5495732648329243965, guid: 782d2a0813b914c4e988a36673a0e6a0, type: 3}
+  - {fileID: 5495732648329243965, guid: 0396ffb4d331c1146934094e78867ea2, type: 3}
+  - {fileID: 5495732648329243965, guid: 0dd53731b1dde544a95b11cf4e2b1cee, type: 3}
   spawnCooldown: 1.5
   spawnAmount: 1
+  limitedNumberOfMoths: 0
+  numberOfMothsToSpawn: 0

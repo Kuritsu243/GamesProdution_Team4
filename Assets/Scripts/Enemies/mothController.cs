@@ -17,6 +17,7 @@ public class mothController : MonoBehaviour
     [SerializeField] private GameObject healthObject;
     [SerializeField] private int defaultLayer;
     [SerializeField] private int enemyLayer;
+    [SerializeField] private Sprite mothPunch;
     private GameObject _detectedActiveDecoy;
     private GameObject _collidedObject;
     private lightDecoyPawn _detectedDecoyScript;
@@ -30,6 +31,7 @@ public class mothController : MonoBehaviour
     private Camera _playerCamera;
     private playerController2 _playerController;
     private SpriteRenderer _mothSprite;
+    private Sprite _mothIdle;
     
 
     // private variables
@@ -45,7 +47,8 @@ public class mothController : MonoBehaviour
         _mothNavMeshAgent = GetComponent<NavMeshAgent>(); // get AI nav component
         _playerCamera = _player.transform.parent.GetComponentInChildren<Camera>();
         _playerController = _player.GetComponentInChildren<playerController2>();
-        _mothSprite = GetComponent<SpriteRenderer>();
+        _mothSprite = GetComponentInChildren<SpriteRenderer>();
+        _mothIdle = _mothSprite.sprite;
     }
     
 
@@ -126,10 +129,10 @@ public class mothController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         _collidedObject = collision.gameObject;
-        if (_collidedObject.CompareTag("Player") && _canDealDamage)
-        {
-            _playerHealth.Damage(damageAmount); // deal damage to player
-        }
+        StartCoroutine(SpriteChange());
+        if (!_collidedObject.CompareTag("Player") || !_canDealDamage) return;
+        _playerHealth.Damage(damageAmount);// deal damage to player
+        StartCoroutine(DamageCooldown(timeInBetweenDealingDamage)); // cooldown on damage to the player
     }
 
     private IEnumerator DamageCooldown(float cooldown) // cooldown for damaging the enemy
@@ -138,11 +141,17 @@ public class mothController : MonoBehaviour
         yield return new WaitForSeconds(cooldown);
         _canDealDamage = true;
     }
-    
+
+    private IEnumerator SpriteChange()
+    {
+        _mothSprite.sprite = mothPunch;
+        yield return new WaitForSeconds(0.5f);
+        _mothSprite.sprite = _mothIdle;
+    }
 
     public void Damage(float amount) // take damage 
     {
         enemyHealth -= amount;
-        StartCoroutine(DamageCooldown(timeInBetweenDealingDamage));
+;
     }
 }

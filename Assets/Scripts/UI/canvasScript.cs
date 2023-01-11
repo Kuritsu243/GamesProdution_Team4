@@ -18,6 +18,7 @@ public class canvasScript : MonoBehaviour
 #pragma warning disable CS0414
     private bool _isCurrentlyPaused = false;
 #pragma warning restore CS0414
+    public int LightDecoyInv = 1;
     // serialized fields that can be accessed in the inspector
     [SerializeField] private Image healthBar;
     [SerializeField] private Image healthBarFlame;
@@ -28,6 +29,8 @@ public class canvasScript : MonoBehaviour
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private Button lightDecoyButton;
+    [SerializeField] private GameObject lightDecoyPrefab;
     // Start is called before the first frame update
     private void Start()
     {
@@ -36,6 +39,7 @@ public class canvasScript : MonoBehaviour
         _playerShooting =
             _player.GetComponent<playerShooting>(); // get player controller component from player gameobject
         pauseButton.onClick.AddListener(PauseButtonClicked);
+        lightDecoyButton.onClick.AddListener(lightDecoyButtonClicked);
         resumeButton.onClick.AddListener(ResumeButtonClicked);
         mainMenuButton.onClick.AddListener(MainMenuButtonClicked);
         quitButton.onClick.AddListener(QuitButtonClicked);
@@ -119,5 +123,16 @@ public class canvasScript : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         _crossFadeObj.SetActive(false);
+        
     }
+
+    private void lightDecoyButtonClicked()
+    {
+        if (LightDecoyInv < 1) return;
+        LightDecoyInv--;
+        var newDecoy = Instantiate(lightDecoyPrefab, _player.transform.position, _player.transform.rotation);
+        newDecoy.GetComponent<lightDecoyPawn>().ActivateDecoy();
+    }
+
+
 }

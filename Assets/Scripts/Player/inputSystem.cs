@@ -63,10 +63,13 @@ public class inputSystem : MonoBehaviour
     public void HandleAllInputs()
     {
         HandleMovementInput();
-        HandleCursorInput();
         if (Application.platform is RuntimePlatform.WindowsEditor or RuntimePlatform.Android)
         {
             HandleJoyInput();
+        }
+        else
+        {
+            HandleCursorInput();
         }
 
     }
@@ -100,10 +103,12 @@ public class inputSystem : MonoBehaviour
         if (_rightJoyInput != Vector2.zero)
         {
             _mouseFire = true;
+            mouseFire = true;
         }
         else
         {
             _mouseFire = false;
+            mouseFire = false;
         }
 
         rightJoyX = _rightJoyInput.x;

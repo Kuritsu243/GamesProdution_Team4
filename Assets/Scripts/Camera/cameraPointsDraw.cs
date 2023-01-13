@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Unity.Mathematics;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;

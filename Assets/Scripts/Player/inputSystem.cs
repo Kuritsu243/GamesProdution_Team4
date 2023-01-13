@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class inputSystem : MonoBehaviour
 {
-    [SerializeField] private bool _usingDesktopInput;
+
     private PlayerControls _playerControls;
     private Vector2 _movementInput;
     public Vector2 mousePos;
@@ -20,20 +20,11 @@ public class inputSystem : MonoBehaviour
     public float rightJoyY;
     private bool _mouseFire;
     public bool mouseFire;
-    private Camera _mainCamera;
-    public Vector3 worldPos;
+
     private void OnEnable()
     {
         if (_playerControls == null)
         {
-            // if (_usingDesktopInput)
-            // {
-            //     _playerControls = new PlayerControls();
-            //     _playerControls.Player.Move.performed += i => _movementInput = i.ReadValue<Vector2>();
-            //     _playerControls.Player.Fire.performed += i => ClickAction(i.ReadValue<float>());
-            //     _playerControls.Player.Look
-            // }
-            
             _playerControls = new PlayerControls();
             _playerControls.Player.Move.performed += i => _movementInput = i.ReadValue<Vector2>();
             _playerControls.Player.Look.performed += i => mousePos = i.ReadValue<Vector2>();
@@ -42,7 +33,6 @@ public class inputSystem : MonoBehaviour
             {
                 _playerControls.Player.Look.ChangeBinding(0).Erase();
                 _playerControls.Player.Fire.performed += i => _rightJoyInput = i.ReadValue<Vector2>();
-                // _playerControls.Player.Fire.performed += i => ClickAction(i.ReadValue<float>());
             }
         }
         
@@ -56,7 +46,6 @@ public class inputSystem : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 60;
-        _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
     }
 

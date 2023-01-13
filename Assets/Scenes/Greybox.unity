@@ -19268,7 +19268,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6082186056838123418, guid: f4ff56e3c172aa4408035f1498507d60, type: 3}
       propertyPath: lightCost
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6082186056838123418, guid: f4ff56e3c172aa4408035f1498507d60, type: 3}
       propertyPath: interactableRadius

@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d0099412c25a14b9d296fdd553ef97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 1
+  enemyHealth: 4
   sphereCastRadius: 5
   damageAmount: 5
   checkSurroundingFrequency: 2
@@ -177,6 +177,7 @@ MonoBehaviour:
   defaultLayer: 0
   enemyLayer: 2
   mothPunch: {fileID: 21300000, guid: b08e58930a6cfb44baad5a71afcb7e04, type: 3}
+  scoreValue: 0
 --- !u!54 &-5888814701877389824
 Rigidbody:
   m_ObjectHideFlags: 0

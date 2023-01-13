@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3562342638330179390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.217, y: 1.251, z: -0}
+  m_LocalPosition: {x: 0.06, y: 1.251, z: -0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -130,10 +130,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 1.1292744
+  m_Height: 4.623519
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.12844849, y: 1.31176, z: -0.000000025424924}
 --- !u!195 &5495732648329243967
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -143,8 +143,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 5495732648329243965}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
+  m_Radius: 1.22
+  m_Speed: 2.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 4
   sphereCastRadius: 5
-  damageAmount: 5
+  damageAmount: 10
   checkSurroundingFrequency: 2
   timeInBetweenDealingDamage: 1.5
   healthObject: {fileID: 7955768921641992954, guid: e17f8b80ce31d12409ae52cb0e97f251, type: 3}

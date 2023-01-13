@@ -2897,7 +2897,7 @@ GameObject:
   - component: {fileID: 601925287}
   - component: {fileID: 601925286}
   m_Layer: 0
-  m_Name: w
+  m_Name: Chimney Void
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

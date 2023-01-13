@@ -22,6 +22,7 @@ public class playerScore : MonoBehaviour
     public void SaveScore()
     {
         PlayerPrefs.SetInt("currency", _dontDestroy.Currency + _playerScore);
+        PlayerPrefs.SetInt("playerScore", _playerScore);
         PlayerPrefs.Save();
     }
 

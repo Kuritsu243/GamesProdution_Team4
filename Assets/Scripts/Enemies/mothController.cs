@@ -125,7 +125,7 @@ public class mothController : MonoBehaviour
     {
         var healthPickup = Instantiate(healthObject, transform.position, Quaternion.identity);
         healthPickup.GetComponent<healthPickupScript>().ScoreAmount = scoreValue;
-        var playerScoreScript = _player.GetComponent<playerScore>();
+        var playerScoreScript = _player.GetComponentInChildren<playerScore>();
         playerScoreScript.AddToScore(scoreValue);
         playerScoreScript.SaveScore();
         Debug.Log("moth death");

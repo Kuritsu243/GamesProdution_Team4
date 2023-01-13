@@ -29,7 +29,7 @@ public class playerHealth : MonoBehaviour
             GameObject.FindGameObjectWithTag("eventManager").GetComponent<gameSaturationModifier>();
         _crossFade = GameObject.FindGameObjectWithTag("crossFade").GetComponent<Animator>();
         _dontDestroy = GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroy>();
-        playerMaxHealth = playerMaxHealth + (_dontDestroy.HealthUpgradesPurchased * 10);
+        playerMaxHealth += (_dontDestroy.HealthUpgradesPurchased * 10);
         _playerHealth = playerMaxHealth;
     }
 

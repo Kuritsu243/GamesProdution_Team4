@@ -56,7 +56,7 @@ public class gameSaturationModifier : MonoBehaviour
 
     public void CalculateVignetteStrength()
     {
-        _vignetteStrength = 1 - _playerHealth.PlayerHealth / _playerHealth.PlayerMaxHealth;
+        _vignetteStrength = Mathf.Clamp(0.9f - _playerHealth.PlayerHealth / _playerHealth.PlayerMaxHealth, 0f, 1f);
         _vignette.intensity.value = _vignetteStrength;
         _postProcessVolume.profile.TryGet<Vignette>(out _vignette);
 

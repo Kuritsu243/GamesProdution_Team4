@@ -2304,11 +2304,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3667045216700483928, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: maxLightIntensity
-      value: 6.5
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 3667045216700483928, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: minLightIntensity
-      value: 6
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 3667045216700483928, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: enableLightFlicker

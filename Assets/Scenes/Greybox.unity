@@ -2228,7 +2228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 784075824792613237, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_Intensity
-      value: 6.48
+      value: 16.94
       objectReference: {fileID: 0}
     - target: {fileID: 784075824792613237, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_RenderMode
@@ -2616,11 +2616,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7847724418078991853, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.53
+      value: 10.94
       objectReference: {fileID: 0}
     - target: {fileID: 7847724418078991853, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.29
+      value: -2.13
       objectReference: {fileID: 0}
     - target: {fileID: 8231591397827556391, guid: a33455582d930c2489f84dc0bd0034ab, type: 3}
       propertyPath: m_Enabled

@@ -548,6 +548,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isLoseScreen: 1
+  shopMenu: {fileID: 0}
+  upgradeCost: 0
+  shopMenuButton: {fileID: 0}
+  healthButton: {fileID: 0}
+  damageButton: {fileID: 0}
+  moveSpeedButton: {fileID: 0}
+  chargeSizeButton: {fileID: 0}
+  buyDecoyButton: {fileID: 0}
+  closeShopMenuButton: {fileID: 0}
+  currencyText: {fileID: 0}
+  healthUpgradesPurchased: {fileID: 0}
+  damageUpgradesPurchased: {fileID: 0}
+  moveSpeedUpgradesPurchased: {fileID: 0}
+  chargeSizeUpgradesPurchased: {fileID: 0}
+  decoysPurchased: {fileID: 0}
 --- !u!114 &733441428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,7 +936,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2058809373
@@ -1017,8 +1032,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.7717, y: 67}
-  m_SizeDelta: {x: 2307.9, y: 1338.8586}
+  m_AnchoredPosition: {x: 0.000030518, y: -0.0021133}
+  m_SizeDelta: {x: 1920, y: 1080.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2121480411
 MonoBehaviour:

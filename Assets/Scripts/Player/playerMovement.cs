@@ -62,7 +62,7 @@ public class playerMovement : MonoBehaviour
     }
     private void HandleRotation()
     {
-        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsEditor)
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer)
         {
             if (_inputSystem.rightJoyX != 0 || _inputSystem.rightJoyY != 0)
             {

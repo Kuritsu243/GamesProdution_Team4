@@ -19,6 +19,7 @@ public class startMenu : MonoBehaviour
     private bool _isShopOpen;
 
     [SerializeField] private bool _isLoseScreen;
+    [SerializeField] private bool _isWinScreen;
     // shop menu 
     [SerializeField] private GameObject shopMenu;
     [SerializeField] private int upgradeCost;
@@ -41,24 +42,30 @@ public class startMenu : MonoBehaviour
     private void Awake()
     {
         _crossFade = GameObject.FindGameObjectWithTag("crossFade").GetComponent<Animator>();
-        if (!_isLoseScreen)
+        if (!_isLoseScreen && !_isWinScreen)
+        {
+            _exitButton = GameObject.FindGameObjectWithTag("exitButton").GetComponent<Button>();
+            _exitButton.onClick.AddListener(OnExitButtonClicked);
+            _dontDestroy = GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroy>();
+            shopMenuButton.onClick.AddListener(ShopMenuButtonClicked);
+            closeShopMenuButton.onClick.AddListener(CloseShopMenuButtonClicked);
+            healthButton.onClick.AddListener(HealthButtonClicked);
+            damageButton.onClick.AddListener(DamageButtonClicked);
+            moveSpeedButton.onClick.AddListener(MoveSpeedButtonClicked);
+            chargeSizeButton.onClick.AddListener(ChargeSizeButtonClicked);
+            buyDecoyButton.onClick.AddListener(BuyDecoyButtonClicked);
+            _playerCurrency = _dontDestroy.Currency;
+            shopMenu.SetActive(false);
+        }
+        else if (_isWinScreen)
         {
             _exitButton = GameObject.FindGameObjectWithTag("exitButton").GetComponent<Button>();
             _exitButton.onClick.AddListener(OnExitButtonClicked);
         }
-        _dontDestroy = GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroy>();
+
         _startButton = GameObject.FindGameObjectWithTag("startButton").GetComponent<Button>();
         _startButton.onClick.AddListener(OnStartButtonClicked);
-        shopMenuButton.onClick.AddListener(ShopMenuButtonClicked);
-        closeShopMenuButton.onClick.AddListener(CloseShopMenuButtonClicked);
-        healthButton.onClick.AddListener(HealthButtonClicked);
-        damageButton.onClick.AddListener(DamageButtonClicked);
-        moveSpeedButton.onClick.AddListener(MoveSpeedButtonClicked);
-        chargeSizeButton.onClick.AddListener(ChargeSizeButtonClicked);
-        buyDecoyButton.onClick.AddListener(BuyDecoyButtonClicked);
-        _playerCurrency = _dontDestroy.Currency;
-        
-        shopMenu.SetActive(false);
+
 
 #if UNITY_ANDROID
         Application.targetFrameRate = 30;
@@ -69,13 +76,16 @@ public class startMenu : MonoBehaviour
 
     private void FixedUpdate()
     {
-        currencyText.text = "Owned: " + _dontDestroy.Currency;
-        decoysPurchased.text = "Owned: " + _dontDestroy.DecoysPurchased;
-        healthUpgradesPurchased.text = "Owned: " + _dontDestroy.HealthUpgradesPurchased;
-        damageUpgradesPurchased.text = "Owned: " + _dontDestroy.DamageUpgradesPurchased;
-        moveSpeedUpgradesPurchased.text = "Owned: " + _dontDestroy.MoveSpeedUpgradesPurchased;
-        chargeSizeUpgradesPurchased.text = "Owned: " + _dontDestroy.ChargeSizeUpgradesPurchased;
-        currencyText.text = "Money: " + _dontDestroy.Currency;
+        if (!_isLoseScreen && !_isWinScreen)
+        {
+            decoysPurchased.text = _dontDestroy.DecoysPurchased.ToString();
+            healthUpgradesPurchased.text = _dontDestroy.HealthUpgradesPurchased.ToString();
+            damageUpgradesPurchased.text = _dontDestroy.DamageUpgradesPurchased.ToString();
+            moveSpeedUpgradesPurchased.text = _dontDestroy.MoveSpeedUpgradesPurchased.ToString();
+            chargeSizeUpgradesPurchased.text = _dontDestroy.ChargeSizeUpgradesPurchased.ToString();
+            currencyText.text = "Money: " + _dontDestroy.Currency;
+        }
+
         
         if (_hasFaded) return;
         if (_crossFade.gameObject.GetComponent<Image>().color.a != 0) return;
@@ -116,7 +126,7 @@ public class startMenu : MonoBehaviour
         _crossFade.gameObject.SetActive(true);
         _crossFade.SetTrigger("Start");
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadSceneAsync("Greybox");
+        SceneManager.LoadSceneAsync(_isLoseScreen || _isWinScreen ? "Start_Screen" : "Greybox");
     }
     
     private IEnumerator LoadDeathScene()

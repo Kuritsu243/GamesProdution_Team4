@@ -22,7 +22,7 @@ public class playerHealth : MonoBehaviour
     
     public float PlayerMaxHealth => playerMaxHealth;
 
-    private void Start()
+    private void Awake()
     {
 
         _gameSaturationModifier =

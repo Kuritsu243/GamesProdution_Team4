@@ -44,6 +44,7 @@ public class projectileScript : MonoBehaviour
         _projectileLight.intensity = _projectileLight.intensity * _projectileCharge * 1.5f;
         _projectileLight.range = _projectileLight.range * _projectileCharge * 1.5f;
         Debug.Log(_playerRotation.eulerAngles.y);
+        Physics.IgnoreLayerCollision(10, 7);
     }
 
     private void FixedUpdate()

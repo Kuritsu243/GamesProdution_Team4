@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5148050479257361489}
   - component: {fileID: 3043485328023267921}
   - component: {fileID: 1116686952374449406}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ProjectileSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 8364593763646355082}
   - component: {fileID: 8422025168520928019}
   - component: {fileID: 541961511853985868}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7484127329190487029}
   - component: {fileID: 7155977403145163787}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 7068686999057456176}
   - component: {fileID: 8114375477764791542}
   - component: {fileID: 5606868415415123077}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

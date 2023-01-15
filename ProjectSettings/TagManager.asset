@@ -26,6 +26,12 @@ TagManager:
   - furnaceFillBarBG
   - playerLight
   - houseOBJ
+  - gameplayUI
+  - crossFade
+  - bottomIndicator
+  - topIndicator
+  - indicatorText
+  - DontDestroy
   layers:
   - Default
   - TransparentFX
@@ -40,7 +46,7 @@ TagManager:
   - Projectiles
   - Collectibles
   - NoPostProcessing
-  - 
+  - Environment
   - 
   - 
   - 

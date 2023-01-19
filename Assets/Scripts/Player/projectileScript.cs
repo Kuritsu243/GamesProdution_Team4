@@ -7,6 +7,7 @@ using UnityEngine;
 public class projectileScript : MonoBehaviour
 {
     // collision variables
+
     private GameObject _collidedEnemy;
     private GameObject _collidedDecoy;
     private GameObject _collidedFurnace;
@@ -23,6 +24,7 @@ public class projectileScript : MonoBehaviour
     private Camera _playerCamera;
     private Quaternion _playerRotation;
     private Light _projectileLight;
+
     
 
     // projectile variables

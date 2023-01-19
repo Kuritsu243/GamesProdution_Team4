@@ -29,6 +29,7 @@ public class playerShooting : MonoBehaviour
     [SerializeField] private float projectileCooldown;
     [SerializeField] private float projectileCost;
     [SerializeField] private GameObject playerProjectile;
+    [SerializeField] private AudioClip flameSound;
     private inputSystem _inputSystem;
     private float _projectileCharge;
     public float projectileChargeDuration;
@@ -40,6 +41,7 @@ public class playerShooting : MonoBehaviour
     private projectileScript _spawnedObjectScript;
     private playerHealth _playerHealth;
     private DontDestroy _dontDestroy;
+    private AudioSource _projectileAudio;
 
 
     public bool IsCharging { get; private set; }
@@ -51,6 +53,7 @@ public class playerShooting : MonoBehaviour
     {
         _inputSystem = GetComponent<inputSystem>();
         _playerHealth = GetComponent<playerHealth>();
+        _projectileAudio = transform.parent.GetComponentInChildren<AudioSource>();
         _projectileSpawnPoint = gameObject.FindGameObjectInChildWithTag("projectileSpawnPoint");
         _dontDestroy = GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroy>();
 
@@ -102,5 +105,8 @@ public class playerShooting : MonoBehaviour
         _spawnedObjectScript = _spawnedObject.GetComponentInChildren<projectileScript>(); // get projectile script of spawned object
         _spawnedObjectScript.Init(projectileSpeed, projectileDamage, projectileDespawnRate, _projectileCharge, transform.localRotation); // pass through variables
         _playerHealth.Damage(projectileDamage);
+        _projectileAudio.clip = flameSound;
+        _projectileAudio.volume = 0.33f;
+        _projectileAudio.Play();
     }
 }

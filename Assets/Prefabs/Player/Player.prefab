@@ -361,7 +361,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a657d402c26e4348b1f6c83559617a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _usingDesktopInput: 0
   mousePos: {x: 0, y: 0}
   verticalInput: 0
   horizontalInput: 0
@@ -370,7 +369,6 @@ MonoBehaviour:
   rightJoyX: 0
   rightJoyY: 0
   mouseFire: 0
-  worldPos: {x: 0, y: 0, z: 0}
 --- !u!114 &736113945510686035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +414,7 @@ MonoBehaviour:
   projectileCooldown: 0.8
   projectileCost: 0
   playerProjectile: {fileID: 2604022971970273221, guid: 7b347fe8898c7dc4cb624f3628d0c58f, type: 3}
+  flameSound: {fileID: 8300000, guid: 54780e52dcac7db4a8e2af7e4423e17b, type: 3}
   projectileChargeDuration: 0
 --- !u!114 &3667045216700483928
 MonoBehaviour:

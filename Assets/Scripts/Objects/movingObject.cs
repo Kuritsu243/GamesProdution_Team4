@@ -16,6 +16,7 @@ public class movingObject : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+
         _startPos = transform.localPosition;
         if (destinationPos.x == 0)
         {
@@ -37,6 +38,7 @@ public class movingObject : MonoBehaviour
         if (!haveConditionsBeenMet || !(Vector3.Distance(transform.localPosition, destinationPos) > 0.01) ||
             _hasMoved) return;
         transform.Translate(destinationPos * (Time.deltaTime / timeToTake), Space.World);
+
         StartCoroutine(Moved());
     }
 

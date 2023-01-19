@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class playerSpriteRotation : MonoBehaviour
 {
+    
     private GameObject _player;
     private Transform _playerTransform;
     private SpriteRenderer _spriteRenderer;
@@ -54,7 +55,11 @@ public class playerSpriteRotation : MonoBehaviour
         {
             transform.position = new Vector3(_playerPos.x, _playerPos.y + HeightOffset, _playerPos.z);
         }
-        
+        if (_currentFrame == "9")
+        {
+            _playerAnimation.PlaySound();
+        }
+        Debug.Log(_currentFrame);
         _spriteRenderer.flipX = (_playerTransform.eulerAngles.y > 180f);
     }
 

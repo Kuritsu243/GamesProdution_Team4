@@ -11,6 +11,8 @@ public class mothTrigger : MonoBehaviour
     [SerializeField] private GameObject[] mothSpawnersToBeDisabled;
     [SerializeField] private GameObject[] movingObjectsToTrigger;
     [SerializeField] private bool randomizeSpawning;
+    [SerializeField] private AudioClip moveSound;
+    private AudioSource _movingBoxAudio;
     // Start is called before the first frame update
 
     private void Awake()
@@ -20,6 +22,7 @@ public class mothTrigger : MonoBehaviour
 
     private void Start()
     {
+        _movingBoxAudio = GetComponent<AudioSource>();
         foreach (GameObject mothSpawner in mothSpawnersToBeTriggered) // for each moth spawner
         {
             mothSpawner.GetComponent<mothSpawnController>().SpawnEnemies = false; // disable spawning
@@ -42,6 +45,14 @@ public class mothTrigger : MonoBehaviour
         {
             Debug.Log(movingObject.name);
             movingObject.GetComponent<movingObject>().haveConditionsBeenMet = true;
+        }
+
+        if (movingObjectsToTrigger != null)
+        {
+            var soundManager = GameObject.FindGameObjectWithTag("soundManager").GetComponent<AudioSource>();
+            soundManager.clip = moveSound;
+            soundManager.volume = 0.75f;
+            soundManager.Play();
         }
         
         foreach (var spawnController in mothSpawnersToBeTriggered) // for each moth spawner

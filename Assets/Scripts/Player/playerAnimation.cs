@@ -14,9 +14,16 @@ public class playerAnimation : MonoBehaviour
     private const string RegexPattern = @"\d+";
     private Transform _spriteTransform;
     private Vector3 _spritePos;
+    private AudioSource _playerAudio;
     [SerializeField] private AnimationClip movingAnim;
     [SerializeField] private AnimationClip idleAnim;
-
+    [SerializeField] private AudioClip stepSound;
+    public AudioClip StepSound { get => stepSound; set => stepSound = value; }
+    public AudioSource PlayerAudio
+    {
+        get => _playerAudio;
+        set => _playerAudio = value;
+    }
     public Animator PlayerAnimator { get; private set; }
 
     private void Start()
@@ -24,6 +31,7 @@ public class playerAnimation : MonoBehaviour
         PlayerAnimator = GetComponent<Animator>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
         _player = GameObject.FindGameObjectWithTag("Player");
+        _playerAudio = _player.transform.parent.GetComponentInChildren<AudioSource>();
         _playerMovement = _player.GetComponent<playerMovement>();
         PlayerAnimator.speed = 1f;
         _spriteTransform = transform;
@@ -45,9 +53,13 @@ public class playerAnimation : MonoBehaviour
                 PlayerAnimator.speed = 1f;
                 break;
         }
-        
-
-
+    }
+    
+    
+    public void PlaySound()
+    {
+        _playerAudio.clip = stepSound;
+        _playerAudio.Play();
     }
     public string GetCurrentFrame() // gets current frame of anim
     {

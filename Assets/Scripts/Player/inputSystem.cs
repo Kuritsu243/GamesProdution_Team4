@@ -29,7 +29,7 @@ public class inputSystem : MonoBehaviour
             _playerControls.Player.Move.performed += i => _movementInput = i.ReadValue<Vector2>();
             _playerControls.Player.Look.performed += i => mousePos = i.ReadValue<Vector2>();
 
-            if (Application.platform is RuntimePlatform.Android or RuntimePlatform.WindowsEditor)
+            if (Application.platform is RuntimePlatform.Android or RuntimePlatform.WindowsEditor or RuntimePlatform.WindowsPlayer)
             {
                 _playerControls.Player.Look.ChangeBinding(0).Erase();
                 _playerControls.Player.Fire.performed += i => _rightJoyInput = i.ReadValue<Vector2>();
@@ -52,7 +52,7 @@ public class inputSystem : MonoBehaviour
     public void HandleAllInputs()
     {
         HandleMovementInput();
-        if (Application.platform is RuntimePlatform.WindowsEditor or RuntimePlatform.Android)
+        if (Application.platform is RuntimePlatform.WindowsEditor or RuntimePlatform.Android or RuntimePlatform.WindowsPlayer)
         {
             HandleJoyInput();
         }

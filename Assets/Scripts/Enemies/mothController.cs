@@ -19,6 +19,8 @@ public class mothController : MonoBehaviour
     [SerializeField] private int enemyLayer;
     [SerializeField] private Sprite mothPunch;
     [SerializeField] private int scoreValue;
+    [SerializeField] private AudioClip mothPunchSound;
+    [SerializeField] private AudioClip mothDeathSound;
     private GameObject _detectedActiveDecoy;
     private GameObject _collidedObject;
     private lightDecoyPawn _detectedDecoyScript;
@@ -33,6 +35,7 @@ public class mothController : MonoBehaviour
     private playerController2 _playerController;
     private SpriteRenderer _mothSprite;
     private Sprite _mothIdle;
+    private AudioSource _mothSound;
     
 
     // private variables
@@ -50,6 +53,7 @@ public class mothController : MonoBehaviour
         _playerController = _player.GetComponentInChildren<playerController2>();
         _mothSprite = GetComponentInChildren<SpriteRenderer>();
         _mothIdle = _mothSprite.sprite;
+        _mothSound = GetComponent<AudioSource>();
     }
     
 
@@ -128,14 +132,22 @@ public class mothController : MonoBehaviour
         var playerScoreScript = _player.GetComponentInChildren<playerScore>();
         playerScoreScript.AddToScore(scoreValue);
         playerScoreScript.SaveScore();
-        Debug.Log("moth death");
+        var soundManager = GameObject.FindGameObjectWithTag("soundManager").GetComponent<AudioSource>();
+        soundManager.clip = mothDeathSound;
+        soundManager.volume = 0.75f;
+        soundManager.Play();
+
         Destroy(this.gameObject); // despawn
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         _collidedObject = collision.gameObject;
-        StartCoroutine(SpriteChange());
         if (!_collidedObject.CompareTag("Player") || !_canDealDamage) return;
+        _mothSound.clip = mothPunchSound;
+        _mothSound.volume = 0.33f;
+        _mothSound.Play();
+        StartCoroutine(SpriteChange());
         _playerHealth.Damage(damageAmount);// deal damage to player
         StartCoroutine(DamageCooldown(timeInBetweenDealingDamage)); // cooldown on damage to the player
     }
@@ -150,6 +162,7 @@ public class mothController : MonoBehaviour
     private IEnumerator SpriteChange()
     {
         _mothSprite.sprite = mothPunch;
+
         yield return new WaitForSeconds(0.5f);
         _mothSprite.sprite = _mothIdle;
     }

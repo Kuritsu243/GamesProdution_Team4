@@ -143,8 +143,5 @@ public class canvasScript : MonoBehaviour
         var newDecoy = Instantiate(lightDecoyPrefab, _player.transform.position, _player.transform.rotation);
         newDecoy.GetComponent<lightDecoyPawn>().ActivateDecoy();
     }
-  
-
-
-
+    
 }
